@@ -6,7 +6,7 @@ import { Login } from './components/Login/Login';
 import { Main } from './components/Main/Main';
 import { NotFound } from './components/NotFound/NotFound';
 import { Welcome } from './components/Welcome/Welcome';
-import { routers } from './constants';
+import { routers } from './constants/constants';
 import './App.css';
 
 function App() {

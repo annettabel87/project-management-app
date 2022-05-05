@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
-import { routers } from '../../constants';
+import { routers } from '../../constants/constants';
 import './Header.css';
 
 export const Header: FC = () => {
