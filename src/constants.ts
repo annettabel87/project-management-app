@@ -1,0 +1,7 @@
+export const routers = {
+  ROUTE_WELCOME: '/',
+  ROUTE_LOGIN: '/login',
+  ROUTE_MAIN: '/main',
+  ROUTE_BOARD: '/board',
+  ROUTE_NOTFOUND: '*',
+};
