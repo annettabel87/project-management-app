@@ -1,24 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Routes, Route } from 'react-router-dom';
+import { Board } from './components/Board/Board';
+import { Header } from './components/Header/Header';
+import { Login } from './components/Login/Login';
+import { Main } from './components/Main/Main';
+import { NotFound } from './components/NotFound/NotFound';
+import { Welcome } from './components/Welcome/Welcome';
+import { routers } from './constants';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Routes>
+        <Route path={routers.ROUTE_WELCOME} element={<Welcome />} />
+        <Route path={routers.ROUTE_MAIN} element={<Main />} />
+        <Route path={routers.ROUTE_LOGIN} element={<Login />} />
+        <Route path={routers.ROUTE_BOARD} element={<Board />} />
+        <Route path={routers.ROUTE_NOTFOUND} element={<NotFound />} />
+      </Routes>
     </div>
   );
 }
