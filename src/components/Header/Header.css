@@ -1,0 +1,22 @@
+.header {
+    height: 10vh;
+    background: #575f61;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    font-size: 20px;
+}
+.header-item {
+    text-decoration: none;
+    color: #fff;
+}
+.header-item:hover {
+    transition: all 1s;
+    color: #5ee2f3;
+    text-shadow: 3px 3px 2px rgba(150, 150, 150, 1);
+}
+.active {
+    color: rgb(117, 117, 231);
+}
