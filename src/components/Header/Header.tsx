@@ -20,6 +20,9 @@ export const Header: FC = () => {
       document.removeEventListener('scroll', setSticked);
     };
   }, []);
+  const logout = () => {};
+  const createBoard = () => {};
+  const changeLanguage = () => {};
 
   return (
     <header className={sticky ? 'header sticky' : 'header'}>
@@ -35,6 +38,15 @@ export const Header: FC = () => {
       <NavLink className="header-item" to={routers.ROUTE_LOGIN}>
         Login
       </NavLink>
+      <NavLink className="header-item" to={routers.ROUTE_PROFILE}>
+        Edit profile
+      </NavLink>
+      <button onClick={logout}>Logout</button>
+      <button onClick={createBoard}>New board</button>
+      <select onSelect={changeLanguage}>
+        <option value="Ru">Ru</option>
+        <option value="En">En</option>
+      </select>
     </header>
   );
 };
