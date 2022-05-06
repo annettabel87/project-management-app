@@ -2,10 +2,17 @@ import React, { FC, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { routers } from '../../constants/constants';
 import { useState } from 'react';
+import { Modal } from '../Modal/Modal';
+import { CreateBoardForm } from './CreateBoardForm/CreateBoardForm';
 import './Header.css';
 
 export const Header: FC = () => {
   const [sticky, setSticky] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const isAuth = true;
+  const onClose = () => {
+    setIsOpen(false);
+  };
   const setSticked = () => {
     if (window.scrollY >= 100) {
       setSticky(true);
@@ -21,7 +28,9 @@ export const Header: FC = () => {
     };
   }, []);
   const logout = () => {};
-  const createBoard = () => {};
+  const createBoard = () => {
+    setIsOpen(true);
+  };
   const changeLanguage = () => {};
 
   return (
@@ -47,6 +56,9 @@ export const Header: FC = () => {
         <option value="Ru">Ru</option>
         <option value="En">En</option>
       </select>
+      <Modal onClose={onClose} open={isOpen}>
+        <CreateBoardForm isAuth={isAuth} onClose={onClose} />
+      </Modal>
     </header>
   );
 };
