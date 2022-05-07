@@ -1,7 +1,9 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { routers } from '../../../constants/constants';
+import { useAppDispatch, useAppSelector } from '../../../hooks/ReduxHooks';
 import { CreateBoardFormProps } from '../../../interfaces/Interfaces';
+import { addBoard } from '../../../store/actions';
 import './CreateBoardForm.css';
 
 export const CreateBoardForm: FC<CreateBoardFormProps> = ({
@@ -9,10 +11,16 @@ export const CreateBoardForm: FC<CreateBoardFormProps> = ({
   onClose,
 }: CreateBoardFormProps) => {
   const navigate = useNavigate();
+  const [title, setTitle] = useState<string>('');
+  const dispatch = useAppDispatch();
+  const { error } = useAppSelector((state) => state.boardReducer);
   if (!isAuth) {
     navigate(routers.ROUTE_LOGIN);
   }
-  const onSubmit = () => {};
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(addBoard(title));
+  };
   return (
     <div className="overlay" onClick={onClose}>
       <div
@@ -22,16 +30,13 @@ export const CreateBoardForm: FC<CreateBoardFormProps> = ({
         }}
       >
         <button className="close" onClick={onClose} />
-        <form className="board-form" onSubmit={onSubmit}>
+        <form className="board-form" onSubmit={(e) => onSubmit(e)}>
           <label htmlFor="title">
             Title
-            <input type="text" />
-          </label>
-          <label htmlFor="description">
-            Description
-            <input type="text" />
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
           </label>
           <button>create</button>
+          {error && <span>{error}</span>}
         </form>
       </div>
     </div>
