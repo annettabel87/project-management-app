@@ -8,6 +8,7 @@ import { NotFound } from './components/NotFound/NotFound';
 import { Welcome } from './components/Welcome/Welcome';
 import { routers } from './constants/constants';
 import './App.css';
+import { Footer } from './components/Footer/Footer';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path={routers.ROUTE_BOARD} element={<Board />} />
         <Route path={routers.ROUTE_NOTFOUND} element={<NotFound />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
