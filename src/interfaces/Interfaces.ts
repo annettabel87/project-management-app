@@ -18,8 +18,20 @@ export type BoardStateType = {
   boards: BoardData[];
   isLoading: boolean;
   error: string;
+  selectBoard: FullBoardData;
 };
 export interface BoardData {
   id: string;
   title: string;
 }
+
+export interface FullBoardData {
+  id: string;
+  title: string;
+  columns: [];
+}
+
+export type updateBoardType = {
+  id: string;
+  title: string;
+};
