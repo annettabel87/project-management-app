@@ -28,10 +28,17 @@ export interface BoardData {
 export interface FullBoardData {
   id: string;
   title: string;
-  columns: [];
+  columns: ColumnData[];
 }
 
 export type updateBoardType = {
   id: string;
   title: string;
 };
+
+export interface ColumnData {
+  id: string;
+  title: string;
+  order: number;
+  tasks: [];
+}
