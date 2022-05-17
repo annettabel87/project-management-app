@@ -1,4 +1,6 @@
 .header {
+    position: sticky;
+    top: 0;
     height: 10vh;
     background: #575f61;
     color: #fff;
@@ -8,14 +10,18 @@
     gap: 20px;
     font-size: 20px;
 }
+.header.sticky {
+    background: #252829;
+    height: 8vh;
+    transition: .3s ease-in-out;
+}
 .header-item {
     text-decoration: none;
     color: #fff;
 }
 .header-item:hover {
     transition: all 1s;
-    color: #5ee2f3;
-    text-shadow: 3px 3px 2px rgba(150, 150, 150, 1);
+    color: #5ee2f3;    
 }
 .active {
     color: rgb(117, 117, 231);

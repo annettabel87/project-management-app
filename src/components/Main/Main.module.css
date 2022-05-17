@@ -1,0 +1,25 @@
+.container {
+    max-width: 1610px;
+    margin: 0 auto;
+}
+.mainTitle {
+    text-align: center;
+    font-size: 36px;
+}
+.mainBtn {
+    border: 1px solid black;
+    background-color: white;
+    padding: 10px;
+    width: 360px;
+    min-height: 164px;
+    border-radius: 5px;
+    font-size: 36px;
+    margin-bottom: 35px;
+    cursor: pointer;
+    transition: all ease-in 0.3s;
+}
+.mainBtn:hover {
+    background-color: #eaeaea;
+    box-shadow: 7px 4px 19px 14px rgba(130, 170, 202, 0.38);
+    
+}

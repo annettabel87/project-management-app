@@ -7,8 +7,10 @@ import { Main } from './components/Main/Main';
 import { NotFound } from './components/NotFound/NotFound';
 import { Welcome } from './components/Welcome/Welcome';
 import { routers } from './constants/constants';
-import './App.css';
 import { Footer } from './components/Footer/Footer';
+import { Profile } from './components/Profile/Profile';
+import './App.css';
+
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
         <Route path={routers.ROUTE_LOGIN} element={<Login />} />
         <Route path={routers.ROUTE_BOARD} element={<Board />} />
         <Route path={routers.ROUTE_NOTFOUND} element={<NotFound />} />
+        <Route path={routers.ROUTE_PROFILE} element={<Profile />} />
       </Routes>
       <Footer />
     </div>
