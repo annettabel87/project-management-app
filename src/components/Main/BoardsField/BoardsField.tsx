@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { BoardData } from '../../../interfaces/Interfaces';
 import { BoardPreview } from '../BoardPreview/BoardPreview';
-import './BoardsField';
+import styles from './BoardsField.module.css';
 
 export type BoardsFieldPropsType = {
   boards: BoardData[];
@@ -10,7 +10,7 @@ export const BoardsField: FC<BoardsFieldPropsType> = ({ boards }: BoardsFieldPro
   const boardsCard = boards.map((board) => <BoardPreview key={board.id} {...board} />);
   return (
     <section>
-      <div className="cards-wrapper">{boardsCard}</div>
+      <div className={styles.cardsWrapper}>{boardsCard}</div>
     </section>
   );
 };

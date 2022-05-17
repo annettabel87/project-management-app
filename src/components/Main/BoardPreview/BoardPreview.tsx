@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { routers } from '../../../constants/constants';
 import { useAppDispatch } from '../../../hooks/ReduxHooks';
 import { BoardData } from '../../../interfaces/Interfaces';
-import { deleteBoardById, getBoardById } from '../../../store/actions';
+import { deleteBoardById, getBoardById } from '../../../store/boardReducer';
 import { ConfirmationWindow } from '../../ConfirmationWindow/ConfirmationWindow';
 import { Modal } from '../../Modal/Modal';
-import './BoardPreview.css';
+import styles from './BoardPreview.module.css';
 
 export const BoardPreview: FC<BoardData> = ({ id, title }: BoardData) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -24,12 +24,18 @@ export const BoardPreview: FC<BoardData> = ({ id, title }: BoardData) => {
     navigate(`${routers.ROUTE_BOARD}`);
   };
   return (
-    <div className="card">
-      <div>
-        <button onClick={() => setIsOpen(true)}>X</button>
-        <div>{title}</div>
-        <button onClick={openBoard}>More</button>
-      </div>
+    <div className={styles.card} onClick={openBoard}>
+      <button
+        className={styles.cardBtn}
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsOpen(true);
+        }}
+      >
+        X
+      </button>
+      <div>{title}</div>
+
       <Modal onClose={onClose} open={isOpen}>
         <ConfirmationWindow onClose={onClose} handleOK={deleteBoard} />
       </Modal>

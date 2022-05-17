@@ -16,7 +16,7 @@ export type AppDispatch = AppStore['dispatch'];
 
 export type BoardStateType = {
   boards: BoardData[];
-  isLoading: boolean;
+  requestStatus: string;
   error: string;
   selectBoard: FullBoardData;
 };

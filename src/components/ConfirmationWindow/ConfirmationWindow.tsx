@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import './ConfirmationWindow.css';
+import styles from './ConfirmationWindow.module.css';
 
 export interface ConfirmPropsType {
   onClose: () => void;
@@ -10,20 +10,22 @@ export const ConfirmationWindow: FC<ConfirmPropsType> = ({
   handleOK,
 }: ConfirmPropsType) => {
   return (
-    <div className="overlay" onClick={onClose}>
+    <div className={styles.overlay} onClick={onClose}>
       <div
-        className="confirm"
+        className={styles.confirm}
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
-        <button className="close" onClick={onClose} />
+        <button className={styles.close} onClick={onClose}>
+          X
+        </button>
         <p>Are your sure?</p>
-        <div className="button-wrapper">
-          <button className="confirm-btn" onClick={handleOK}>
+        <div className={styles.buttonWrapper}>
+          <button className={styles.confirmBtn} onClick={handleOK}>
             Ok
           </button>
-          <button className="confirm-btn" onClick={onClose}>
+          <button className={styles.confirmBtn} onClick={onClose}>
             Cancel
           </button>
         </div>
