@@ -1,6 +1,8 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import './Board.css';
 
-export const Board: FC = () => {
+const Board: FC = () => {
   return <div>Board</div>;
 };
+
+export default Board;

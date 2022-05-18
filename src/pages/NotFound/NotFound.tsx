@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import './NotFound.css';
 
-export const NotFound: FC = () => {
+const NotFound: FC = () => {
   return (
     <div>
       <h2>404</h2>
@@ -9,3 +9,5 @@ export const NotFound: FC = () => {
     </div>
   );
 };
+
+export default NotFound;

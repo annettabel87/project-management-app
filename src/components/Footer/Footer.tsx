@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import './Footer.css';
 
-export const Footer: FC = () => {
+const Footer: FC = () => {
   return (
     <div className="footer">
       <img
@@ -27,3 +27,5 @@ export const Footer: FC = () => {
     </div>
   );
 };
+
+export default Footer;

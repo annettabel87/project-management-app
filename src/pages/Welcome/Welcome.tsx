@@ -1,6 +1,8 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import './Welcome.css';
 
-export const Welcome: FC = () => {
+const Welcome: FC = () => {
   return <div>Welcome</div>;
 };
+
+export default Welcome;

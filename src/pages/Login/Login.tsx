@@ -11,7 +11,7 @@ import { Navigate } from 'react-router-dom';
 import { loginUser } from '../../store/login-reducer';
 import tokenActions from '../../api/token-actions/token-actions';
 
-export const Login = () => {
+const Login = () => {
   const { error, isLoading } = useAppSelector((state) => state.loginReducer);
   const token = tokenActions.getUserToken();
   const dispatch = useAppDispatch();
@@ -88,3 +88,5 @@ export const Login = () => {
     </div>
   );
 };
+
+export default Login;

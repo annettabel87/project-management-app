@@ -1,14 +1,14 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTERS } from '../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import { getBoards } from '../../store/boards-slice';
-import { CreateBoardForm } from '../../components/Header/CreateBoardForm/CreateBoardForm';
+import CreateBoardForm from '../../components/CreateBoardForm/CreateBoardForm';
 import { Modal } from '../../components/Modal/Modal';
 import { BoardsField } from '../../components/BoardsField/BoardsField';
 import styles from './Main.module.css';
 
-export const Main: FC = () => {
+const Main: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const { boards, requestStatus, error } = useAppSelector((state) => state.boardsSlice);
@@ -42,3 +42,5 @@ export const Main: FC = () => {
     </div>
   );
 };
+
+export default Main;

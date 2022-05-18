@@ -1,15 +1,12 @@
 import React, { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ROUTERS } from '../../../constants/constants';
-import { useAppDispatch, useAppSelector } from '../../../hooks/ReduxHooks';
-import { CreateBoardFormProps } from '../../../interfaces/Interfaces';
-import { addBoard } from '../../../store/boards-slice';
+import { ROUTERS } from '../../constants/constants';
+import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
+import { CreateBoardFormProps } from '../../interfaces/Interfaces';
+import { addBoard } from '../../store/boards-slice';
 import styles from './CreateBoardForm.module.css';
 
-export const CreateBoardForm: FC<CreateBoardFormProps> = ({
-  isAuth,
-  onClose,
-}: CreateBoardFormProps) => {
+const CreateBoardForm: FC<CreateBoardFormProps> = ({ isAuth, onClose }: CreateBoardFormProps) => {
   const navigate = useNavigate();
   const [title, setTitle] = useState<string>('');
   const dispatch = useAppDispatch();
@@ -50,3 +47,5 @@ export const CreateBoardForm: FC<CreateBoardFormProps> = ({
     </div>
   );
 };
+
+export default CreateBoardForm;
