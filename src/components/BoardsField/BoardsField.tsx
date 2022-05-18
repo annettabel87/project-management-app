@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { BoardData } from '../../../interfaces/Interfaces';
+import { BoardData } from '../../interfaces/Interfaces';
 import { BoardPreview } from '../BoardPreview/BoardPreview';
 import styles from './BoardsField.module.css';
 

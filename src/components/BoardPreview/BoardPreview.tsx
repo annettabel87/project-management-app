@@ -1,11 +1,11 @@
 import React, { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { routers } from '../../../constants/constants';
-import { useAppDispatch } from '../../../hooks/ReduxHooks';
-import { BoardData } from '../../../interfaces/Interfaces';
-import { deleteBoardById, getBoardById } from '../../../store/boardReducer';
-import { ConfirmationWindow } from '../../ConfirmationWindow/ConfirmationWindow';
-import { Modal } from '../../Modal/Modal';
+import { ROUTERS } from '../../constants/constants';
+import { useAppDispatch } from '../../hooks/ReduxHooks';
+import { BoardData } from '../../interfaces/Interfaces';
+import { deleteBoardById, getBoardById } from '../../store/boards-slice';
+import { ConfirmationWindow } from '../ConfirmationWindow/ConfirmationWindow';
+import { Modal } from '../Modal/Modal';
 import styles from './BoardPreview.module.css';
 
 export const BoardPreview: FC<BoardData> = ({ id, title }: BoardData) => {
@@ -21,7 +21,7 @@ export const BoardPreview: FC<BoardData> = ({ id, title }: BoardData) => {
   };
   const openBoard = () => {
     dispatch(getBoardById(id));
-    navigate(`${routers.ROUTE_BOARD}`);
+    navigate(`${ROUTERS.BOARD}`);
   };
   return (
     <div className={styles.card} onClick={openBoard}>

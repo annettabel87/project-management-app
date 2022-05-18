@@ -1,11 +1,11 @@
-export const routers = {
-  ROUTE_WELCOME: '/',
-  ROUTE_LOGIN: '/login',
-  ROUTE_REGISTRATION: '/registration',
-  ROUTE_MAIN: '/main',
-  ROUTE_BOARD: '/board',
-  ROUTE_PROFILE: '/profile',
-  ROUTE_NOTFOUND: '*',
+export const ROUTERS = {
+  WELCOME: '/',
+  LOGIN: '/login',
+  REGISTRATION: '/registration',
+  MAIN: '/main',
+  BOARD: '/board',
+  PROFILE: '/profile',
+  NOTFOUND: '*',
 };
 
 export const api_endpoints = {

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import s from './registration.module.scss';
+import s from './Registration.module.scss';
 import HeaderEnterApp from '../../shared/header-enter-app/header-enter-app';
 import InputContainer from '../../shared/input-container/input-container';
 import MainActionButton from '../../shared/main-action-button/main-action-button';
@@ -10,7 +10,7 @@ import {
   passwordValidation,
 } from '../../shared/validation/validation';
 import { Navigate } from 'react-router-dom';
-import { routers } from '../../constants/constants';
+import { ROUTERS } from '../../constants/constants';
 import { registrationUser } from '../../store/registration-reducer';
 
 const Registration = () => {
@@ -69,7 +69,7 @@ const Registration = () => {
   }, [dispatch]);*/
 
   if (isRegistration) {
-    return <Navigate to={routers.ROUTE_LOGIN} />;
+    return <Navigate to={ROUTERS.LOGIN} />;
   }
 
   const goBack = () => {

@@ -1,12 +1,14 @@
+import authorisationSlice from './autorisation-slice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import boardReducer from './boardReducer';
+import boardsSlice from './boards-slice';
 import loginReducer from './login-reducer';
 import registrationReducer from './registration-reducer';
 
 export const rootReducer = combineReducers({
-  boardReducer,
+  boardsSlice,
   loginReducer,
   registrationReducer,
+  authorisationSlice,
 });
 
 export const setupStore = () => {

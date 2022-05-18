@@ -11,7 +11,7 @@ import usersApi from '../api/token-actions/api';
 import errorMessage from '../shared/error-nessage/error-message';
 import tokenApi from '../api/token-actions/token-api';
 
-/*export const registrationUser = createAsyncThunk<ResponseRegistrationData, RegistrationData>(
+export const registrationUser = createAsyncThunk<ResponseRegistrationData, RegistrationData>(
   'registration/fetch',
   async (registration, { rejectWithValue }) => {
     try {
@@ -55,24 +55,7 @@ export const authorisationSlice = createSlice({
   name: 'authorisation',
   initialState: initialState,
   reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(loginUser.pending, (state) => {
-      state.requestStatus = 'pending';
-      state.isLoading = true;
-      state.logIn = false;
-    });
-    builder.addCase(loginUser.fulfilled, (state, action) => {
-      state.requestStatus = 'succeeded';
-      state.isLoading = false;
-      state.logIn = true;
-      state.token = action.payload.token;
-      state.authStatus = state.logIn ? AuthStatusEnum.authorized : AuthStatusEnum.notAuthorized;
-      state.error = '';
-    });
-    builder.addCase(loginUser.rejected, (state) => {
-      state.requestStatus = 'failed';
-      state.isLoading = false;
-      state.error = 'error';
-    });
-  },
-});*/
+  extraReducers: (builder) => {},
+});
+
+export default authorisationSlice.reducer;

@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useState } from 'react';
-import s from './login.module.scss';
+import s from './Login.module.scss';
 import HeaderEnterApp from '../../shared/header-enter-app/header-enter-app';
 import InputContainer from '../../shared/input-container/input-container';
 import { NavLink } from 'react-router-dom';
 import MainActionButton from '../../shared/main-action-button/main-action-button';
 import { loginValidation, passwordValidation } from '../../shared/validation/validation';
-import { routers } from '../../constants/constants';
+import { ROUTERS } from '../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import { Navigate } from 'react-router-dom';
 import { loginUser } from '../../store/login-reducer';
@@ -42,7 +42,7 @@ export const Login = () => {
   const disabledBtnSubmit = !loginValue || !passwordValue;
 
   if (token) {
-    return <Navigate to={routers.ROUTE_PROFILE} />;
+    return <Navigate to={ROUTERS.PROFILE} />;
   }
 
   return (
@@ -80,7 +80,7 @@ export const Login = () => {
         </div>
         <div className={s.footer}>
           <p className={s.text}>Don&apos;t have an account</p>
-          <NavLink to={routers.ROUTE_REGISTRATION} className={s.footerBtn}>
+          <NavLink to={ROUTERS.REGISTRATION} className={s.footerBtn}>
             Sing Up
           </NavLink>
         </div>

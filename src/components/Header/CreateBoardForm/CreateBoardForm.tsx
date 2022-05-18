@@ -1,9 +1,9 @@
 import React, { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { routers } from '../../../constants/constants';
+import { ROUTERS } from '../../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks/ReduxHooks';
 import { CreateBoardFormProps } from '../../../interfaces/Interfaces';
-import { addBoard } from '../../../store/boardReducer';
+import { addBoard } from '../../../store/boards-slice';
 import styles from './CreateBoardForm.module.css';
 
 export const CreateBoardForm: FC<CreateBoardFormProps> = ({
@@ -13,9 +13,9 @@ export const CreateBoardForm: FC<CreateBoardFormProps> = ({
   const navigate = useNavigate();
   const [title, setTitle] = useState<string>('');
   const dispatch = useAppDispatch();
-  const { error } = useAppSelector((state) => state.boardReducer);
+  const { error } = useAppSelector((state) => state.boardsSlice);
   if (!isAuth) {
-    navigate(routers.ROUTE_LOGIN);
+    navigate(ROUTERS.LOGIN);
   }
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
