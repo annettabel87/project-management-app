@@ -1,31 +1,31 @@
-import { rootReducer, setupStore } from '../store/store';
+import { rootReducer, setupStore } from '../redux/store';
 
-export interface ModalProps {
+export interface IModalProps {
   children: React.ReactNode;
   open: boolean;
   onClose: () => void;
 }
-export interface CreateBoardFormProps {
+export interface ICreateBoardFormProps {
   isAuth: boolean;
   onClose: () => void;
 }
 
-export type RootState = ReturnType<typeof rootReducer>;
-export type AppStore = ReturnType<typeof setupStore>;
-export type AppDispatch = AppStore['dispatch'];
+export type TRootState = ReturnType<typeof rootReducer>;
+export type TAppStore = ReturnType<typeof setupStore>;
+export type TAppDispatch = TAppStore['dispatch'];
 
-export type BoardStateType = {
-  boards: BoardData[];
+export type TBoardSliceState = {
+  boards: IBoardData[];
   requestStatus: string;
   error: string;
-  selectBoard: FullBoardData;
+  selectBoard: IFullBoardData;
 };
-export interface BoardData {
+export interface IBoardData {
   id: string;
   title: string;
 }
 
-export type LoginStateType = {
+export type TLoginState = {
   login: string;
   password: string;
   token: string;
@@ -33,38 +33,16 @@ export type LoginStateType = {
   error: string;
   requestStatus: string;
 };
-export interface LoginData {
+export interface ILoginData {
   login: string;
   password: string;
 }
 
-export interface ResponseLoginData {
+export interface IResponseLoginData {
   token: string;
 }
 
-export type RegistrationStateType = {
-  id: string;
-  name: string;
-  login: string;
-  password: string;
-  isLoading: boolean;
-  error: string;
-  isRegistration: boolean;
-  requestStatus: string;
-};
-export interface RegistrationData {
-  name: string;
-  login: string;
-  password: string;
-}
-
-export interface ResponseRegistrationData {
-  id: string;
-  login: string;
-  name: string;
-}
-
-export type AuthorisationStateType = {
+export type TRegistrationStateType = {
   id: string;
   name: string;
   login: string;
@@ -73,21 +51,39 @@ export type AuthorisationStateType = {
   error: string;
   isRegistration: boolean;
   requestStatus: string;
-  token: string;
 };
-
-export interface FullBoardData {
-  id: string;
-  title: string;
-  columns: ColumnData[];
+export interface IRegistrationData {
+  name: string;
+  login: string;
+  password: string;
 }
 
-export type updateBoardType = {
+export interface IResponseRegistrationData {
+  [key: string]: string;
+}
+
+export type TAuthorisationSliceState = {
+  loginRequestStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
+  registrationRequestStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
+  user?: {
+    [key: string]: string;
+  };
+  error?: string;
+  token?: string;
+};
+
+export interface IFullBoardData {
+  id: string;
+  title: string;
+  columns: IColumnData[];
+}
+
+export type TupdateBoardType = {
   id: string;
   title: string;
 };
 
-export interface ColumnData {
+export interface IColumnData {
   id: string;
   title: string;
   order: number;

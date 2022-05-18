@@ -1,5 +1,6 @@
-import React, { ChangeEvent, useState } from 'react';
-import s from './registration.module.scss';
+import { ChangeEvent, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+
 import HeaderEnterApp from '../../shared/header-enter-app/header-enter-app';
 import InputContainer from '../../shared/input-container/input-container';
 import MainActionButton from '../../shared/main-action-button/main-action-button';
@@ -9,67 +10,62 @@ import {
   nameValidation,
   passwordValidation,
 } from '../../shared/validation/validation';
-import { Navigate } from 'react-router-dom';
-import { routers } from '../../constants/constants';
-import { registrationUser } from '../../store/registration-reducer';
+import { ROUTERS } from '../../constants/constants';
+import { registrationUser } from '../../redux/authorisation-slice';
+import { IRegistrationData } from '../../interfaces/Interfaces';
+import s from './Registration.module.scss';
 
 const Registration = () => {
-  const { error, isLoading, isRegistration } = useAppSelector((state) => state.registrationReducer);
+  const { error, registrationRequestStatus } = useAppSelector((state) => state.authorisationSlice);
   const dispatch = useAppDispatch();
 
-  const [name, setName] = useState<string>('');
-  const [login, setLogin] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [registrationData, setRegistrationData] = useState<IRegistrationData>({
+    name: '',
+    login: '',
+    password: '',
+  });
+
   const [checkPassword, setCheckPassword] = useState<string>('');
   const [errorNameMessage, setErrorNameMessage] = useState<string>('');
   const [errorLoginMessage, setErrorLoginMessage] = useState<string>('');
   const [errorPasswordMessage, setErrorPasswordMessage] = useState<string>('');
 
-  const disabledBtnSubmit = !name || !login || !password || !checkPassword;
+  const disabledBtnSubmit =
+    !registrationData.name ||
+    !registrationData.login ||
+    !registrationData.password ||
+    !checkPassword;
 
-  const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
-    setErrorNameMessage('');
-    setName(e.currentTarget.value);
-  };
-
-  const onChangeLogin = (e: ChangeEvent<HTMLInputElement>) => {
-    setErrorLoginMessage('');
-    setLogin(e.currentTarget.value);
-  };
-
-  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-    setErrorPasswordMessage('');
-    setPassword(e.currentTarget.value);
-  };
-
-  const onChangeCheckPassword = (e: ChangeEvent<HTMLInputElement>) => {
-    setErrorPasswordMessage('');
-    setCheckPassword(e.currentTarget.value);
-  };
-
-  const onRegistration = () => {
-    if (!nameValidation(name)) {
-      setErrorNameMessage('Incorrect name');
-    } else if (!loginValidation(login)) {
-      setErrorLoginMessage('Incorrect login');
-    } else if (!passwordValidation(password)) {
-      setErrorPasswordMessage('Minimum 8 characters');
-    } else if (password !== checkPassword) {
-      setErrorPasswordMessage('Enter the same password');
+  const changeData = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === 'confirm') {
+      setCheckPassword(e.currentTarget.value);
+      setErrorPasswordMessage('');
     } else {
-      dispatch(registrationUser({ name, login, password }));
+      setRegistrationData({ ...registrationData, [e.target.name]: e.target.value });
+      e.target.name === 'name'
+        ? setErrorNameMessage('')
+        : e.target.name === 'login'
+        ? setErrorLoginMessage('')
+        : setErrorPasswordMessage('');
     }
   };
 
-  /*  useEffect(() => {
-    return () => {
-      dispatch(setServerErrorMessageRegistration(''));
-      dispatch(setRegistrationAC(false));
-    };
-  }, [dispatch]);*/
+  const onRegistration = () => {
+    if (!nameValidation(registrationData.name)) {
+      setErrorNameMessage('Incorrect name');
+    } else if (!loginValidation(registrationData.login)) {
+      setErrorLoginMessage('Incorrect login');
+    } else if (!passwordValidation(registrationData.password)) {
+      setErrorPasswordMessage('Minimum 8 characters');
+    } else if (registrationData.password !== checkPassword) {
+      setErrorPasswordMessage('Enter the same password');
+    } else {
+      dispatch(registrationUser(registrationData));
+    }
+  };
 
-  if (isRegistration) {
-    return <Navigate to={routers.ROUTE_LOGIN} />;
+  if (registrationRequestStatus === 'succeeded') {
+    return <Navigate to={ROUTERS.LOGIN} />;
   }
 
   const goBack = () => {
@@ -82,31 +78,31 @@ const Registration = () => {
         <HeaderEnterApp title={'Sign Up'} />
         <div className={s.main}>
           <InputContainer
-            title={'Name'}
+            title={'name'}
             typeInput={'name'}
-            value={name}
-            changeValue={onChangeName}
+            value={registrationData.name}
+            changeValue={changeData}
             errorMessage={errorNameMessage}
           />
           <InputContainer
-            title={'Login'}
+            title={'login'}
             typeInput={'login'}
-            value={login}
-            changeValue={onChangeLogin}
+            value={registrationData.login}
+            changeValue={changeData}
             errorMessage={errorLoginMessage}
           />
           <InputContainer
-            title={'Password'}
+            title={'password'}
             typeInput={'password'}
-            value={password}
-            changeValue={onChangePassword}
+            value={registrationData.password}
+            changeValue={changeData}
             errorMessage={errorPasswordMessage}
           />
           <InputContainer
-            title={'Confirm password'}
+            title={'confirm'}
             typeInput={'password'}
             value={checkPassword}
-            changeValue={onChangeCheckPassword}
+            changeValue={changeData}
             errorMessage={errorPasswordMessage}
           />
         </div>
@@ -123,7 +119,7 @@ const Registration = () => {
                 actionClick={onRegistration}
                 disabledBtnSubmit={disabledBtnSubmit}
                 title={'Register'}
-                loadingStatus={isLoading}
+                loadingStatus={registrationRequestStatus}
               />
             </div>
           </div>

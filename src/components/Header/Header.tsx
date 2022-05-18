@@ -1,16 +1,20 @@
-import React, { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { routers } from '../../constants/constants';
-import { useState } from 'react';
-import { Modal } from '../Modal/Modal';
-import { CreateBoardForm } from './CreateBoardForm/CreateBoardForm';
-import './Header.css';
-import tokenActions from '../../api/token-actions/token-actions';
 
-export const Header: FC = () => {
+import Modal from '../Modal/Modal';
+import CreateBoardForm from '../CreateBoardForm/CreateBoardForm';
+
+import { ROUTERS } from '../../constants/constants';
+import tokenActions from '../../api/token-actions/token-actions';
+import { useAppDispatch } from '../../hooks/ReduxHooks';
+import { logout } from '../../redux/authorisation-slice';
+import s from './Header.module.scss';
+
+const Header: FC = () => {
   const [sticky, setSticky] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const isAuth = true;
   const onClose = () => {
@@ -33,7 +37,8 @@ export const Header: FC = () => {
 
   const logOut = () => {
     tokenActions.removeUserToken();
-    navigate(routers.ROUTE_LOGIN);
+    dispatch(logout());
+    navigate(ROUTERS.LOGIN);
   };
 
   const createBoard = () => {
@@ -42,20 +47,20 @@ export const Header: FC = () => {
   const changeLanguage = () => {};
 
   return (
-    <header className={sticky ? 'header sticky' : 'header'}>
-      <NavLink className="header-item" to={routers.ROUTE_WELCOME}>
+    <header className={sticky ? `${s.header} ${s.sticky}` : s.header}>
+      <NavLink className={s.header__item} to={ROUTERS.WELCOME}>
         Welcome
       </NavLink>
-      <NavLink className="header-item" to={routers.ROUTE_MAIN}>
+      <NavLink className={s.header__item} to={ROUTERS.MAIN}>
         Main
       </NavLink>
-      <NavLink className="header-item" to={routers.ROUTE_BOARD}>
+      <NavLink className={s.header__item} to={ROUTERS.BOARD}>
         Board
       </NavLink>
-      <NavLink className="header-item" to={routers.ROUTE_LOGIN}>
+      <NavLink className={s.header__item} to={ROUTERS.LOGIN}>
         Login
       </NavLink>
-      <NavLink className="header-item" to={routers.ROUTE_PROFILE}>
+      <NavLink className={s.header__item} to={ROUTERS.PROFILE}>
         Edit profile
       </NavLink>
       <button onClick={logOut}>Logout</button>
@@ -70,3 +75,5 @@ export const Header: FC = () => {
     </header>
   );
 };
+
+export default Header;

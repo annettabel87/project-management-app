@@ -1,19 +1,19 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  BoardData,
-  BoardStateType,
-  FullBoardData,
-  updateBoardType,
+  IBoardData,
+  TBoardSliceState,
+  IFullBoardData,
+  TupdateBoardType,
 } from '../interfaces/Interfaces';
 import axios from 'axios';
-import { api_endpoints } from '../constants/constants';
+import { API_ENDPOINTS } from '../constants/constants';
 
-export const addBoard = createAsyncThunk<BoardData, string>(
+export const addBoard = createAsyncThunk<IBoardData, string>(
   'board/addBoard',
   async (title: string) => {
     return axios
       .post(
-        api_endpoints.BOARDS,
+        API_ENDPOINTS.BOARDS,
         { title },
         {
           headers: {
@@ -28,9 +28,9 @@ export const addBoard = createAsyncThunk<BoardData, string>(
   }
 );
 
-export const getBoards = createAsyncThunk<BoardData[]>('board/getBoards', async () => {
+export const getBoards = createAsyncThunk<IBoardData[]>('board/getBoards', async () => {
   return axios
-    .get(api_endpoints.BOARDS, {
+    .get(API_ENDPOINTS.BOARDS, {
       headers: {
         accept: 'application/json',
         Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjFlMGZhZC00MTU3LTQ0OTMtODkyNi0yMjhhZTI4ZjVkMGYiLCJsb2dpbiI6ImFubmEiLCJpYXQiOjE2NTI3MTc2ODl9.F-KeNIddUj3_W3dQNkpp3WGrjt__1K4rikivt0wMhLA`,
@@ -41,11 +41,11 @@ export const getBoards = createAsyncThunk<BoardData[]>('board/getBoards', async 
     });
 });
 
-export const getBoardById = createAsyncThunk<FullBoardData, string>(
+export const getBoardById = createAsyncThunk<IFullBoardData, string>(
   'board/getBoardById',
   async (id: string) => {
     return axios
-      .get(`${api_endpoints.BOARDS}/${id}`, {
+      .get(`${API_ENDPOINTS.BOARDS}/${id}`, {
         headers: {
           accept: 'application/json',
           Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjFlMGZhZC00MTU3LTQ0OTMtODkyNi0yMjhhZTI4ZjVkMGYiLCJsb2dpbiI6ImFubmEiLCJpYXQiOjE2NTI3MTc2ODl9.F-KeNIddUj3_W3dQNkpp3WGrjt__1K4rikivt0wMhLA`,
@@ -61,7 +61,7 @@ export const deleteBoardById = createAsyncThunk<string, string>(
   'board/deleteBoardById',
   async (id: string) => {
     return axios
-      .delete(`${api_endpoints.BOARDS}/${id}`, {
+      .delete(`${API_ENDPOINTS.BOARDS}/${id}`, {
         headers: {
           accept: 'application/json',
           Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjFlMGZhZC00MTU3LTQ0OTMtODkyNi0yMjhhZTI4ZjVkMGYiLCJsb2dpbiI6ImFubmEiLCJpYXQiOjE2NTI3MTc2ODl9.F-KeNIddUj3_W3dQNkpp3WGrjt__1K4rikivt0wMhLA`,
@@ -73,12 +73,12 @@ export const deleteBoardById = createAsyncThunk<string, string>(
   }
 );
 
-export const updateBoard = createAsyncThunk<BoardData, updateBoardType>(
+export const updateBoard = createAsyncThunk<IBoardData, TupdateBoardType>(
   'board/updateBoard',
-  async ({ id, title }: updateBoardType) => {
+  async ({ id, title }: TupdateBoardType) => {
     return axios
       .put(
-        `${api_endpoints.BOARDS}/${id}`,
+        `${API_ENDPOINTS.BOARDS}/${id}`,
         { title },
         {
           headers: {
@@ -93,7 +93,7 @@ export const updateBoard = createAsyncThunk<BoardData, updateBoardType>(
   }
 );
 
-export const initialState: BoardStateType = {
+export const initialState: TBoardSliceState = {
   boards: [],
   requestStatus: '',
   error: '',
@@ -112,7 +112,7 @@ export const boardsSlice = createSlice({
     builder.addCase(getBoards.pending, (state) => {
       state.requestStatus = 'pending';
     });
-    builder.addCase(getBoards.fulfilled, (state, action: PayloadAction<BoardData[]>) => {
+    builder.addCase(getBoards.fulfilled, (state, action: PayloadAction<IBoardData[]>) => {
       state.error = '';
       state.requestStatus = 'succeeded';
       state.boards = action.payload;
@@ -124,7 +124,7 @@ export const boardsSlice = createSlice({
     builder.addCase(getBoardById.pending, (state) => {
       state.requestStatus = 'pending';
     });
-    builder.addCase(getBoardById.fulfilled, (state, action: PayloadAction<FullBoardData>) => {
+    builder.addCase(getBoardById.fulfilled, (state, action: PayloadAction<IFullBoardData>) => {
       state.error = '';
       state.requestStatus = 'succeeded';
       state.selectBoard = action.payload;
@@ -136,7 +136,7 @@ export const boardsSlice = createSlice({
     builder.addCase(addBoard.pending, (state) => {
       state.requestStatus = 'pending';
     });
-    builder.addCase(addBoard.fulfilled, (state, action: PayloadAction<BoardData>) => {
+    builder.addCase(addBoard.fulfilled, (state, action: PayloadAction<IBoardData>) => {
       state.error = '';
       state.requestStatus = 'succeeded';
       state.boards.push(action.payload);
@@ -160,7 +160,7 @@ export const boardsSlice = createSlice({
     builder.addCase(updateBoard.pending, (state) => {
       state.requestStatus = 'pending';
     });
-    builder.addCase(updateBoard.fulfilled, (state, action: PayloadAction<BoardData>) => {
+    builder.addCase(updateBoard.fulfilled, (state, action: PayloadAction<IBoardData>) => {
       state.error = '';
       state.requestStatus = 'succeeded';
       const updateItem = state.boards.find((item) => item.id == action.payload.id);

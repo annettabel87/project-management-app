@@ -1,17 +1,20 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { routers } from '../../constants/constants';
-import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
-import { getBoards } from '../../store/boardReducer';
-import { CreateBoardForm } from '../Header/CreateBoardForm/CreateBoardForm';
-import { Modal } from '../Modal/Modal';
-import { BoardsField } from './BoardsField/BoardsField';
-import styles from './Main.module.css';
 
-export const Main: FC = () => {
+import CreateBoardForm from '../../components/CreateBoardForm/CreateBoardForm';
+import Modal from '../../components/Modal/Modal';
+import BoardsField from '../../components/BoardsField/BoardsField';
+
+import { ROUTERS } from '../../constants/constants';
+import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
+import { getBoards } from '../../redux/boards-slice';
+
+import s from './Main.module.scss';
+
+const Main: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { boards, requestStatus, error } = useAppSelector((state) => state.boardReducer);
+  const { boards, requestStatus, error } = useAppSelector((state) => state.boardsSlice);
   const isAuth = true;
   const dispatch = useAppDispatch();
   const createBoard = () => {
@@ -24,13 +27,13 @@ export const Main: FC = () => {
     dispatch(getBoards());
   }, [dispatch]);
   if (!isAuth) {
-    navigate(routers.ROUTE_WELCOME);
+    navigate(ROUTERS.WELCOME);
   }
   return (
-    <div className={styles.mainPage}>
-      <div className={styles.container}>
-        <h2 className={styles.mainTitle}>Your boards</h2>
-        <button className={styles.mainBtn} onClick={createBoard}>
+    <div className={s.mainPage}>
+      <div className={s.container}>
+        <h2 className={s.mainTitle}>Your boards</h2>
+        <button className={s.mainBtn} onClick={createBoard}>
           New board
         </button>
         {error && <span>{error}</span>}
@@ -42,3 +45,5 @@ export const Main: FC = () => {
     </div>
   );
 };
+
+export default Main;

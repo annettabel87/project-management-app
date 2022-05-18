@@ -1,14 +1,16 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { routers } from '../../../constants/constants';
-import { useAppDispatch } from '../../../hooks/ReduxHooks';
-import { BoardData } from '../../../interfaces/Interfaces';
-import { deleteBoardById, getBoardById } from '../../../store/boardReducer';
-import { ConfirmationWindow } from '../../ConfirmationWindow/ConfirmationWindow';
-import { Modal } from '../../Modal/Modal';
-import styles from './BoardPreview.module.css';
 
-export const BoardPreview: FC<BoardData> = ({ id, title }: BoardData) => {
+import ConfirmationWindow from '../ConfirmationWindow/ConfirmationWindow';
+import Modal from '../Modal/Modal';
+
+import { ROUTERS } from '../../constants/constants';
+import { useAppDispatch } from '../../hooks/ReduxHooks';
+import { IBoardData } from '../../interfaces/Interfaces';
+import { deleteBoardById, getBoardById } from '../../redux/boards-slice';
+import s from './BoardPreview.module.scss';
+
+const BoardPreview: FC<IBoardData> = ({ id, title }: IBoardData) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const onClose = () => {
@@ -21,12 +23,12 @@ export const BoardPreview: FC<BoardData> = ({ id, title }: BoardData) => {
   };
   const openBoard = () => {
     dispatch(getBoardById(id));
-    navigate(`${routers.ROUTE_BOARD}`);
+    navigate(`${ROUTERS.BOARD}`);
   };
   return (
-    <div className={styles.card} onClick={openBoard}>
+    <div className={s.card} onClick={openBoard}>
       <button
-        className={styles.cardBtn}
+        className={s.cardBtn}
         onClick={(e) => {
           e.stopPropagation();
           setIsOpen(true);
@@ -42,3 +44,5 @@ export const BoardPreview: FC<BoardData> = ({ id, title }: BoardData) => {
     </div>
   );
 };
+
+export default BoardPreview;

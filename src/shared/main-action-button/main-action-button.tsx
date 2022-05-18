@@ -1,22 +1,22 @@
-import React from 'react';
-import s from './main-action-button.module.scss';
 import Preloader from '../preloader/preloader';
+import s from './main-action-button.module.scss';
 
 type MainActionButton = {
   actionClick: () => void;
-  loadingStatus?: boolean;
+  loadingStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
   disabledBtnSubmit?: boolean;
   title: string;
 };
 
 const MainActionButton = (props: MainActionButton) => {
+  const pendingStatus = props.loadingStatus === 'pending' ? true : false;
   return (
     <button
       className={s.blueBtn}
       onClick={props.actionClick}
-      disabled={props.loadingStatus || props.disabledBtnSubmit}
+      disabled={pendingStatus || props.disabledBtnSubmit}
     >
-      {props.loadingStatus ? <Preloader /> : props.title}
+      {pendingStatus ? <Preloader /> : props.title}
     </button>
   );
 };

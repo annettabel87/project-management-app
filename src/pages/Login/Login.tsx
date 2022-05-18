@@ -1,48 +1,48 @@
-import React, { ChangeEvent, useState } from 'react';
-import s from './login.module.scss';
+import { ChangeEvent, useState } from 'react';
+import { NavLink, Navigate } from 'react-router-dom';
+
 import HeaderEnterApp from '../../shared/header-enter-app/header-enter-app';
 import InputContainer from '../../shared/input-container/input-container';
-import { NavLink } from 'react-router-dom';
 import MainActionButton from '../../shared/main-action-button/main-action-button';
 import { loginValidation, passwordValidation } from '../../shared/validation/validation';
-import { routers } from '../../constants/constants';
+import { ROUTERS } from '../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
-import { Navigate } from 'react-router-dom';
-import { loginUser } from '../../store/login-reducer';
+import { loginUser } from '../../redux/authorisation-slice';
 import tokenActions from '../../api/token-actions/token-actions';
+import { ILoginData } from '../../interfaces/Interfaces';
+import s from './Login.module.scss';
 
-export const Login = () => {
-  const { error, isLoading } = useAppSelector((state) => state.loginReducer);
+const Login = () => {
+  const { error, loginRequestStatus } = useAppSelector((state) => state.authorisationSlice);
   const token = tokenActions.getUserToken();
   const dispatch = useAppDispatch();
-  const [loginValue, setLoginValue] = useState<string>('');
-  const [passwordValue, setPasswordValue] = useState<string>('');
+  const [loginData, setLoginData] = useState<ILoginData>({
+    login: '',
+    password: '',
+  });
+
   const [errorLoginMessage, setErrorLoginMessage] = useState<string>('');
   const [errorPasswordMessage, setErrorPasswordMessage] = useState<string>('');
 
-  const changeLoginValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setLoginValue(e.currentTarget.value);
-    setErrorLoginMessage('');
-  };
-  const changePasswordValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setPasswordValue(e.currentTarget.value);
-    setErrorPasswordMessage('');
+  const changeData = (e: ChangeEvent<HTMLInputElement>) => {
+    setLoginData({ ...loginData, [e.target.name]: e.target.value });
+    e.target.name === 'login' ? setErrorLoginMessage('') : setErrorPasswordMessage('');
   };
 
   const checkLoginUser = () => {
-    if (!loginValidation(loginValue)) {
+    if (!loginValidation(loginData.login)) {
       setErrorLoginMessage('Incorrect login');
-    } else if (!passwordValidation(passwordValue)) {
+    } else if (!passwordValidation(loginData.password)) {
       setErrorPasswordMessage('Minimum 8 characters');
     } else {
-      dispatch(loginUser({ login: loginValue, password: passwordValue }));
+      dispatch(loginUser(loginData));
     }
   };
 
-  const disabledBtnSubmit = !loginValue || !passwordValue;
+  const disabledBtnSubmit = !loginData.login || !loginData.password;
 
   if (token) {
-    return <Navigate to={routers.ROUTE_PROFILE} />;
+    return <Navigate to={ROUTERS.PROFILE} />;
   }
 
   return (
@@ -52,17 +52,17 @@ export const Login = () => {
         <div className={s.main}>
           <div className={s.emailPasswordLoginContainer}>
             <InputContainer
-              title={'Login'}
+              title={'login'}
               typeInput={'login'}
-              value={loginValue}
-              changeValue={changeLoginValue}
+              value={loginData.login}
+              changeValue={changeData}
               errorMessage={errorLoginMessage}
             />
             <InputContainer
-              title={'Password'}
+              title={'password'}
               typeInput={'password'}
-              value={passwordValue}
-              changeValue={changePasswordValue}
+              value={loginData.password}
+              changeValue={changeData}
               errorMessage={errorPasswordMessage}
             />
           </div>
@@ -72,7 +72,7 @@ export const Login = () => {
               <MainActionButton
                 actionClick={checkLoginUser}
                 disabledBtnSubmit={disabledBtnSubmit}
-                loadingStatus={isLoading}
+                loadingStatus={loginRequestStatus}
                 title={'login'}
               />
             </div>
@@ -80,7 +80,7 @@ export const Login = () => {
         </div>
         <div className={s.footer}>
           <p className={s.text}>Don&apos;t have an account</p>
-          <NavLink to={routers.ROUTE_REGISTRATION} className={s.footerBtn}>
+          <NavLink to={ROUTERS.REGISTRATION} className={s.footerBtn}>
             Sing Up
           </NavLink>
         </div>
@@ -88,3 +88,5 @@ export const Login = () => {
     </div>
   );
 };
+
+export default Login;

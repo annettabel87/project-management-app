@@ -1,31 +1,28 @@
-import React, { FC } from 'react';
-import styles from './ConfirmationWindow.module.css';
+import { FC } from 'react';
+import s from './ConfirmationWindow.module.scss';
 
 export interface ConfirmPropsType {
   onClose: () => void;
   handleOK: () => void;
 }
-export const ConfirmationWindow: FC<ConfirmPropsType> = ({
-  onClose,
-  handleOK,
-}: ConfirmPropsType) => {
+const ConfirmationWindow: FC<ConfirmPropsType> = ({ onClose, handleOK }: ConfirmPropsType) => {
   return (
-    <div className={styles.overlay} onClick={onClose}>
+    <div className={s.overlay} onClick={onClose}>
       <div
-        className={styles.confirm}
+        className={s.confirm}
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
-        <button className={styles.close} onClick={onClose}>
+        <button className={s.close} onClick={onClose}>
           X
         </button>
         <p>Are your sure?</p>
-        <div className={styles.buttonWrapper}>
-          <button className={styles.confirmBtn} onClick={handleOK}>
+        <div className={s.buttonWrapper}>
+          <button className={s.confirmBtn} onClick={handleOK}>
             Ok
           </button>
-          <button className={styles.confirmBtn} onClick={onClose}>
+          <button className={s.confirmBtn} onClick={onClose}>
             Cancel
           </button>
         </div>
@@ -33,3 +30,5 @@ export const ConfirmationWindow: FC<ConfirmPropsType> = ({
     </div>
   );
 };
+
+export default ConfirmationWindow;
