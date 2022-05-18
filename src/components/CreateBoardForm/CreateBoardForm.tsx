@@ -5,7 +5,7 @@ import { ROUTERS } from '../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import { ICreateBoardFormProps } from '../../interfaces/Interfaces';
 import { addBoard } from '../../redux/boards-slice';
-import styles from './CreateBoardForm.module.scss';
+import s from './CreateBoardForm.module.scss';
 
 const CreateBoardForm: FC<ICreateBoardFormProps> = ({ isAuth, onClose }: ICreateBoardFormProps) => {
   const navigate = useNavigate();
@@ -21,27 +21,27 @@ const CreateBoardForm: FC<ICreateBoardFormProps> = ({ isAuth, onClose }: ICreate
     setTitle('');
   };
   return (
-    <div className={styles.overlay} onClick={onClose}>
+    <div className={s.overlay} onClick={onClose}>
       <div
-        className={styles.boardFormWrapper}
+        className={s.boardFormWrapper}
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
-        <button className={styles.close} onClick={onClose}>
+        <button className={s.close} onClick={onClose}>
           X
         </button>
-        <form className={styles.boardForm} onSubmit={(e) => onSubmit(e)}>
-          <label htmlFor="title" className={styles.formLabel}>
-            <p className={styles.formTitle}>Title</p>
+        <form className={s.boardForm} onSubmit={(e) => onSubmit(e)}>
+          <label htmlFor="title" className={s.formLabel}>
+            <p className={s.formTitle}>Title</p>
             <input
               type="text"
-              className={styles.formInput}
+              className={s.formInput}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
           </label>
-          <button className={styles.formBtn}>create</button>
+          <button className={s.formBtn}>create</button>
           {error && <span>{error}</span>}
         </form>
       </div>

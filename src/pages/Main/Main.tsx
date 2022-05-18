@@ -9,7 +9,7 @@ import { ROUTERS } from '../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import { getBoards } from '../../redux/boards-slice';
 
-import styles from './Main.module.scss';
+import s from './Main.module.scss';
 
 const Main: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -30,10 +30,10 @@ const Main: FC = () => {
     navigate(ROUTERS.WELCOME);
   }
   return (
-    <div className={styles.mainPage}>
-      <div className={styles.container}>
-        <h2 className={styles.mainTitle}>Your boards</h2>
-        <button className={styles.mainBtn} onClick={createBoard}>
+    <div className={s.mainPage}>
+      <div className={s.container}>
+        <h2 className={s.mainTitle}>Your boards</h2>
+        <button className={s.mainBtn} onClick={createBoard}>
           New board
         </button>
         {error && <span>{error}</span>}

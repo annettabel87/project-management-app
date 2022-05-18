@@ -10,7 +10,7 @@ const Footer: FC = () => {
         alt="logo of RS School"
       />
       <a href="https://rs.school/react/" className={s.rsschool}>
-        The Rolling Slopes School
+        The Rolling Scopes School
       </a>
       <div>2022</div>
       <div className={s.github}>

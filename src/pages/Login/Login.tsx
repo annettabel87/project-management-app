@@ -9,37 +9,37 @@ import { ROUTERS } from '../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import { loginUser } from '../../redux/authorisation-slice';
 import tokenActions from '../../api/token-actions/token-actions';
+import { ILoginData } from '../../interfaces/Interfaces';
 import s from './Login.module.scss';
 
 const Login = () => {
   const { error, loginRequestStatus } = useAppSelector((state) => state.authorisationSlice);
   const token = tokenActions.getUserToken();
   const dispatch = useAppDispatch();
-  const [loginValue, setLoginValue] = useState<string>('');
-  const [passwordValue, setPasswordValue] = useState<string>('');
+  const [loginData, setLoginData] = useState<ILoginData>({
+    login: '',
+    password: '',
+  });
+
   const [errorLoginMessage, setErrorLoginMessage] = useState<string>('');
   const [errorPasswordMessage, setErrorPasswordMessage] = useState<string>('');
 
-  const changeLoginValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setLoginValue(e.currentTarget.value);
-    setErrorLoginMessage('');
-  };
-  const changePasswordValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setPasswordValue(e.currentTarget.value);
-    setErrorPasswordMessage('');
+  const changeData = (e: ChangeEvent<HTMLInputElement>) => {
+    setLoginData({ ...loginData, [e.target.name]: e.target.value });
+    e.target.name === 'login' ? setErrorLoginMessage('') : setErrorPasswordMessage('');
   };
 
   const checkLoginUser = () => {
-    if (!loginValidation(loginValue)) {
+    if (!loginValidation(loginData.login)) {
       setErrorLoginMessage('Incorrect login');
-    } else if (!passwordValidation(passwordValue)) {
+    } else if (!passwordValidation(loginData.password)) {
       setErrorPasswordMessage('Minimum 8 characters');
     } else {
-      dispatch(loginUser({ login: loginValue, password: passwordValue }));
+      dispatch(loginUser(loginData));
     }
   };
 
-  const disabledBtnSubmit = !loginValue || !passwordValue;
+  const disabledBtnSubmit = !loginData.login || !loginData.password;
 
   if (token) {
     return <Navigate to={ROUTERS.PROFILE} />;
@@ -52,17 +52,17 @@ const Login = () => {
         <div className={s.main}>
           <div className={s.emailPasswordLoginContainer}>
             <InputContainer
-              title={'Login'}
+              title={'login'}
               typeInput={'login'}
-              value={loginValue}
-              changeValue={changeLoginValue}
+              value={loginData.login}
+              changeValue={changeData}
               errorMessage={errorLoginMessage}
             />
             <InputContainer
-              title={'Password'}
+              title={'password'}
               typeInput={'password'}
-              value={passwordValue}
-              changeValue={changePasswordValue}
+              value={loginData.password}
+              changeValue={changeData}
               errorMessage={errorPasswordMessage}
             />
           </div>

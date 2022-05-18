@@ -24,6 +24,7 @@ const InputContainer = (props: InputContainerPropsType) => {
     <label className={s.emailPasswordContainer}>
       <span className={s.inputTitle}>{props.title}</span>
       <input
+        name={props.title}
         type={typeShowInput()}
         value={props.value}
         onChange={props.changeValue}
