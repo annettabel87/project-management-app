@@ -14,14 +14,14 @@
 .logo {
     width: 100px;
 }
-.rsschool, .github-link {
+.rsschool, .github__link {
     text-decoration: none;
     color: #fff;
 }
-.github-links {
+.github {
     display: flex;
     flex-direction: column;
 }
-.rsschool:hover, .github-link:hover  {
+.rsschool:hover, .github__link:hover  {
    cursor: pointer;
 }

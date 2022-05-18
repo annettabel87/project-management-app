@@ -6,7 +6,7 @@ import CreateBoardForm from '../CreateBoardForm/CreateBoardForm';
 
 import { ROUTERS } from '../../constants/constants';
 import tokenActions from '../../api/token-actions/token-actions';
-import './Header.module.scss';
+import s from './Header.module.scss';
 
 const Header: FC = () => {
   const [sticky, setSticky] = useState<boolean>(false);
@@ -43,20 +43,20 @@ const Header: FC = () => {
   const changeLanguage = () => {};
 
   return (
-    <header className={sticky ? 'header sticky' : 'header'}>
-      <NavLink className="header-item" to={ROUTERS.WELCOME}>
+    <header className={sticky ? `${s.header} ${s.sticky}` : s.header}>
+      <NavLink className={s.header__item} to={ROUTERS.WELCOME}>
         Welcome
       </NavLink>
-      <NavLink className="header-item" to={ROUTERS.MAIN}>
+      <NavLink className={s.header__item} to={ROUTERS.MAIN}>
         Main
       </NavLink>
-      <NavLink className="header-item" to={ROUTERS.BOARD}>
+      <NavLink className={s.header__item} to={ROUTERS.BOARD}>
         Board
       </NavLink>
-      <NavLink className="header-item" to={ROUTERS.LOGIN}>
+      <NavLink className={s.header__item} to={ROUTERS.LOGIN}>
         Login
       </NavLink>
-      <NavLink className="header-item" to={ROUTERS.PROFILE}>
+      <NavLink className={s.header__item} to={ROUTERS.PROFILE}>
         Edit profile
       </NavLink>
       <button onClick={logOut}>Logout</button>
