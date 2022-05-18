@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import Board from '../../pages/Board/Board';
 import Login from '../../pages/Login/Login';
@@ -12,20 +12,9 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 
 import { ROUTERS } from '../../constants/constants';
-import { useAppSelector } from '../../hooks/ReduxHooks';
 import './App.module.scss';
 
 function App() {
-  const { requestStatus } = useAppSelector((state) => state.loginReducer);
-  const { pathname } = useLocation();
-
-  // if (
-  //   (requestStatus === 'failed' || requestStatus === 'pending' || requestStatus === 'idle') &&
-  //   pathname !== ROUTERS.LOGIN
-  // ) {
-  //   return <Navigate to={ROUTERS.LOGIN} />;
-  // }
-
   return (
     <div className="App">
       <Header />

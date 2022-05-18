@@ -1,5 +1,4 @@
 import s from './header-enter-app.module.scss';
-import React from 'react';
 
 type HeaderEnterAppType = {
   title?: string;

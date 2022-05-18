@@ -8,7 +8,7 @@ export const ROUTERS = {
   NOTFOUND: '*',
 };
 
-export const api_endpoints = {
+export const API_ENDPOINTS = {
   USERS: 'https://kanban71.herokuapp.com/users',
   BOARDS: 'https://kanban71.herokuapp.com/boards',
   SIGNIN: 'https://kanban71.herokuapp.com/signin',

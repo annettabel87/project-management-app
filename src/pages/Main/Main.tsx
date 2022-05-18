@@ -7,7 +7,7 @@ import BoardsField from '../../components/BoardsField/BoardsField';
 
 import { ROUTERS } from '../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
-import { getBoards } from '../../store/boards-slice';
+import { getBoards } from '../../redux/boards-slice';
 
 import styles from './Main.module.scss';
 

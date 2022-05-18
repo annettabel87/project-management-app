@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FocusEvent, useState } from 'react';
+import { ChangeEvent, FocusEvent, useState } from 'react';
 import s from './input-container.module.scss';
 
 type InputContainerPropsType = {

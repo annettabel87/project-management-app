@@ -6,11 +6,11 @@ import Modal from '../Modal/Modal';
 
 import { ROUTERS } from '../../constants/constants';
 import { useAppDispatch } from '../../hooks/ReduxHooks';
-import { BoardData } from '../../interfaces/Interfaces';
-import { deleteBoardById, getBoardById } from '../../store/boards-slice';
+import { IBoardData } from '../../interfaces/Interfaces';
+import { deleteBoardById, getBoardById } from '../../redux/boards-slice';
 import styles from './BoardPreview.module.scss';
 
-const BoardPreview: FC<BoardData> = ({ id, title }: BoardData) => {
+const BoardPreview: FC<IBoardData> = ({ id, title }: IBoardData) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const onClose = () => {

@@ -11,11 +11,11 @@ import {
   passwordValidation,
 } from '../../shared/validation/validation';
 import { ROUTERS } from '../../constants/constants';
-import { registrationUser } from '../../store/registration-reducer';
+import { registrationUser } from '../../redux/authorisation-slice';
 import s from './Registration.module.scss';
 
 const Registration = () => {
-  const { error, isLoading, isRegistration } = useAppSelector((state) => state.registrationReducer);
+  const { error, registrationRequestStatus } = useAppSelector((state) => state.authorisationSlice);
   const dispatch = useAppDispatch();
 
   const [name, setName] = useState<string>('');
@@ -62,14 +62,7 @@ const Registration = () => {
     }
   };
 
-  /*  useEffect(() => {
-    return () => {
-      dispatch(setServerErrorMessageRegistration(''));
-      dispatch(setRegistrationAC(false));
-    };
-  }, [dispatch]);*/
-
-  if (isRegistration) {
+  if (registrationRequestStatus === 'succeeded') {
     return <Navigate to={ROUTERS.LOGIN} />;
   }
 
@@ -124,7 +117,7 @@ const Registration = () => {
                 actionClick={onRegistration}
                 disabledBtnSubmit={disabledBtnSubmit}
                 title={'Register'}
-                loadingStatus={isLoading}
+                loadingStatus={registrationRequestStatus}
               />
             </div>
           </div>

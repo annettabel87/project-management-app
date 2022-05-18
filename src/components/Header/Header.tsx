@@ -6,12 +6,15 @@ import CreateBoardForm from '../CreateBoardForm/CreateBoardForm';
 
 import { ROUTERS } from '../../constants/constants';
 import tokenActions from '../../api/token-actions/token-actions';
+import { useAppDispatch } from '../../hooks/ReduxHooks';
+import { logout } from '../../redux/authorisation-slice';
 import s from './Header.module.scss';
 
 const Header: FC = () => {
   const [sticky, setSticky] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const isAuth = true;
   const onClose = () => {
@@ -34,6 +37,7 @@ const Header: FC = () => {
 
   const logOut = () => {
     tokenActions.removeUserToken();
+    dispatch(logout());
     navigate(ROUTERS.LOGIN);
   };
 

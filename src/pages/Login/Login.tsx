@@ -7,12 +7,12 @@ import MainActionButton from '../../shared/main-action-button/main-action-button
 import { loginValidation, passwordValidation } from '../../shared/validation/validation';
 import { ROUTERS } from '../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
-import { loginUser } from '../../store/login-reducer';
+import { loginUser } from '../../redux/authorisation-slice';
 import tokenActions from '../../api/token-actions/token-actions';
 import s from './Login.module.scss';
 
 const Login = () => {
-  const { error, isLoading } = useAppSelector((state) => state.loginReducer);
+  const { error, loginRequestStatus } = useAppSelector((state) => state.authorisationSlice);
   const token = tokenActions.getUserToken();
   const dispatch = useAppDispatch();
   const [loginValue, setLoginValue] = useState<string>('');
@@ -72,7 +72,7 @@ const Login = () => {
               <MainActionButton
                 actionClick={checkLoginUser}
                 disabledBtnSubmit={disabledBtnSubmit}
-                loadingStatus={isLoading}
+                loadingStatus={loginRequestStatus}
                 title={'login'}
               />
             </div>
