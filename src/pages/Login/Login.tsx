@@ -1,15 +1,15 @@
-import React, { ChangeEvent, useState } from 'react';
-import s from './Login.module.scss';
+import { ChangeEvent, useState } from 'react';
+import { NavLink, Navigate } from 'react-router-dom';
+
 import HeaderEnterApp from '../../shared/header-enter-app/header-enter-app';
 import InputContainer from '../../shared/input-container/input-container';
-import { NavLink } from 'react-router-dom';
 import MainActionButton from '../../shared/main-action-button/main-action-button';
 import { loginValidation, passwordValidation } from '../../shared/validation/validation';
 import { ROUTERS } from '../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
-import { Navigate } from 'react-router-dom';
 import { loginUser } from '../../store/login-reducer';
 import tokenActions from '../../api/token-actions/token-actions';
+import s from './Login.module.scss';
 
 const Login = () => {
   const { error, isLoading } = useAppSelector((state) => state.loginReducer);

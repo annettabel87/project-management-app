@@ -1,14 +1,16 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import ConfirmationWindow from '../ConfirmationWindow/ConfirmationWindow';
+import Modal from '../Modal/Modal';
+
 import { ROUTERS } from '../../constants/constants';
 import { useAppDispatch } from '../../hooks/ReduxHooks';
 import { BoardData } from '../../interfaces/Interfaces';
 import { deleteBoardById, getBoardById } from '../../store/boards-slice';
-import { ConfirmationWindow } from '../ConfirmationWindow/ConfirmationWindow';
-import { Modal } from '../Modal/Modal';
-import styles from './BoardPreview.module.css';
+import styles from './BoardPreview.module.scss';
 
-export const BoardPreview: FC<BoardData> = ({ id, title }: BoardData) => {
+const BoardPreview: FC<BoardData> = ({ id, title }: BoardData) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const onClose = () => {
@@ -42,3 +44,5 @@ export const BoardPreview: FC<BoardData> = ({ id, title }: BoardData) => {
     </div>
   );
 };
+
+export default BoardPreview;

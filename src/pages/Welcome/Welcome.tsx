@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import './Welcome.css';
+import './Welcome.module.scss';
 
 const Welcome: FC = () => {
   return <div>Welcome</div>;

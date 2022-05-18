@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import './Board.css';
+import './Board.module.scss';
 
 const Board: FC = () => {
   return <div>Board</div>;

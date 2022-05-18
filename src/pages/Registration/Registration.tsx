@@ -1,5 +1,6 @@
-import React, { ChangeEvent, useState } from 'react';
-import s from './Registration.module.scss';
+import { ChangeEvent, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+
 import HeaderEnterApp from '../../shared/header-enter-app/header-enter-app';
 import InputContainer from '../../shared/input-container/input-container';
 import MainActionButton from '../../shared/main-action-button/main-action-button';
@@ -9,9 +10,9 @@ import {
   nameValidation,
   passwordValidation,
 } from '../../shared/validation/validation';
-import { Navigate } from 'react-router-dom';
 import { ROUTERS } from '../../constants/constants';
 import { registrationUser } from '../../store/registration-reducer';
+import s from './Registration.module.scss';
 
 const Registration = () => {
   const { error, isLoading, isRegistration } = useAppSelector((state) => state.registrationReducer);

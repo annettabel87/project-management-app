@@ -13,7 +13,7 @@ import Footer from '../../components/Footer/Footer';
 
 import { ROUTERS } from '../../constants/constants';
 import { useAppSelector } from '../../hooks/ReduxHooks';
-import './App.css';
+import './App.module.scss';
 
 function App() {
   const { requestStatus } = useAppSelector((state) => state.loginReducer);

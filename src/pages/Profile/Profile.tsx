@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import './Profile.css';
+import './Profile.module.scss';
 
 const Profile: FC = () => {
   return <div>Profile</div>;

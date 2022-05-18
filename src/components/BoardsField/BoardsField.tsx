@@ -1,12 +1,14 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
+
+import BoardPreview from '../BoardPreview/BoardPreview';
+
 import { BoardData } from '../../interfaces/Interfaces';
-import { BoardPreview } from '../BoardPreview/BoardPreview';
-import styles from './BoardsField.module.css';
+import styles from './BoardsField.module.scss';
 
 export type BoardsFieldPropsType = {
   boards: BoardData[];
 };
-export const BoardsField: FC<BoardsFieldPropsType> = ({ boards }: BoardsFieldPropsType) => {
+const BoardsField: FC<BoardsFieldPropsType> = ({ boards }: BoardsFieldPropsType) => {
   const boardsCard = boards.map((board) => <BoardPreview key={board.id} {...board} />);
   return (
     <section>
@@ -14,3 +16,5 @@ export const BoardsField: FC<BoardsFieldPropsType> = ({ boards }: BoardsFieldPro
     </section>
   );
 };
+
+export default BoardsField;

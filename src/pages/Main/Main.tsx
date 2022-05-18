@@ -1,12 +1,15 @@
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import CreateBoardForm from '../../components/CreateBoardForm/CreateBoardForm';
+import Modal from '../../components/Modal/Modal';
+import BoardsField from '../../components/BoardsField/BoardsField';
+
 import { ROUTERS } from '../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import { getBoards } from '../../store/boards-slice';
-import CreateBoardForm from '../../components/CreateBoardForm/CreateBoardForm';
-import { Modal } from '../../components/Modal/Modal';
-import { BoardsField } from '../../components/BoardsField/BoardsField';
-import styles from './Main.module.css';
+
+import styles from './Main.module.scss';
 
 const Main: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);

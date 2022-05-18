@@ -1,14 +1,11 @@
-import React, { FC } from 'react';
-import styles from './ConfirmationWindow.module.css';
+import { FC } from 'react';
+import styles from './ConfirmationWindow.module.scss';
 
 export interface ConfirmPropsType {
   onClose: () => void;
   handleOK: () => void;
 }
-export const ConfirmationWindow: FC<ConfirmPropsType> = ({
-  onClose,
-  handleOK,
-}: ConfirmPropsType) => {
+const ConfirmationWindow: FC<ConfirmPropsType> = ({ onClose, handleOK }: ConfirmPropsType) => {
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div
@@ -33,3 +30,5 @@ export const ConfirmationWindow: FC<ConfirmPropsType> = ({
     </div>
   );
 };
+
+export default ConfirmationWindow;

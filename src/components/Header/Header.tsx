@@ -1,11 +1,12 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { ROUTERS } from '../../constants/constants';
-import { useState } from 'react';
-import { Modal } from '../Modal/Modal';
+
+import Modal from '../Modal/Modal';
 import CreateBoardForm from '../CreateBoardForm/CreateBoardForm';
-import './Header.css';
+
+import { ROUTERS } from '../../constants/constants';
 import tokenActions from '../../api/token-actions/token-actions';
+import './Header.module.scss';
 
 const Header: FC = () => {
   const [sticky, setSticky] = useState<boolean>(false);

@@ -1,9 +1,9 @@
 import React, { FC, useEffect } from 'react';
 import ReactDom from 'react-dom';
 import { ModalProps } from '../../interfaces/Interfaces';
-import './Modal.css';
+import './Modal.module.scss';
 
-export const Modal: FC<ModalProps> = React.memo(({ children, open }: ModalProps) => {
+const Modal: FC<ModalProps> = React.memo(({ children, open }: ModalProps) => {
   const domNode = document.getElementById('portal');
   const element = document.createElement('div');
   useEffect(() => {
@@ -15,3 +15,5 @@ export const Modal: FC<ModalProps> = React.memo(({ children, open }: ModalProps)
 
   return open ? ReactDom.createPortal(children, element) : null;
 });
+
+export default Modal;
