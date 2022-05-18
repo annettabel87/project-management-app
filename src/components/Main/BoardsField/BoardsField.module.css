@@ -1,0 +1,6 @@
+.cardsWrapper {
+    display: flex;
+    justify-content: stretch;
+    gap: 20px;
+    flex-wrap: wrap;
+}

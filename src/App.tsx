@@ -7,10 +7,11 @@ import { Main } from './components/Main/Main';
 import { NotFound } from './components/NotFound/NotFound';
 import { Welcome } from './components/Welcome/Welcome';
 import { routers } from './constants/constants';
-import './App.css';
+import { Footer } from './components/Footer/Footer';
 import { Profile } from './components/Profile/Profile';
 import Registration from './components/Registration/registration';
 import { useAppSelector } from './hooks/ReduxHooks';
+import './App.css';
 
 function App() {
   const { requestStatus } = useAppSelector((state) => state.loginReducer);
@@ -35,6 +36,7 @@ function App() {
         <Route path={routers.ROUTE_NOTFOUND} element={<NotFound />} />
         <Route path={routers.ROUTE_PROFILE} element={<Profile />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

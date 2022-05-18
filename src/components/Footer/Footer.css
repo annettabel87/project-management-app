@@ -1,0 +1,27 @@
+.footer {
+    height: 10vh;
+    background: #575f61;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    font-size: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.logo {
+    width: 100px;
+}
+.rsschool, .github-link {
+    text-decoration: none;
+    color: #fff;
+}
+.github-links {
+    display: flex;
+    flex-direction: column;
+}
+.rsschool:hover, .github-link:hover  {
+   cursor: pointer;
+}
