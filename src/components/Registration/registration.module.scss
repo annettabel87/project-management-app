@@ -1,0 +1,55 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  @include flexCenter();
+  .wrapper {
+    @include authWrapper(413px, 540px);
+    .main {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 84px;
+    }
+    .footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .errorMessageContainer {
+        height: 30px;
+        color: red;
+      }
+      .footerBtns {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        .btnCancel {
+          height: 36px;
+          max-width: 125px;
+          width: 100%;
+          border-radius: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #ffffff;
+          opacity: 0.8;
+          text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+          background-color: #575f61;
+          transition: 0.2s;
+
+          &:hover {
+            background-color: #7c868a;
+          }
+          &:active {
+            background-color: #949ea4;
+          }
+        }
+        .blueBtnContainer {
+          max-width: 187px;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
