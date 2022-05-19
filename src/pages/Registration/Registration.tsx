@@ -1,67 +1,44 @@
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import HeaderEnterApp from '../../shared/header-enter-app/header-enter-app';
 import InputContainer from '../../shared/input-container/input-container';
 import MainActionButton from '../../shared/main-action-button/main-action-button';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
-import {
-  loginValidation,
-  nameValidation,
-  passwordValidation,
-} from '../../shared/validation/validation';
 import { ROUTERS } from '../../constants/constants';
-import { registrationUser } from '../../redux/authorisation-slice';
+import { cancel, registrationUser } from '../../redux/authorisation-slice';
 import { IRegistrationData } from '../../interfaces/Interfaces';
+
 import s from './Registration.module.scss';
 
 const Registration = () => {
   const { error, registrationRequestStatus } = useAppSelector((state) => state.authorisationSlice);
+  const [errorPasswords, setErrorPasswords] = useState<string>('');
   const dispatch = useAppDispatch();
 
-  const [registrationData, setRegistrationData] = useState<IRegistrationData>({
-    name: '',
-    login: '',
-    password: '',
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isDirty, isValid },
+  } = useForm<IRegistrationData & { passwordConfirm: string }>({
+    mode: 'onChange',
   });
 
-  const [checkPassword, setCheckPassword] = useState<string>('');
-  const [errorNameMessage, setErrorNameMessage] = useState<string>('');
-  const [errorLoginMessage, setErrorLoginMessage] = useState<string>('');
-  const [errorPasswordMessage, setErrorPasswordMessage] = useState<string>('');
-
-  const disabledBtnSubmit =
-    !registrationData.name ||
-    !registrationData.login ||
-    !registrationData.password ||
-    !checkPassword;
-
-  const changeData = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === 'confirm') {
-      setCheckPassword(e.currentTarget.value);
-      setErrorPasswordMessage('');
-    } else {
-      setRegistrationData({ ...registrationData, [e.target.name]: e.target.value });
-      e.target.name === 'name'
-        ? setErrorNameMessage('')
-        : e.target.name === 'login'
-        ? setErrorLoginMessage('')
-        : setErrorPasswordMessage('');
+  const onSubmit: SubmitHandler<IRegistrationData & { passwordConfirm: string }> = (data) => {
+    if (data.password !== data.passwordConfirm) {
+      setErrorPasswords(`Sorry, but the passwords don't match.`);
+    } else if (data && data.password === data.passwordConfirm) {
+      dispatch(registrationUser({ name: data.name, login: data.login, password: data.password }));
     }
-  };
-
-  const onRegistration = () => {
-    if (!nameValidation(registrationData.name)) {
-      setErrorNameMessage('Incorrect name');
-    } else if (!loginValidation(registrationData.login)) {
-      setErrorLoginMessage('Incorrect login');
-    } else if (!passwordValidation(registrationData.password)) {
-      setErrorPasswordMessage('Minimum 8 characters');
-    } else if (registrationData.password !== checkPassword) {
-      setErrorPasswordMessage('Enter the same password');
-    } else {
-      dispatch(registrationUser(registrationData));
-    }
+    error === undefined &&
+      reset({
+        name: '',
+        login: '',
+        password: '',
+        passwordConfirm: '',
+      });
   };
 
   if (registrationRequestStatus === 'succeeded') {
@@ -70,61 +47,85 @@ const Registration = () => {
 
   const goBack = () => {
     window.history.go(-1);
+    dispatch(cancel());
   };
 
   return (
     <div className={s.container}>
-      <div className={s.wrapper}>
+      <form className={s.wrapper} onSubmit={handleSubmit(onSubmit)}>
         <HeaderEnterApp title={'Sign Up'} />
         <div className={s.main}>
           <InputContainer
+            {...register('name', {
+              required: 'Please, enter your name',
+              pattern: {
+                value: /^[a-zA-Z ]{2,30}$/,
+                message: 'Please, enter your name correctly',
+              },
+            })}
+            placeholder={'enter your name...'}
             title={'name'}
-            typeInput={'name'}
-            value={registrationData.name}
-            changeValue={changeData}
-            errorMessage={errorNameMessage}
+            type={'name'}
+            errors={errors.name?.message}
           />
           <InputContainer
+            {...register('login', {
+              required: 'Please, enter your login',
+              pattern: {
+                value: /^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$/i,
+                message: 'Please, enter your login correctly',
+              },
+            })}
+            placeholder={'enter your login...'}
             title={'login'}
-            typeInput={'login'}
-            value={registrationData.login}
-            changeValue={changeData}
-            errorMessage={errorLoginMessage}
+            type={'login'}
+            errors={errors.login?.message}
           />
           <InputContainer
+            {...register('password', {
+              required: 'Please, enter your password',
+              pattern: {
+                value: /[0-9a-zA-Z!@#$%^&*]{8,}/,
+                message: 'Please, enter your password correctly',
+              },
+            })}
+            placeholder={'enter your password...'}
             title={'password'}
-            typeInput={'password'}
-            value={registrationData.password}
-            changeValue={changeData}
-            errorMessage={errorPasswordMessage}
+            type={'password'}
+            errors={errors.password?.message}
           />
           <InputContainer
+            {...register('passwordConfirm', {
+              required: 'Please, enter your confirm password',
+              pattern: {
+                value: /[0-9a-zA-Z!@#$%^&*]{8,}/,
+                message: 'Please, enter your confirm password correctly',
+              },
+            })}
+            placeholder={'enter your confirm password...'}
             title={'confirm'}
-            typeInput={'password'}
-            value={checkPassword}
-            changeValue={changeData}
-            errorMessage={errorPasswordMessage}
+            type={'password'}
+            errors={errors.passwordConfirm?.message}
           />
         </div>
 
         <div className={s.footer}>
-          <span className={s.errorMessageContainer}>{error}</span>
-
           <div className={s.footerBtns}>
             <span className={s.btnCancel} onClick={goBack}>
               Cancel
             </span>
             <div className={s.blueBtnContainer}>
               <MainActionButton
-                actionClick={onRegistration}
-                disabledBtnSubmit={disabledBtnSubmit}
+                type={'submit'}
+                disabledBtnSubmit={!isDirty || !isValid || !!errorPasswords}
                 title={'Register'}
                 loadingStatus={registrationRequestStatus}
               />
             </div>
           </div>
+          <span className={s.errorMessageContainer}>{errorPasswords || error}</span>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

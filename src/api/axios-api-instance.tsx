@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { authUser } from './auth-user';
+import { API_PROJECT_MANAGEMENT_APP } from '../constants/constants';
 
-const axiosApiInstance = axios.create({ baseURL: 'https://kanban71.herokuapp.com/' });
+const axiosApiInstance = axios.create({ baseURL: API_PROJECT_MANAGEMENT_APP });
 axiosApiInstance.interceptors.request.use(
   async (config) => {
     config.headers = {

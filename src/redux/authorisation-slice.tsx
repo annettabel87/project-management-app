@@ -6,9 +6,8 @@ import {
   IResponseLoginData,
   IResponseRegistrationData,
 } from '../interfaces/Interfaces';
-import usersApi from '../api/token-actions/api';
+import { tokenApi, usersApi } from '../api/token-actions/api';
 import errorMessage from '../shared/error-nessage/error-message';
-import tokenApi from '../api/token-actions/token-api';
 import tokenActions from '../api/token-actions/token-actions';
 
 export const registrationUser = createAsyncThunk<IResponseRegistrationData, IRegistrationData>(
@@ -56,6 +55,10 @@ export const authorisationSlice = createSlice({
       state.user = undefined;
       state.token = undefined;
     },
+    cancel: (state) => {
+      state.error = '';
+      state.user = undefined;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(loginUser.pending, (state) => {
@@ -68,7 +71,7 @@ export const authorisationSlice = createSlice({
     });
     builder.addCase(loginUser.rejected, (state) => {
       state.loginRequestStatus = 'failed';
-      state.error = 'error';
+      state.error = 'Error! Failed to login! Try again!';
     });
     builder.addCase(registrationUser.pending, (state) => {
       state.registrationRequestStatus = 'pending';
@@ -80,10 +83,10 @@ export const authorisationSlice = createSlice({
     });
     builder.addCase(registrationUser.rejected, (state) => {
       state.registrationRequestStatus = 'failed';
-      state.error = 'Error! User not registration!';
+      state.error = 'Error! User not registration! Try again!';
     });
   },
 });
 
-export const { logout } = authorisationSlice.actions;
+export const { logout, cancel } = authorisationSlice.actions;
 export default authorisationSlice.reducer;

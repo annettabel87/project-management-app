@@ -1,37 +1,32 @@
-import { ChangeEvent, FocusEvent, useState } from 'react';
+import React, { FocusEvent, useState } from 'react';
+
 import s from './input-container.module.scss';
 
-type InputContainerPropsType = {
+type InputContainerPropsType = React.InputHTMLAttributes<HTMLInputElement> & {
   title?: string;
-  value: string;
-  changeValue: (e: ChangeEvent<HTMLInputElement>) => void;
-  errorMessage: string;
-  typeInput: 'name' | 'login' | 'password' | 'text';
-  placeholder?: string;
+  value?: string;
+  type?: 'name' | 'login' | 'password' | 'text';
+  errors?: string;
   onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
 };
-const InputContainer = (props: InputContainerPropsType) => {
+const InputContainer: React.ForwardRefExoticComponent<InputContainerPropsType> = React.forwardRef<
+  HTMLInputElement,
+  InputContainerPropsType
+>((props, ref) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const typeShowInput = () => {
-    if (props.typeInput === 'password') {
+    if (props.type === 'password') {
       return showPassword ? 'text' : 'password';
     }
-    return props.typeInput;
+    return props.type;
   };
 
   return (
     <label className={s.emailPasswordContainer}>
       <span className={s.inputTitle}>{props.title}</span>
-      <input
-        name={props.title}
-        type={typeShowInput()}
-        value={props.value}
-        onChange={props.changeValue}
-        placeholder={props.placeholder}
-        onBlur={props.onBlur}
-      />
-      {props.typeInput === 'password' && (
+      <input ref={ref} {...props} type={typeShowInput()} />
+      {props.type === 'password' && (
         <img
           alt={'your password'}
           src={
@@ -45,9 +40,9 @@ const InputContainer = (props: InputContainerPropsType) => {
           }}
         />
       )}
-      <span className={s.errorEmailPasswordMessage}>{props.errorMessage}</span>
+      <span className={s.errorEmailPasswordMessage}>{props.errors}</span>
     </label>
   );
-};
+});
 
 export default InputContainer;

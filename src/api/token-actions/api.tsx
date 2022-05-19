@@ -1,10 +1,19 @@
 import axiosApiInstance from '../../api/axios-api-instance';
-import { IRegistrationData } from '../../interfaces/Interfaces';
+import { ILoginData, IRegistrationData } from '../../interfaces/Interfaces';
+import { API_ENDPOINTS } from '../../constants/constants';
 
-const usersApi = {
+export const usersApi = {
   registerUser(data: IRegistrationData) {
-    return axiosApiInstance.post('signup', { ...data }).then((response) => response.data);
+    return axiosApiInstance
+      .post(API_ENDPOINTS.SIGNUP, { ...data })
+      .then((response) => response.data);
   },
 };
 
-export default usersApi;
+export const tokenApi = {
+  createToken(login: ILoginData) {
+    return axiosApiInstance
+      .post(API_ENDPOINTS.SIGNIN, { ...login })
+      .then((response) => response.data);
+  },
+};
