@@ -15,6 +15,7 @@ const Header: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const currentUser = tokenActions.getUserToken() ? true : false;
 
   const isAuth = true;
   const onClose = () => {
@@ -51,20 +52,27 @@ const Header: FC = () => {
       <NavLink className={s.header__item} to={ROUTERS.WELCOME}>
         Welcome
       </NavLink>
-      <NavLink className={s.header__item} to={ROUTERS.MAIN}>
-        Main
-      </NavLink>
-      <NavLink className={s.header__item} to={ROUTERS.BOARD}>
-        Board
-      </NavLink>
-      <NavLink className={s.header__item} to={ROUTERS.LOGIN}>
-        Login
-      </NavLink>
-      <NavLink className={s.header__item} to={ROUTERS.PROFILE}>
-        Edit profile
-      </NavLink>
-      <button onClick={logOut}>Logout</button>
-      <button onClick={createBoard}>New board</button>
+      {currentUser && (
+        <>
+          <NavLink className={s.header__item} to={ROUTERS.MAIN}>
+            Main
+          </NavLink>
+          <NavLink className={s.header__item} to={ROUTERS.BOARD}>
+            Board
+          </NavLink>
+          <NavLink className={s.header__item} to={ROUTERS.PROFILE}>
+            Edit profile
+          </NavLink>
+          <button onClick={createBoard}>New board</button>
+          <button onClick={logOut}>Logout</button>
+        </>
+      )}
+      {!currentUser && (
+        <NavLink className={s.header__item} to={ROUTERS.LOGIN}>
+          Login
+        </NavLink>
+      )}
+
       <select onSelect={changeLanguage}>
         <option value="Ru">Ru</option>
         <option value="En">En</option>
