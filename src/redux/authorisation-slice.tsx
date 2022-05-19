@@ -6,9 +6,8 @@ import {
   IResponseLoginData,
   IResponseRegistrationData,
 } from '../interfaces/Interfaces';
-import usersApi from '../api/token-actions/api';
+import { tokenApi, usersApi } from '../api/token-actions/api';
 import errorMessage from '../shared/error-nessage/error-message';
-import tokenApi from '../api/token-actions/token-api';
 import tokenActions from '../api/token-actions/token-actions';
 
 export const registrationUser = createAsyncThunk<IResponseRegistrationData, IRegistrationData>(
