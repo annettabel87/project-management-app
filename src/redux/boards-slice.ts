@@ -116,7 +116,6 @@ export const boardsSlice = createSlice({
       state.requestStatus = 'pending';
     });
     builder.addCase(getBoards.fulfilled, (state, action: PayloadAction<IBoardData[]>) => {
-      state.error = '';
       state.requestStatus = 'succeeded';
       state.boards = action.payload;
     });
@@ -129,7 +128,6 @@ export const boardsSlice = createSlice({
       state.requestStatus = 'pending';
     });
     builder.addCase(getBoardById.fulfilled, (state, action: PayloadAction<IFullBoardData>) => {
-      state.error = '';
       state.requestStatus = 'succeeded';
       state.selectBoard = action.payload;
     });
@@ -142,7 +140,6 @@ export const boardsSlice = createSlice({
       state.requestStatus = 'pending';
     });
     builder.addCase(addBoard.fulfilled, (state, action: PayloadAction<IBoardData>) => {
-      state.error = '';
       state.requestStatus = 'succeeded';
       state.boards.push(action.payload);
     });
@@ -155,7 +152,6 @@ export const boardsSlice = createSlice({
       state.requestStatus = 'pending';
     });
     builder.addCase(deleteBoardById.fulfilled, (state, action: PayloadAction<string>) => {
-      state.error = '';
       state.requestStatus = 'succeeded';
       state.boards = state.boards.filter((item) => item.id !== action.payload);
     });
@@ -168,7 +164,6 @@ export const boardsSlice = createSlice({
       state.requestStatus = 'pending';
     });
     builder.addCase(updateBoard.fulfilled, (state, action: PayloadAction<IBoardData>) => {
-      state.error = '';
       state.requestStatus = 'succeeded';
       const updateItem = state.boards.find((item) => item.id == action.payload.id);
       if (updateItem) {
