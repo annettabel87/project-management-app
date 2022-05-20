@@ -16,8 +16,6 @@ const Header: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const currentUser = tokenActions.getUserToken() ? true : false;
-
-  const isAuth = true;
   const onClose = () => {
     setIsOpen(false);
   };
@@ -78,7 +76,7 @@ const Header: FC = () => {
         <option value="En">En</option>
       </select>
       <Modal onClose={onClose} open={isOpen}>
-        <CreateBoardForm isAuth={isAuth} onClose={onClose} />
+        <CreateBoardForm onClose={onClose} />
       </Modal>
     </header>
   );

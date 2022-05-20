@@ -6,7 +6,6 @@ export interface IModalProps {
   onClose: () => void;
 }
 export interface ICreateBoardFormProps {
-  isAuth: boolean;
   onClose: () => void;
 }
 
@@ -23,6 +22,12 @@ export type TBoardSliceState = {
 export interface IBoardData {
   id: string;
   title: string;
+  description: string;
+}
+
+export interface IAddBoardData {
+  title: string;
+  description: string;
 }
 
 export type TLoginState = {
@@ -80,7 +85,7 @@ export interface IFullBoardData {
 
 export type TupdateBoardType = {
   id: string;
-  title: string;
+  body: IAddBoardData;
 };
 
 export interface IColumnData {

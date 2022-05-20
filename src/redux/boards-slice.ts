@@ -4,21 +4,23 @@ import {
   TBoardSliceState,
   IFullBoardData,
   TupdateBoardType,
+  IAddBoardData,
 } from '../interfaces/Interfaces';
 import axios from 'axios';
 import { API_ENDPOINTS } from '../constants/constants';
+import { authUser } from '../api/auth-user';
 
-export const addBoard = createAsyncThunk<IBoardData, string>(
+export const addBoard = createAsyncThunk<IBoardData, IAddBoardData>(
   'board/addBoard',
-  async (title: string) => {
+  async (body: IAddBoardData) => {
     return axios
       .post(
         API_ENDPOINTS.BOARDS,
-        { title },
+        { ...body },
         {
           headers: {
             accept: 'application/json',
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjFlMGZhZC00MTU3LTQ0OTMtODkyNi0yMjhhZTI4ZjVkMGYiLCJsb2dpbiI6ImFubmEiLCJpYXQiOjE2NTI3MTc2ODl9.F-KeNIddUj3_W3dQNkpp3WGrjt__1K4rikivt0wMhLA`,
+            Authorization: authUser(),
           },
         }
       )
@@ -33,7 +35,7 @@ export const getBoards = createAsyncThunk<IBoardData[]>('board/getBoards', async
     .get(API_ENDPOINTS.BOARDS, {
       headers: {
         accept: 'application/json',
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjFlMGZhZC00MTU3LTQ0OTMtODkyNi0yMjhhZTI4ZjVkMGYiLCJsb2dpbiI6ImFubmEiLCJpYXQiOjE2NTI3MTc2ODl9.F-KeNIddUj3_W3dQNkpp3WGrjt__1K4rikivt0wMhLA`,
+        Authorization: authUser(),
       },
     })
     .then((data) => {
@@ -48,7 +50,7 @@ export const getBoardById = createAsyncThunk<IFullBoardData, string>(
       .get(`${API_ENDPOINTS.BOARDS}/${id}`, {
         headers: {
           accept: 'application/json',
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjFlMGZhZC00MTU3LTQ0OTMtODkyNi0yMjhhZTI4ZjVkMGYiLCJsb2dpbiI6ImFubmEiLCJpYXQiOjE2NTI3MTc2ODl9.F-KeNIddUj3_W3dQNkpp3WGrjt__1K4rikivt0wMhLA`,
+          Authorization: authUser(),
         },
       })
       .then((data) => {
@@ -64,7 +66,7 @@ export const deleteBoardById = createAsyncThunk<string, string>(
       .delete(`${API_ENDPOINTS.BOARDS}/${id}`, {
         headers: {
           accept: 'application/json',
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjFlMGZhZC00MTU3LTQ0OTMtODkyNi0yMjhhZTI4ZjVkMGYiLCJsb2dpbiI6ImFubmEiLCJpYXQiOjE2NTI3MTc2ODl9.F-KeNIddUj3_W3dQNkpp3WGrjt__1K4rikivt0wMhLA`,
+          Authorization: authUser(),
         },
       })
       .then(() => {
@@ -75,15 +77,15 @@ export const deleteBoardById = createAsyncThunk<string, string>(
 
 export const updateBoard = createAsyncThunk<IBoardData, TupdateBoardType>(
   'board/updateBoard',
-  async ({ id, title }: TupdateBoardType) => {
+  async ({ id, body }: TupdateBoardType) => {
     return axios
       .put(
         `${API_ENDPOINTS.BOARDS}/${id}`,
-        { title },
+        { ...body },
         {
           headers: {
             accept: 'application/json',
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjFlMGZhZC00MTU3LTQ0OTMtODkyNi0yMjhhZTI4ZjVkMGYiLCJsb2dpbiI6ImFubmEiLCJpYXQiOjE2NTI3MTc2ODl9.F-KeNIddUj3_W3dQNkpp3WGrjt__1K4rikivt0wMhLA`,
+            Authorization: authUser(),
           },
         }
       )
@@ -110,6 +112,7 @@ export const boardsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getBoards.pending, (state) => {
+      state.error = '';
       state.requestStatus = 'pending';
     });
     builder.addCase(getBoards.fulfilled, (state, action: PayloadAction<IBoardData[]>) => {
@@ -122,6 +125,7 @@ export const boardsSlice = createSlice({
       state.error = 'Board was not founded!';
     });
     builder.addCase(getBoardById.pending, (state) => {
+      state.error = '';
       state.requestStatus = 'pending';
     });
     builder.addCase(getBoardById.fulfilled, (state, action: PayloadAction<IFullBoardData>) => {
@@ -134,6 +138,7 @@ export const boardsSlice = createSlice({
       state.error = 'Board was not founded!';
     });
     builder.addCase(addBoard.pending, (state) => {
+      state.error = '';
       state.requestStatus = 'pending';
     });
     builder.addCase(addBoard.fulfilled, (state, action: PayloadAction<IBoardData>) => {
@@ -146,6 +151,7 @@ export const boardsSlice = createSlice({
       state.error = 'Board not create!';
     });
     builder.addCase(deleteBoardById.pending, (state) => {
+      state.error = '';
       state.requestStatus = 'pending';
     });
     builder.addCase(deleteBoardById.fulfilled, (state, action: PayloadAction<string>) => {
@@ -158,6 +164,7 @@ export const boardsSlice = createSlice({
       state.error = 'Board not delete!';
     });
     builder.addCase(updateBoard.pending, (state) => {
+      state.error = '';
       state.requestStatus = 'pending';
     });
     builder.addCase(updateBoard.fulfilled, (state, action: PayloadAction<IBoardData>) => {
@@ -166,6 +173,7 @@ export const boardsSlice = createSlice({
       const updateItem = state.boards.find((item) => item.id == action.payload.id);
       if (updateItem) {
         updateItem.title = action.payload.title;
+        updateItem.description = action.payload.description;
       }
     });
     builder.addCase(updateBoard.rejected, (state) => {
