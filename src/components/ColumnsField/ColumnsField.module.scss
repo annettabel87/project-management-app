@@ -1,0 +1,18 @@
+.columnsWrapper {
+    display: flex;
+    gap: 15px;
+}
+.createBtn {
+    border: none;
+    background-color: #eaeaea70;;
+    padding: 10px;
+    min-width: 235px;
+    height: 100px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 36px;
+    position: relative;
+    box-sizing: border-box;
+    transition: all ease-in 0.3s;
+    cursor: pointer;   
+}
