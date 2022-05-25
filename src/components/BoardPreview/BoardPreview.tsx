@@ -7,7 +7,7 @@ import Modal from '../Modal/Modal';
 import { ROUTERS } from '../../constants/constants';
 import { useAppDispatch } from '../../hooks/ReduxHooks';
 import { IBoardData } from '../../interfaces/Interfaces';
-import { deleteBoardById, getBoardById } from '../../redux/boards-slice';
+import { deleteBoardById } from '../../redux/boards-slice';
 import s from './BoardPreview.module.scss';
 
 const BoardPreview: FC<IBoardData> = ({ id, title, description }: IBoardData) => {
@@ -22,7 +22,7 @@ const BoardPreview: FC<IBoardData> = ({ id, title, description }: IBoardData) =>
     setIsOpen(false);
   };
   const openBoard = () => {
-    dispatch(getBoardById(id));
+    localStorage.setItem('selectBoard', id);
     navigate(`${ROUTERS.BOARD}`);
   };
   return (

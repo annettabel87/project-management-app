@@ -102,6 +102,7 @@ export const initialState: TBoardSliceState = {
   selectBoard: {
     id: '',
     title: '',
+    description: '',
     columns: [],
   },
 };

@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import CreateBoardForm from '../../components/CreateBoardForm/CreateBoardForm';
 import Modal from '../../components/Modal/Modal';
