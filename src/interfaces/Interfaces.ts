@@ -78,9 +78,14 @@ export interface IFullBoardData {
   columns: IColumnData[];
 }
 
-export type TupdateBoardType = {
+export type TUpdateBoardType = {
   id: string;
   title: string;
+};
+
+export type TUpdateUser = {
+  userId?: string;
+  user: IRegistrationData;
 };
 
 export interface IColumnData {
@@ -89,3 +94,9 @@ export interface IColumnData {
   order: number;
   tasks: [];
 }
+
+export type TResponseUserData = {
+  id: string;
+  name: string;
+  login: string;
+};

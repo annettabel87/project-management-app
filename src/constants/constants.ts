@@ -11,7 +11,7 @@ export const ROUTERS = {
 export const API_PROJECT_MANAGEMENT_APP = 'https://kanban71.herokuapp.com/';
 
 export const API_ENDPOINTS = {
-  USERS: 'https://kanban71.herokuapp.com/users',
+  USERS: 'users',
   BOARDS: 'https://kanban71.herokuapp.com/boards',
   SIGNIN: 'signin',
   SIGNUP: 'signup',

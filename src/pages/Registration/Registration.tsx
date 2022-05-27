@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import HeaderEnterApp from '../../shared/header-enter-app/header-enter-app';
@@ -19,6 +19,7 @@ const Registration = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -40,7 +41,11 @@ const Registration = () => {
     if (data.password !== data.passwordConfirm) {
       setErrorPasswords(`Sorry, but the passwords don't match.`);
     } else if (data && data.password === data.passwordConfirm) {
-      dispatch(registrationUser({ name: data.name, login: data.login, password: data.password }));
+      dispatch(
+        registrationUser({ name: data.name, login: data.login, password: data.password })
+      ).then(() => {
+        navigate(`${ROUTERS.LOGIN}`);
+      });
     }
     error === undefined &&
       reset({
@@ -50,10 +55,6 @@ const Registration = () => {
         passwordConfirm: '',
       });
   };
-
-  if (registrationRequestStatus === 'succeeded') {
-    return <Navigate to={ROUTERS.LOGIN} />;
-  }
 
   const goBack = () => {
     window.history.go(-1);

@@ -13,6 +13,8 @@ import ShowPasswords from '../../shared/show-password/show-password';
 
 import s from './Login.module.scss';
 import style_form from '../../shared/show-password/show-password.module.scss';
+import saveLogin from '../../shared/login-save/login-save';
+import savePassword from '../../shared/password-save/password-save';
 
 const Login = () => {
   const { error, loginRequestStatus } = useAppSelector((state) => state.authorisationSlice);
@@ -38,6 +40,8 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<ILoginData> = (data) => {
     data && dispatch(loginUser(data));
+    saveLogin.setUserLogin(data.login);
+    savePassword.setUserPassword(data.password);
     error !== undefined &&
       reset({
         login: '',
