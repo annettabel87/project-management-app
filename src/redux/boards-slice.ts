@@ -3,7 +3,7 @@ import {
   IBoardData,
   TBoardsSliceState,
   IFullBoardData,
-  TupdateBoardType,
+  TUpdateBoardType,
   IAddBoardData,
 } from '../interfaces/Interfaces';
 import axios from 'axios';
@@ -75,9 +75,9 @@ export const deleteBoardById = createAsyncThunk<string, string>(
   }
 );
 
-export const updateBoard = createAsyncThunk<IBoardData, TupdateBoardType>(
+export const updateBoard = createAsyncThunk<IBoardData, TUpdateBoardType>(
   'boards/updateBoard',
-  async ({ id, body }: TupdateBoardType) => {
+  async ({ id, body }: TUpdateBoardType) => {
     return axios
       .put(
         `${API_ENDPOINTS.BOARDS}/${id}`,

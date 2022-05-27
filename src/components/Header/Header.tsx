@@ -9,6 +9,8 @@ import tokenActions from '../../api/token-actions/token-actions';
 import { useAppDispatch } from '../../hooks/ReduxHooks';
 import { logout } from '../../redux/authorisation-slice';
 import s from './Header.module.scss';
+import saveLogin from '../../shared/login-save/login-save';
+import savePassword from '../../shared/password-save/password-save';
 
 const Header: FC = () => {
   const [sticky, setSticky] = useState<boolean>(false);
@@ -38,6 +40,8 @@ const Header: FC = () => {
     tokenActions.removeUserToken();
     dispatch(logout());
     navigate(ROUTERS.LOGIN);
+    saveLogin.removeUserLogin();
+    savePassword.removeUserPassword();
   };
 
   const createBoard = () => {

@@ -169,9 +169,14 @@ export interface IFullBoardData {
   columns: IColumnData[];
 }
 
-export type TupdateBoardType = {
+export type TUpdateBoardType = {
   id: string;
   body: IAddBoardData;
+};
+
+export type TUpdateUser = {
+  userId?: string;
+  user: IRegistrationData;
 };
 
 export interface IColumnData {
@@ -205,3 +210,9 @@ export interface IFileData {
   filename: string;
   fileSize: number;
 }
+
+export type TResponseUserData = {
+  id: string;
+  name: string;
+  login: string;
+};
