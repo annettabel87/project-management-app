@@ -1,14 +1,14 @@
 import React, { FC, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
-import { ITaskData, ITaskProps } from '../../interfaces/Interfaces';
-import { removeTask, updateTask } from '../../redux/boards-slice';
+import { ITaskProps } from '../../interfaces/Interfaces';
+import { removeTask, updateTask } from '../../redux/columns-slice';
 import ConfirmationWindow from '../ConfirmationWindow/ConfirmationWindow';
 import Modal from '../Modal/Modal';
 import s from './Task.module.scss';
 
 const Task: FC<ITaskProps> = ({ task, columnId }: ITaskProps) => {
   const dispatch = useAppDispatch();
-  const { users } = useAppSelector((state) => state.boardsSlice);
+  const { users } = useAppSelector((state) => state.profileSlice);
 
   const userName = users?.filter((user) => {
     if (user.id === task.userId) {
@@ -60,10 +60,7 @@ const Task: FC<ITaskProps> = ({ task, columnId }: ITaskProps) => {
         })
       );
     }
-
-    //updateTask(title, boardId, columnId, description)
     setOpenTitle(false);
-    console.log(formData);
   };
 
   return (

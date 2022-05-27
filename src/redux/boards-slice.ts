@@ -5,14 +5,6 @@ import {
   IFullBoardData,
   TupdateBoardType,
   IAddBoardData,
-  TCreateColumnRequest,
-  TDeleteColumnRequest,
-  TUsersResponse,
-  TAddTaskRequest,
-  TTaskResponse,
-  TDeleteTaskRequest,
-  TUpdateTaskRequest,
-  TUpdateColumnRequest,
 } from '../interfaces/Interfaces';
 import axios from 'axios';
 import { API_ENDPOINTS } from '../constants/constants';
@@ -103,134 +95,6 @@ export const updateBoard = createAsyncThunk<IBoardData, TupdateBoardType>(
   }
 );
 
-export const createColumn = createAsyncThunk<IBoardData, TCreateColumnRequest>(
-  'boards/createColumn',
-  async (body: TCreateColumnRequest) => {
-    return axios
-      .post(
-        `${API_ENDPOINTS.BOARDS}/${body.boardId}/columns`,
-        { ...body.columnData },
-        {
-          headers: {
-            accept: 'application/json',
-            Authorization: authUser(),
-          },
-        }
-      )
-      .then((data) => {
-        return data.data;
-      });
-  }
-);
-
-export const deleteColumn = createAsyncThunk<{ [key: string]: string }, TDeleteColumnRequest>(
-  'boards/deleteColumn',
-  async (body: TDeleteColumnRequest) => {
-    return axios
-      .delete(`${API_ENDPOINTS.BOARDS}/${body.boardId}/columns/${body.columnId}`, {
-        headers: {
-          accept: 'application/json',
-          Authorization: authUser(),
-        },
-      })
-      .then((data) => {
-        return data.data;
-      });
-  }
-);
-
-export const updateColumn = createAsyncThunk<TTaskResponse, TUpdateColumnRequest>(
-  'boards/updateColumn',
-  async (body: TUpdateColumnRequest) => {
-    return axios
-      .put(
-        `${API_ENDPOINTS.BOARDS}/${body.boardId}/columns/${body.columnId}`,
-        { ...body.columnData },
-        {
-          headers: {
-            accept: 'application/json',
-            Authorization: authUser(),
-          },
-        }
-      )
-      .then((data) => {
-        return data.data;
-      });
-  }
-);
-
-export const getUsers = createAsyncThunk<TUsersResponse>('boards/getUsers', async () => {
-  return axios
-    .get(API_ENDPOINTS.USERS, {
-      headers: {
-        accept: 'application/json',
-        Authorization: authUser(),
-      },
-    })
-    .then((data) => {
-      return [...data.data];
-    });
-});
-
-export const addTask = createAsyncThunk<TTaskResponse, TAddTaskRequest>(
-  'boards/addTask',
-  async (body: TAddTaskRequest) => {
-    return axios
-      .post(
-        `${API_ENDPOINTS.BOARDS}/${body.boardId}/columns/${body.columnId}/tasks`,
-        { ...body.taskData },
-        {
-          headers: {
-            accept: 'application/json',
-            Authorization: authUser(),
-          },
-        }
-      )
-      .then((data) => {
-        return data.data;
-      });
-  }
-);
-
-export const removeTask = createAsyncThunk<{ [key: string]: string }, TDeleteTaskRequest>(
-  'boards/removeTask',
-  async (body: TDeleteTaskRequest) => {
-    return axios
-      .delete(
-        `${API_ENDPOINTS.BOARDS}/${body.boardId}/columns/${body.columnId}/tasks/${body.taskId}`,
-        {
-          headers: {
-            accept: 'application/json',
-            Authorization: authUser(),
-          },
-        }
-      )
-      .then((data) => {
-        return data.data;
-      });
-  }
-);
-
-export const updateTask = createAsyncThunk<TTaskResponse, TUpdateTaskRequest>(
-  'boards/updateTask',
-  async (body: TUpdateTaskRequest) => {
-    return axios
-      .put(
-        `${API_ENDPOINTS.BOARDS}/${body.boardId}/columns/${body.columnId}/tasks/${body.taskId}`,
-        { ...body.taskData },
-        {
-          headers: {
-            accept: 'application/json',
-            Authorization: authUser(),
-          },
-        }
-      )
-      .then((data) => {
-        return data.data;
-      });
-  }
-);
-
 export const initialState: TBoardsSliceState = {
   reloadStatus: true,
   boards: [],
@@ -277,34 +141,29 @@ export const boardsSlice = createSlice({
     });
     builder.addCase(addBoard.pending, (state) => {
       state.error = '';
-      state.requestStatus = 'pending';
     });
     builder.addCase(addBoard.fulfilled, (state, action: PayloadAction<IBoardData>) => {
-      state.requestStatus = 'succeeded';
       state.boards.push(action.payload);
+      state.reloadStatus = true;
     });
     builder.addCase(addBoard.rejected, (state) => {
-      state.requestStatus = 'failed';
       state.error = 'Board not create!';
     });
     builder.addCase(deleteBoardById.pending, (state) => {
       state.error = '';
-      state.requestStatus = 'pending';
     });
     builder.addCase(deleteBoardById.fulfilled, (state, action: PayloadAction<string>) => {
-      state.requestStatus = 'succeeded';
+      state.reloadStatus = true;
       state.boards = state.boards.filter((item) => item.id !== action.payload);
     });
     builder.addCase(deleteBoardById.rejected, (state) => {
-      state.requestStatus = 'failed';
       state.error = 'Board not delete!';
     });
     builder.addCase(updateBoard.pending, (state) => {
       state.error = '';
-      state.requestStatus = 'pending';
     });
     builder.addCase(updateBoard.fulfilled, (state, action: PayloadAction<IBoardData>) => {
-      state.requestStatus = 'succeeded';
+      state.reloadStatus = true;
       const updateItem = state.boards.find((item) => item.id == action.payload.id);
       if (updateItem) {
         updateItem.title = action.payload.title;
@@ -312,71 +171,7 @@ export const boardsSlice = createSlice({
       }
     });
     builder.addCase(updateBoard.rejected, (state) => {
-      state.requestStatus = 'failed';
       state.error = 'Board not update!';
-    });
-    builder.addCase(createColumn.pending, (state) => {
-      state.error = '';
-    });
-    builder.addCase(createColumn.fulfilled, (state) => {
-      state.reloadStatus = true;
-    });
-    builder.addCase(createColumn.rejected, (state) => {
-      state.error = '';
-    });
-    builder.addCase(deleteColumn.pending, (state) => {
-      state.error = '';
-    });
-    builder.addCase(deleteColumn.fulfilled, (state) => {
-      state.reloadStatus = true;
-    });
-    builder.addCase(deleteColumn.rejected, (state) => {
-      state.error = '';
-    });
-    builder.addCase(getUsers.pending, (state) => {
-      state.error = '';
-    });
-    builder.addCase(getUsers.fulfilled, (state, action: PayloadAction<TUsersResponse>) => {
-      state.users = action.payload;
-    });
-    builder.addCase(getUsers.rejected, (state) => {
-      state.error = '';
-    });
-    builder.addCase(addTask.pending, (state) => {
-      state.error = '';
-    });
-    builder.addCase(addTask.fulfilled, (state) => {
-      state.reloadStatus = true;
-    });
-    builder.addCase(addTask.rejected, (state) => {
-      state.error = '';
-    });
-    builder.addCase(removeTask.pending, (state) => {
-      state.error = '';
-    });
-    builder.addCase(removeTask.fulfilled, (state) => {
-      state.reloadStatus = true;
-    });
-    builder.addCase(removeTask.rejected, (state) => {
-      state.error = '';
-    });
-    builder.addCase(updateTask.pending, (state) => {
-      state.error = '';
-    });
-    builder.addCase(updateTask.fulfilled, (state) => {
-      state.reloadStatus = true;
-    });
-    builder.addCase(updateTask.rejected, (state) => {
-      state.error = '';
-    });
-    builder.addCase(updateColumn.pending, (state) => {
-      state.error = '';
-    });
-    builder.addCase(updateColumn.fulfilled, (state) => {
-      state.reloadStatus = true;
-    });
-    builder.addCase(updateColumn.rejected, (state) => {
-      state.error = '';
     });
   },
 });

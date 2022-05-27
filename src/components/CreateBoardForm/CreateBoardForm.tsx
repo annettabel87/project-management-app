@@ -15,6 +15,7 @@ const CreateBoardForm: FC<ICreateBoardFormProps> = ({ onClose }: ICreateBoardFor
     dispatch(addBoard({ title, description }));
     setTitle('');
     setDescription('');
+    onClose();
   };
   return (
     <div className={s.overlay} onClick={onClose}>

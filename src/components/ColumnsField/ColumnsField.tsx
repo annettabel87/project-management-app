@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { IColumnData } from '../../interfaces/Interfaces';
 import Column from '../Column/Column';
 import CreateColumn from '../CreateColumn/CreateColumn';
@@ -17,9 +17,7 @@ const ColumnsField: FC<ColumnFieldPropsType> = ({ columns }: ColumnFieldPropsTyp
   return (
     <section>
       <div className={s.columnsWrapper}>
-        {columns.map((column) => (
-          <Column key={column.id} {...column} />
-        ))}
+        {columns && columns.map((column) => <Column key={column.id} {...column} />)}
         <button className={s.createBtn} onClick={() => setIsOpen(true)}>
           + Create column
         </button>

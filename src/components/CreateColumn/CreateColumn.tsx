@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../hooks/ReduxHooks';
 
 import { ICreateBoardFormProps, TColumnData } from '../../interfaces/Interfaces';
-import { createColumn } from '../../redux/boards-slice';
+import { createColumn } from '../../redux/columns-slice';
 import s from './CreateColumn.module.scss';
 
 const CreateColumn: FC<ICreateBoardFormProps> = ({ onClose }: ICreateBoardFormProps) => {

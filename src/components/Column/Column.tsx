@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useAppDispatch } from '../../hooks/ReduxHooks';
 import { IColumnData } from '../../interfaces/Interfaces';
-import { deleteColumn, updateColumn } from '../../redux/boards-slice';
+import { deleteColumn, updateColumn } from '../../redux/columns-slice';
 import ConfirmationWindow from '../ConfirmationWindow/ConfirmationWindow';
 import CreateTask from '../CreateTask/CreateTask';
 import Modal from '../Modal/Modal';
@@ -86,7 +86,7 @@ const Column: FC<IColumnData> = (column: IColumnData) => {
         </p>
       )}
       <div className={s.taskWrapper}>
-        {column.tasks.map((task) => (
+        {column.tasks?.map((task) => (
           <Task task={task} columnId={column.id} key={task.id} />
         ))}
       </div>

@@ -15,7 +15,7 @@ import './App.module.scss';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { useAppDispatch } from '../../hooks/ReduxHooks';
-import { getUsers } from '../../redux/boards-slice';
+import { getUsers } from '../../redux/profile-slice';
 
 function App() {
   const dispatch = useAppDispatch();

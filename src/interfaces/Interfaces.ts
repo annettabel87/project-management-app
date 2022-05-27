@@ -42,7 +42,13 @@ export interface IAddBoardData {
   description: string;
 }
 
-// Board slice
+// Columns slice
+export type TColumnsSliceState = {
+  reloadColumnsStatus: boolean;
+  columns: IColumnData[];
+  error?: string;
+};
+
 export type TCreateColumnRequest = {
   columnData: TColumnData;
   boardId: string;
@@ -101,12 +107,12 @@ export type TDeleteTaskRequest = {
   taskId: string;
 };
 
-export type TBoardSliceState = {
-  board: IBoardData[];
-  boardRequestStatus: string;
-  reloadStatus: boolean;
-  error: string;
-  selectBoard: IFullBoardData;
+// Profile slice
+
+export type TProfileSliceState = {
+  reloadProfileStatus: boolean;
+  error?: string;
+  users?: TUsersResponse;
 };
 
 export type TLoginState = {

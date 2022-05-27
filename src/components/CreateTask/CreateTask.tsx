@@ -3,12 +3,12 @@ import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 
 import { ICreateTaskFormProps, TTaskData } from '../../interfaces/Interfaces';
-import { addTask } from '../../redux/boards-slice';
+import { addTask } from '../../redux/columns-slice';
 import s from './CreateTask.module.scss';
 
 const CreateTask: FC<ICreateTaskFormProps> = ({ onClose, columnId }: ICreateTaskFormProps) => {
   const dispatch = useAppDispatch();
-  const { users } = useAppSelector((state) => state.boardsSlice);
+  const { users } = useAppSelector((state) => state.profileSlice);
 
   const {
     register,
