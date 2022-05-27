@@ -17,12 +17,20 @@ export type TRootState = ReturnType<typeof rootReducer>;
 export type TAppStore = ReturnType<typeof setupStore>;
 export type TAppDispatch = TAppStore['dispatch'];
 
-export type TBoardSliceState = {
+// Boards slice
+export type TBoardsSliceState = {
+  reloadStatus: boolean;
   boards: IBoardData[];
   requestStatus: string;
   error: string;
   selectBoard: IFullBoardData;
+  users?: TUsersResponse;
 };
+
+export type TUsersResponse = {
+  [key: string]: string;
+}[];
+
 export interface IBoardData {
   id: string;
   title: string;
@@ -33,6 +41,79 @@ export interface IAddBoardData {
   title: string;
   description: string;
 }
+
+// Columns slice
+export type TColumnsSliceState = {
+  reloadColumnsStatus: boolean;
+  columns: IColumnData[];
+  error?: string;
+};
+
+export type TCreateColumnRequest = {
+  columnData: TColumnData;
+  boardId: string;
+};
+
+export type TDeleteColumnRequest = {
+  boardId: string;
+  columnId: string;
+};
+
+export type TAddTaskRequest = {
+  taskData: TTaskData;
+  boardId: string;
+  columnId: string;
+};
+
+export type TColumnData = {
+  title: string;
+};
+
+export type TTaskData = {
+  title: string;
+  description: string;
+  userId: string;
+};
+
+export type TUpdateTaskRequest = {
+  taskData: TUpdateTaskData;
+  boardId: string;
+  columnId: string;
+  taskId: string;
+};
+
+export type TUpdateColumnRequest = {
+  columnData: { title: string; order: number };
+  boardId: string;
+  columnId: string;
+};
+
+export type TUpdateTaskData = {
+  title: string;
+  description: string;
+  boardId: string;
+  columnId: string;
+  userId: string;
+  order: number;
+};
+
+export type TTaskResponse = {
+  [key: string]: string;
+};
+
+export type TDeleteTaskRequest = {
+  boardId: string;
+  columnId: string;
+  taskId: string;
+};
+
+// Profile slice
+
+export type TProfileSliceState = {
+  reloadProfileStatus: boolean;
+  error?: string;
+  users?: TUsersResponse;
+};
 
 export type TLoginState = {
   login: string;

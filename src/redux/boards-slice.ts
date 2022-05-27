@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   IBoardData,
-  TBoardSliceState,
+  TBoardsSliceState,
   IFullBoardData,
   TupdateBoardType,
   IAddBoardData,
@@ -11,7 +11,7 @@ import { API_ENDPOINTS } from '../constants/constants';
 import { authUser } from '../api/auth-user';
 
 export const addBoard = createAsyncThunk<IBoardData, IAddBoardData>(
-  'board/addBoard',
+  'boards/addBoard',
   async (body: IAddBoardData) => {
     return axios
       .post(
@@ -30,7 +30,7 @@ export const addBoard = createAsyncThunk<IBoardData, IAddBoardData>(
   }
 );
 
-export const getBoards = createAsyncThunk<IBoardData[]>('board/getBoards', async () => {
+export const getBoards = createAsyncThunk<IBoardData[]>('boards/getBoards', async () => {
   return axios
     .get(API_ENDPOINTS.BOARDS, {
       headers: {
@@ -44,7 +44,7 @@ export const getBoards = createAsyncThunk<IBoardData[]>('board/getBoards', async
 });
 
 export const getBoardById = createAsyncThunk<IFullBoardData, string>(
-  'board/getBoardById',
+  'boards/getBoardById',
   async (id: string) => {
     return axios
       .get(`${API_ENDPOINTS.BOARDS}/${id}`, {
@@ -60,7 +60,7 @@ export const getBoardById = createAsyncThunk<IFullBoardData, string>(
 );
 
 export const deleteBoardById = createAsyncThunk<string, string>(
-  'board/deleteBoardById',
+  'boards/deleteBoardById',
   async (id: string) => {
     return axios
       .delete(`${API_ENDPOINTS.BOARDS}/${id}`, {
@@ -76,7 +76,7 @@ export const deleteBoardById = createAsyncThunk<string, string>(
 );
 
 export const updateBoard = createAsyncThunk<IBoardData, TupdateBoardType>(
-  'board/updateBoard',
+  'boards/updateBoard',
   async ({ id, body }: TupdateBoardType) => {
     return axios
       .put(
@@ -95,7 +95,8 @@ export const updateBoard = createAsyncThunk<IBoardData, TupdateBoardType>(
   }
 );
 
-export const initialState: TBoardSliceState = {
+export const initialState: TBoardsSliceState = {
+  reloadStatus: true,
   boards: [],
   requestStatus: '',
   error: '',
@@ -119,6 +120,7 @@ export const boardsSlice = createSlice({
     builder.addCase(getBoards.fulfilled, (state, action: PayloadAction<IBoardData[]>) => {
       state.requestStatus = 'succeeded';
       state.boards = action.payload;
+      state.reloadStatus = false;
     });
     builder.addCase(getBoards.rejected, (state) => {
       state.requestStatus = 'failed';
@@ -131,6 +133,7 @@ export const boardsSlice = createSlice({
     builder.addCase(getBoardById.fulfilled, (state, action: PayloadAction<IFullBoardData>) => {
       state.requestStatus = 'succeeded';
       state.selectBoard = action.payload;
+      state.reloadStatus = false;
     });
     builder.addCase(getBoardById.rejected, (state) => {
       state.requestStatus = 'failed';
@@ -138,34 +141,29 @@ export const boardsSlice = createSlice({
     });
     builder.addCase(addBoard.pending, (state) => {
       state.error = '';
-      state.requestStatus = 'pending';
     });
     builder.addCase(addBoard.fulfilled, (state, action: PayloadAction<IBoardData>) => {
-      state.requestStatus = 'succeeded';
       state.boards.push(action.payload);
+      state.reloadStatus = true;
     });
     builder.addCase(addBoard.rejected, (state) => {
-      state.requestStatus = 'failed';
       state.error = 'Board not create!';
     });
     builder.addCase(deleteBoardById.pending, (state) => {
       state.error = '';
-      state.requestStatus = 'pending';
     });
     builder.addCase(deleteBoardById.fulfilled, (state, action: PayloadAction<string>) => {
-      state.requestStatus = 'succeeded';
+      state.reloadStatus = true;
       state.boards = state.boards.filter((item) => item.id !== action.payload);
     });
     builder.addCase(deleteBoardById.rejected, (state) => {
-      state.requestStatus = 'failed';
       state.error = 'Board not delete!';
     });
     builder.addCase(updateBoard.pending, (state) => {
       state.error = '';
-      state.requestStatus = 'pending';
     });
     builder.addCase(updateBoard.fulfilled, (state, action: PayloadAction<IBoardData>) => {
-      state.requestStatus = 'succeeded';
+      state.reloadStatus = true;
       const updateItem = state.boards.find((item) => item.id == action.payload.id);
       if (updateItem) {
         updateItem.title = action.payload.title;
@@ -173,7 +171,6 @@ export const boardsSlice = createSlice({
       }
     });
     builder.addCase(updateBoard.rejected, (state) => {
-      state.requestStatus = 'failed';
       state.error = 'Board not update!';
     });
   },
