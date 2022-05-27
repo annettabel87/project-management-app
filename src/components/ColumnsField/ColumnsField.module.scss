@@ -1,6 +1,7 @@
 .columnsWrapper {
     display: flex;
     gap: 15px;
+    overflow-x: auto;
 }
 .createBtn {
     border: none;

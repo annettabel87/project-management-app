@@ -7,7 +7,7 @@ import { ROUTERS } from '../../constants/constants';
 import s from './Board.module.scss';
 
 const Board: FC = () => {
-  const { selectBoard } = useAppSelector((state) => state.boardsSlice);
+  const { selectBoard, reloadStatus } = useAppSelector((state) => state.boardsSlice);
   let requestStatus;
   const { title, description, columns } = selectBoard;
   const dispatch = useAppDispatch();
@@ -17,23 +17,19 @@ const Board: FC = () => {
   };
   useEffect(() => {
     const id = localStorage.getItem('selectBoard');
-    if (id) {
+
+    if (id && reloadStatus) {
       dispatch(getBoardById(id));
     }
-  }, []);
+  }, [dispatch, reloadStatus]);
+
   return (
     <section className={s.boardPage}>
       <div className={s.container}>
         <button className={s.homeBtn} onClick={toMain}></button>
         <p className={s.boardTitle}>{title}</p>
         <p className={s.text}>{description}</p>
-        {requestStatus === 'pending' ? (
-          <div>Loading</div>
-        ) : columns.length ? (
-          <ColumnsField columns={columns} />
-        ) : (
-          <p>This board have no columns</p>
-        )}
+        {requestStatus === 'pending' ? <div>Loading</div> : <ColumnsField columns={columns} />}
       </div>
     </section>
   );

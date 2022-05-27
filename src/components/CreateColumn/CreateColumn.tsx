@@ -1,22 +1,27 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { useAppDispatch } from '../../hooks/ReduxHooks';
 
-import { ICreateBoardFormProps } from '../../interfaces/Interfaces';
+import { ICreateBoardFormProps, TColumnData } from '../../interfaces/Interfaces';
+import { createColumn } from '../../redux/boards-slice';
 import s from './CreateColumn.module.scss';
 
 const CreateColumn: FC<ICreateBoardFormProps> = ({ onClose }: ICreateBoardFormProps) => {
+  const dispatch = useAppDispatch();
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<TColumnData>();
 
   const onSubmit = handleSubmit((data) => {
     const boardId = localStorage.getItem('selectBoard');
-    console.log(data);
-    //обработка данных формы
-    //adColumn(boardID,data.title)
+    if (boardId) {
+      dispatch(createColumn({ boardId: boardId, columnData: data }));
+      onClose();
+    }
     reset();
   });
   return (

@@ -1,27 +1,29 @@
-import React, { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 
-import { ICreateTaskFormProps } from '../../interfaces/Interfaces';
+import { ICreateTaskFormProps, TTaskData } from '../../interfaces/Interfaces';
+import { addTask } from '../../redux/boards-slice';
 import s from './CreateTask.module.scss';
 
 const CreateTask: FC<ICreateTaskFormProps> = ({ onClose, columnId }: ICreateTaskFormProps) => {
+  const dispatch = useAppDispatch();
+  const { users } = useAppSelector((state) => state.boardsSlice);
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
-  useEffect(() => {
-    //запросить users для выпадающего меню
-  }, []);
+  } = useForm<TTaskData>();
+
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
     const boardId = localStorage.getItem('selectBoard');
-    //обработка данных формы
-    //addTask(boardId, data.title, data.description, data.userId, columnId)
-    // if(data.file) {
-    //   addFile(data.file)
-    // }
+
+    if (boardId) {
+      dispatch(addTask({ boardId: boardId, columnId: columnId, taskData: data }));
+    }
+    onClose();
     reset();
   });
   return (
@@ -69,13 +71,16 @@ const CreateTask: FC<ICreateTaskFormProps> = ({ onClose, columnId }: ICreateTask
                 required: 'select user',
               })}
             >
-              {/* {users.map((user) => (
-                <option key={user.id} value={user.id}>{user.name}</option>
-              ))} */}
+              {users &&
+                users.map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.name}
+                  </option>
+                ))}
             </select>
             {errors.userId && <span className={s.error}>{errors.userId.message}</span>}
           </label>
-          <label htmlFor="file">
+          {/* <label htmlFor="file">
             <p className={s.formTitle}>Load your photo</p>
             <input
               className="input-file"
@@ -84,7 +89,7 @@ const CreateTask: FC<ICreateTaskFormProps> = ({ onClose, columnId }: ICreateTask
                 required: false,
               })}
             />
-          </label>
+          </label> */}
           <button type="submit" className={s.formBtn}>
             create
           </button>

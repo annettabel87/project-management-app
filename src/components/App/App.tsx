@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import Board from '../../pages/Board/Board';
@@ -13,8 +14,16 @@ import { ROUTERS } from '../../constants/constants';
 import './App.module.scss';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import { useAppDispatch } from '../../hooks/ReduxHooks';
+import { getUsers } from '../../redux/boards-slice';
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
+
   return (
     <div className="App">
       <Header />
