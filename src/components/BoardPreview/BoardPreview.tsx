@@ -7,10 +7,10 @@ import Modal from '../Modal/Modal';
 import { ROUTERS } from '../../constants/constants';
 import { useAppDispatch } from '../../hooks/ReduxHooks';
 import { IBoardData } from '../../interfaces/Interfaces';
-import { deleteBoardById, getBoardById } from '../../redux/boards-slice';
+import { deleteBoardById } from '../../redux/boards-slice';
 import s from './BoardPreview.module.scss';
 
-const BoardPreview: FC<IBoardData> = ({ id, title }: IBoardData) => {
+const BoardPreview: FC<IBoardData> = ({ id, title, description }: IBoardData) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const onClose = () => {
@@ -22,7 +22,7 @@ const BoardPreview: FC<IBoardData> = ({ id, title }: IBoardData) => {
     setIsOpen(false);
   };
   const openBoard = () => {
-    dispatch(getBoardById(id));
+    localStorage.setItem('selectBoard', id);
     navigate(`${ROUTERS.BOARD}`);
   };
   return (
@@ -36,7 +36,10 @@ const BoardPreview: FC<IBoardData> = ({ id, title }: IBoardData) => {
       >
         X
       </button>
-      <div>{title}</div>
+      <div>
+        <p className={s.title}>{title}</p>
+        <p className={s.description}>{description}</p>
+      </div>
 
       <Modal onClose={onClose} open={isOpen}>
         <ConfirmationWindow onClose={onClose} handleOK={deleteBoard} />

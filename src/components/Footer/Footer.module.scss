@@ -1,15 +1,15 @@
 .footer {
-    height: 10vh;
+    min-height: 10vh;
     background: #575f61;
     color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 30px;
+    gap: 20px;
     font-size: 20px;
-    position: absolute;
-    bottom: 0;
     width: 100%;
+    flex-wrap: wrap;
+    padding: 10px;
 }
 .logo {
     width: 100px;
