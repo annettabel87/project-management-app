@@ -3,9 +3,11 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TProfileSliceState, TResponseUserData, TUpdateUser } from '../interfaces/Interfaces';
 import { usersApi } from '../api/token-actions/api';
 import errorMessage from '../shared/error-nessage/error-message';
+import { authUser } from '../api/auth-user';
+import axios from 'axios';
 
 export const getUsers = createAsyncThunk<TResponseUserData[]>(
-  'getUsers/fetch',
+  'profile/getUsers',
   async (_, { rejectWithValue }) => {
     try {
       return await usersApi.getUsers();
@@ -16,7 +18,7 @@ export const getUsers = createAsyncThunk<TResponseUserData[]>(
 );
 
 export const getUser = createAsyncThunk<TResponseUserData, string>(
-  'getUser/fetch',
+  'profile/getUser',
   async (userId: string, { rejectWithValue }) => {
     try {
       return await usersApi.getUser(userId);
@@ -27,7 +29,7 @@ export const getUser = createAsyncThunk<TResponseUserData, string>(
 );
 
 export const updateUser = createAsyncThunk<TResponseUserData, TUpdateUser>(
-  'updateUser/fetch',
+  'profile/updateUser',
   async ({ userId, user }: TUpdateUser, { rejectWithValue }) => {
     try {
       return await usersApi.updateUser(userId, user);
@@ -37,24 +39,35 @@ export const updateUser = createAsyncThunk<TResponseUserData, TUpdateUser>(
   }
 );
 
-export const deleteUser = createAsyncThunk<string, string>(
-  'deleteUser/fetch',
-  async (userId: string) => {
-    return await usersApi.deleteUser(userId).then(() => {
-      return userId;
-    });
+export const deleteUser = createAsyncThunk<{ [key: string]: string }, string>(
+  'profile/deleteUser',
+  async (body: string) => {
+    return axios
+      .delete(`https://kanban71.herokuapp.com/users/${body}`, {
+        headers: {
+          accept: 'application/json',
+          Authorization: authUser(),
+        },
+      })
+      .then((data) => {
+        return data.data;
+      });
   }
 );
 
 export const initialState: TProfileSliceState = {
   reloadProfileStatus: true,
   getUsersStatus: 'idle',
+  users: [],
 };
 
 export const profileSlice = createSlice({
-  name: 'edit-profile-slice',
+  name: 'profile',
   initialState: initialState,
   reducers: {
+    setUser: (state, action) => {
+      state.currentUser = action.payload;
+    },
     cancel: (state) => {
       state.error = '';
     },
@@ -79,14 +92,13 @@ export const profileSlice = createSlice({
       state.error = '';
     });
     builder.addCase(getUser.fulfilled, (state, action: PayloadAction<TResponseUserData>) => {
-      state.user = action.payload;
-      state.user = {
+      state.currentUser = {
+        ...state.currentUser,
         name: action.payload.name,
         login: action.payload.login,
         id: action.payload.id,
       };
       state.error = undefined;
-      state.reloadProfileStatus = false;
     });
     builder.addCase(getUser.rejected, (state) => {
       state.error = 'Error! In page loading! Try again!';
@@ -97,7 +109,7 @@ export const profileSlice = createSlice({
     });
     builder.addCase(updateUser.fulfilled, (state, action: PayloadAction<TResponseUserData>) => {
       state.reloadProfileStatus = true;
-      state.user = action.payload;
+      state.currentUser = { ...state.currentUser, ...action.payload };
       state.error = undefined;
     });
     builder.addCase(updateUser.rejected, (state) => {
@@ -105,12 +117,10 @@ export const profileSlice = createSlice({
     });
 
     builder.addCase(deleteUser.pending, (state) => {
-      state.reloadProfileStatus = false;
       state.error = '';
     });
     builder.addCase(deleteUser.fulfilled, (state) => {
-      state.reloadProfileStatus = true;
-      state.user = undefined;
+      state.currentUser = undefined;
       state.error = undefined;
     });
     builder.addCase(deleteUser.rejected, (state) => {
@@ -119,5 +129,5 @@ export const profileSlice = createSlice({
   },
 });
 
-export const { cancel } = profileSlice.actions;
+export const { cancel, setUser } = profileSlice.actions;
 export default profileSlice.reducer;

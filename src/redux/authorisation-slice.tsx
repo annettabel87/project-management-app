@@ -8,10 +8,10 @@ import {
 } from '../interfaces/Interfaces';
 import { tokenApi, usersApi } from '../api/token-actions/api';
 import errorMessage from '../shared/error-nessage/error-message';
-import tokenActions from '../api/token-actions/token-actions';
+import { localStorageActions } from '../utils/localStorageActions';
 
 export const registrationUser = createAsyncThunk<IResponseRegistrationData, IRegistrationData>(
-  'registration/fetch',
+  'authorization/registration',
   async (registration, { rejectWithValue }) => {
     try {
       const response = await usersApi.registerUser(registration);
@@ -25,13 +25,13 @@ export const registrationUser = createAsyncThunk<IResponseRegistrationData, IReg
 );
 
 export const loginUser = createAsyncThunk<IResponseLoginData, ILoginData>(
-  'login/fetch',
+  'authorization/login',
   async (login, { rejectWithValue }) => {
     try {
       const response = await tokenApi.createToken(login);
       if (response) {
         const { token } = response as IResponseLoginData;
-        tokenActions.setUserToken(token);
+        localStorageActions.setToken(token);
         return response;
       }
     } catch (error) {
@@ -49,6 +49,9 @@ export const authorisationSlice = createSlice({
   name: 'authorization',
   initialState: initialState,
   reducers: {
+    setToken: (state, action) => {
+      state.token = action.payload;
+    },
     logout: (state) => {
       state.loginRequestStatus = 'idle';
       state.registrationRequestStatus = 'idle';
@@ -88,5 +91,5 @@ export const authorisationSlice = createSlice({
   },
 });
 
-export const { logout, cancel } = authorisationSlice.actions;
+export const { logout, cancel, setToken } = authorisationSlice.actions;
 export default authorisationSlice.reducer;

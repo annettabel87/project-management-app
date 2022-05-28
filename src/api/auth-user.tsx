@@ -1,7 +1,7 @@
-import tokenActions from './token-actions/token-actions';
+import { localStorageActions } from '../utils/localStorageActions';
 
 export const authUser = () => {
-  const token = tokenActions.getUserToken();
+  const token = localStorageActions.getToken();
   if (token) {
     return 'Bearer ' + token;
   } else {

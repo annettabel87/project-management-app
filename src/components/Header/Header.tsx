@@ -5,20 +5,18 @@ import Modal from '../Modal/Modal';
 import CreateBoardForm from '../CreateBoardForm/CreateBoardForm';
 
 import { ROUTERS } from '../../constants/constants';
-import tokenActions from '../../api/token-actions/token-actions';
 import { useAppDispatch } from '../../hooks/ReduxHooks';
 import { logout } from '../../redux/authorisation-slice';
+
+import { localStorageActions } from '../../utils/localStorageActions';
 import s from './Header.module.scss';
-import saveLogin from '../../shared/login-save/login-save';
-import savePassword from '../../shared/password-save/password-save';
-import saveId from '../../shared/id-save/id-save';
 
 const Header: FC = () => {
   const [sticky, setSticky] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const currentUser = !!tokenActions.getUserToken();
+  const currentUser = !!localStorageActions.getToken();
   const onClose = () => {
     setIsOpen(false);
   };
@@ -38,12 +36,11 @@ const Header: FC = () => {
   }, []);
 
   const logOut = () => {
-    tokenActions.removeUserToken();
+    localStorageActions.removeToken();
     dispatch(logout());
     navigate(ROUTERS.LOGIN);
-    saveLogin.removeUserLogin();
-    savePassword.removeUserPassword();
-    saveId.removeUserId();
+
+    localStorageActions.removeCurrentUser();
   };
 
   const createBoard = () => {

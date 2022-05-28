@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Navigate, NavLink } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -7,18 +7,15 @@ import MainActionButton from '../../shared/main-action-button/main-action-button
 import { ROUTERS } from '../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import { loginUser } from '../../redux/authorisation-slice';
-import tokenActions from '../../api/token-actions/token-actions';
 import { ILoginData } from '../../interfaces/Interfaces';
 import ShowPasswords from '../../shared/show-password/show-password';
+import { localStorageActions } from '../../utils/localStorageActions';
 
 import s from './Login.module.scss';
 import style_form from '../../shared/show-password/show-password.module.scss';
-import saveLogin from '../../shared/login-save/login-save';
-import savePassword from '../../shared/password-save/password-save';
 
 const Login = () => {
-  const { error, loginRequestStatus } = useAppSelector((state) => state.authorisationSlice);
-  const token = tokenActions.getUserToken();
+  const { error, loginRequestStatus, token } = useAppSelector((state) => state.authorisationSlice);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
@@ -40,8 +37,8 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<ILoginData> = (data) => {
     data && dispatch(loginUser(data));
-    saveLogin.setUserLogin(data.login);
-    savePassword.setUserPassword(data.password);
+    localStorageActions.setLoginData(data);
+
     error !== undefined &&
       reset({
         login: '',

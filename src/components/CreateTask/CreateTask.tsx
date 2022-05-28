@@ -8,7 +8,7 @@ import s from './CreateTask.module.scss';
 
 const CreateTask: FC<ICreateTaskFormProps> = ({ onClose, columnId }: ICreateTaskFormProps) => {
   const dispatch = useAppDispatch();
-  const { users } = useAppSelector((state) => state.usersSlice);
+  const { users } = useAppSelector((state) => state.profileSlice);
 
   const {
     register,
@@ -80,16 +80,6 @@ const CreateTask: FC<ICreateTaskFormProps> = ({ onClose, columnId }: ICreateTask
             </select>
             {errors.userId && <span className={s.error}>{errors.userId.message}</span>}
           </label>
-          {/* <label htmlFor="file">
-            <p className={s.formTitle}>Load your photo</p>
-            <input
-              className="input-file"
-              type="file"
-              {...register('file', {
-                required: false,
-              })}
-            />
-          </label> */}
           <button type="submit" className={s.formBtn}>
             create
           </button>
