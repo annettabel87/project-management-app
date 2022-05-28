@@ -8,7 +8,7 @@ import s from './Task.module.scss';
 
 const Task: FC<ITaskProps> = ({ task, columnId }: ITaskProps) => {
   const dispatch = useAppDispatch();
-  const { users } = useAppSelector((state) => state.usersSlice);
+  const { users } = useAppSelector((state) => state.profileSlice);
 
   const userName = users?.filter((user) => {
     if (user.id === task.userId) {

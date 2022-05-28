@@ -112,8 +112,8 @@ export type TDeleteTaskRequest = {
 export type TProfileSliceState = {
   reloadProfileStatus: boolean;
   error?: string;
-  users?: TResponseUserData[];
-  user?: TResponseUserData;
+  users: TResponseUserData[];
+  currentUser?: TCurrentUser;
   getUsersStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
 };
 
@@ -217,4 +217,11 @@ export type TResponseUserData = {
   id: string;
   name: string;
   login: string;
+};
+
+export type TCurrentUser = {
+  id: string;
+  name: string;
+  login: string;
+  password?: string;
 };

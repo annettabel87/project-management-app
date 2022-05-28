@@ -11,34 +11,48 @@ import NotFound from '../../pages/NotFound/NotFound';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import { ROUTERS } from '../../constants/constants';
-import './App.module.scss';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
-import { getUsers } from '../../redux/edit-profile-slice';
-import saveId from '../../shared/id-save/id-save';
-import saveLogin from '../../shared/login-save/login-save';
-import { TResponseUserData } from '../../interfaces/Interfaces';
+import { getUsers, setUser } from '../../redux/profile-slice';
+import { setToken } from '../../redux/authorisation-slice';
+import { localStorageActions } from '../../utils/localStorageActions';
+
+import './App.module.scss';
 
 function App() {
   const dispatch = useAppDispatch();
-  const { users, getUsersStatus, reloadProfileStatus } = useAppSelector(
-    (state) => state.usersSlice
-  );
+  const { users, reloadProfileStatus } = useAppSelector((state) => state.profileSlice);
+  const { token } = useAppSelector((state) => state.authorisationSlice);
 
   useEffect(() => {
-    if (reloadProfileStatus) {
+    const localToken = localStorage.getItem('token');
+    if (localToken && !token) {
+      dispatch(setToken(localToken));
+    }
+    // if (!localToken && token) {
+    //   tokenActions.setUserToken(token);
+    // }
+  }, [dispatch, token]);
+
+  useEffect(() => {
+    if (users.length && token) {
+      const loginData = localStorageActions.getLoginData();
+
+      if (loginData) {
+        const userId = (users?.filter((user) => user.login === loginData.login))[0];
+        localStorageActions.updateCurrentUser(loginData, userId);
+        dispatch(setUser(localStorageActions.getCurrentUser()));
+        localStorageActions.removeLoginData();
+      }
+    }
+  }, [dispatch, users, token]);
+
+  useEffect(() => {
+    if (reloadProfileStatus && token) {
       dispatch(getUsers());
     }
-  }, [dispatch, reloadProfileStatus]);
-
-  useEffect(() => {
-    if (getUsersStatus === 'succeeded') {
-      saveId.setUserId(
-        (users?.find((user) => user.login === saveLogin.getUserLogin()) as TResponseUserData).id
-      );
-    }
-  }, [dispatch, getUsersStatus, users]);
+  }, [dispatch, reloadProfileStatus, token]);
 
   return (
     <div className="App">

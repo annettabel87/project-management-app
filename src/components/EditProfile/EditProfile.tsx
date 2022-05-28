@@ -1,22 +1,19 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
-import { cancel, getUser, updateUser } from '../../redux/edit-profile-slice';
+import { cancel, updateUser } from '../../redux/profile-slice';
 import ShowPasswords from '../../shared/show-password/show-password';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import MainActionButton from '../../shared/main-action-button/main-action-button';
-import saveLogin from '../../shared/login-save/login-save';
-import savePassword from '../../shared/password-save/password-save';
 import HeaderEnterApp from '../../shared/header-enter-app/header-enter-app';
-import { TResponseUserData, TUpdateUser } from '../../interfaces/Interfaces';
+import { TCurrentUser, TUpdateUser } from '../../interfaces/Interfaces';
 
 import s from '../../pages/Registration/Registration.module.scss';
 import style_form from '../../shared/show-password/show-password.module.scss';
-import saveId from '../../shared/id-save/id-save';
 
 type TEditProfile = {
   setEditMode: (editMode: boolean) => void;
-  user?: TResponseUserData;
+  user?: TCurrentUser;
 };
 
 const EditProfile = (props: TEditProfile) => {
@@ -29,7 +26,7 @@ const EditProfile = (props: TEditProfile) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const [name, setName] = useState<string | undefined>(user?.name);
   const [login, setLogin] = useState<string | undefined>(user?.login);
-  const [password, setPassword] = useState<string>(savePassword.getUserPassword() as string);
+  const [password, setPassword] = useState<string | undefined>(user?.password);
 
   const onSubmit: SubmitHandler<TUpdateUser & { passwordConfirm: string }> = (data) => {
     if (data.user.password !== data.passwordConfirm) {
@@ -45,8 +42,7 @@ const EditProfile = (props: TEditProfile) => {
           },
         })
       );
-      saveLogin.setUserLogin(data.user.login);
-      savePassword.setUserPassword(data.user.password);
+
       setEditMode(false);
     }
     error === undefined &&
