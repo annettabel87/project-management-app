@@ -46,7 +46,7 @@ export const initialState: TAuthorisationSliceState = {
 };
 
 export const authorisationSlice = createSlice({
-  name: 'authorisation',
+  name: 'authorization',
   initialState: initialState,
   reducers: {
     logout: (state) => {

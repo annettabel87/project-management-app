@@ -8,7 +8,7 @@ import s from './CreateTask.module.scss';
 
 const CreateTask: FC<ICreateTaskFormProps> = ({ onClose, columnId }: ICreateTaskFormProps) => {
   const dispatch = useAppDispatch();
-  const { users } = useAppSelector((state) => state.profileSlice);
+  const { users } = useAppSelector((state) => state.usersSlice);
 
   const {
     register,

@@ -112,7 +112,9 @@ export type TDeleteTaskRequest = {
 export type TProfileSliceState = {
   reloadProfileStatus: boolean;
   error?: string;
-  users?: TUsersResponse;
+  users?: TResponseUserData[];
+  user?: TResponseUserData;
+  getUsersStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
 };
 
 export type TLoginState = {

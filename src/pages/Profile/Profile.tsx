@@ -1,24 +1,26 @@
 import React, { FC, useEffect, useState } from 'react';
 
-import { useAppDispatch } from '../../hooks/ReduxHooks';
-import { getUser } from '../../redux/edit-profile-slice';
+import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import EditProfile from '../../components/ProfileEdit/Edit-profile';
 import MyProfile from '../../components/ProfileMy/My-profile';
+import saveId from '../../shared/id-save/id-save';
+import { getUser } from '../../redux/edit-profile-slice';
 
 const Profile: FC = () => {
-  const dispatch = useAppDispatch();
   const [editMode, setEditMode] = useState(false);
+  const { user } = useAppSelector((state) => state.usersSlice);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getUser());
+    dispatch(getUser(saveId.getUserId() as string));
   }, [dispatch]);
 
   return (
     <>
       {editMode ? (
-        <EditProfile setEditMode={setEditMode} />
+        <EditProfile setEditMode={setEditMode} user={user} />
       ) : (
-        <MyProfile setEditMode={setEditMode} />
+        <MyProfile setEditMode={setEditMode} user={user} />
       )}
     </>
   );
