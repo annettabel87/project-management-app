@@ -1,21 +1,39 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { TResponseUserData, TUpdateUser } from '../interfaces/Interfaces';
+import { TProfileSliceState, TResponseUserData, TUpdateUser } from '../interfaces/Interfaces';
 import { usersApi } from '../api/token-actions/api';
-import saveLogin from '../shared/login-save/login-save';
+import errorMessage from '../shared/error-nessage/error-message';
 
-export const getUser = createAsyncThunk<TResponseUserData[]>('getUsers/fetch', async () => {
-  return await usersApi.getUser().then((data) => {
-    return data.data;
-  });
-});
+export const getUsers = createAsyncThunk<TResponseUserData[]>(
+  'getUsers/fetch',
+  async (_, { rejectWithValue }) => {
+    try {
+      return await usersApi.getUsers();
+    } catch (error) {
+      return rejectWithValue(errorMessage(error));
+    }
+  }
+);
+
+export const getUser = createAsyncThunk<TResponseUserData, string>(
+  'getUser/fetch',
+  async (userId: string, { rejectWithValue }) => {
+    try {
+      return await usersApi.getUser(userId);
+    } catch (error) {
+      return rejectWithValue(errorMessage(error));
+    }
+  }
+);
 
 export const updateUser = createAsyncThunk<TResponseUserData, TUpdateUser>(
   'updateUser/fetch',
-  async ({ userId, user }: TUpdateUser) => {
-    return await usersApi.updateUser(userId, user).then((data) => {
-      return data;
-    });
+  async ({ userId, user }: TUpdateUser, { rejectWithValue }) => {
+    try {
+      return await usersApi.updateUser(userId, user);
+    } catch (error) {
+      return rejectWithValue(errorMessage(error));
+    }
   }
 );
 
@@ -28,26 +46,13 @@ export const deleteUser = createAsyncThunk<string, string>(
   }
 );
 
-export const initialState: {
-  user?: TResponseUserData;
-  getUserRequestStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
-  updateUserRequestStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
-  deleteUserRequestStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
-  error?: string;
-} = {
-  user: {
-    id: '',
-    name: '',
-    login: '',
-  },
-  getUserRequestStatus: 'idle',
-  updateUserRequestStatus: 'idle',
-  deleteUserRequestStatus: 'idle',
-  error: '',
+export const initialState: TProfileSliceState = {
+  reloadProfileStatus: true,
+  getUsersStatus: 'idle',
 };
 
-export const usersSlice = createSlice({
-  name: 'authorisation',
+export const profileSlice = createSlice({
+  name: 'edit-profile-slice',
   initialState: initialState,
   reducers: {
     cancel: (state) => {
@@ -55,48 +60,64 @@ export const usersSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getUser.pending, (state) => {
-      state.getUserRequestStatus = 'pending';
+    builder.addCase(getUsers.pending, (state) => {
+      state.getUsersStatus = 'pending';
+      state.error = '';
     });
-    builder.addCase(getUser.fulfilled, (state, action: PayloadAction<TResponseUserData[]>) => {
-      state.getUserRequestStatus = 'succeeded';
-      state.user = action.payload.find(
-        (user) => user.login === saveLogin.getUserLogin()
-      ) as TResponseUserData;
+    builder.addCase(getUsers.fulfilled, (state, action: PayloadAction<TResponseUserData[]>) => {
+      state.getUsersStatus = 'succeeded';
+      state.users = action.payload;
       state.error = undefined;
+      state.reloadProfileStatus = false;
+    });
+    builder.addCase(getUsers.rejected, (state) => {
+      state.getUsersStatus = 'failed';
+      state.error = 'Error! In page loading! Try again!';
+    });
+
+    builder.addCase(getUser.pending, (state) => {
+      state.error = '';
+    });
+    builder.addCase(getUser.fulfilled, (state, action: PayloadAction<TResponseUserData>) => {
+      state.user = action.payload;
+      state.user = {
+        name: action.payload.name,
+        login: action.payload.login,
+        id: action.payload.id,
+      };
+      state.error = undefined;
+      state.reloadProfileStatus = false;
     });
     builder.addCase(getUser.rejected, (state) => {
-      state.getUserRequestStatus = 'failed';
       state.error = 'Error! In page loading! Try again!';
     });
 
     builder.addCase(updateUser.pending, (state) => {
-      state.updateUserRequestStatus = 'pending';
+      state.error = '';
     });
     builder.addCase(updateUser.fulfilled, (state, action: PayloadAction<TResponseUserData>) => {
-      state.updateUserRequestStatus = 'succeeded';
+      state.reloadProfileStatus = true;
       state.user = action.payload;
       state.error = undefined;
     });
     builder.addCase(updateUser.rejected, (state) => {
-      state.updateUserRequestStatus = 'failed';
       state.error = 'Error! In page loading! Try again!';
     });
 
     builder.addCase(deleteUser.pending, (state) => {
-      state.deleteUserRequestStatus = 'pending';
+      state.reloadProfileStatus = false;
+      state.error = '';
     });
     builder.addCase(deleteUser.fulfilled, (state) => {
-      state.deleteUserRequestStatus = 'succeeded';
+      state.reloadProfileStatus = true;
       state.user = undefined;
       state.error = undefined;
     });
     builder.addCase(deleteUser.rejected, (state) => {
-      state.deleteUserRequestStatus = 'failed';
       state.error = 'Error! In page loading! Try again!';
     });
   },
 });
 
-export const { cancel } = usersSlice.actions;
-export default usersSlice.reducer;
+export const { cancel } = profileSlice.actions;
+export default profileSlice.reducer;

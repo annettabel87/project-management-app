@@ -8,8 +8,15 @@ export const usersApi = {
       .post(API_ENDPOINTS.SIGNUP, { ...data })
       .then((response) => response.data);
   },
-  getUser() {
-    return axiosApiInstance.get<TResponseUserData[]>(API_ENDPOINTS.USERS);
+  getUsers() {
+    return axiosApiInstance
+      .get<TResponseUserData[]>(API_ENDPOINTS.USERS)
+      .then((response) => response.data);
+  },
+  getUser(userId: string) {
+    return axiosApiInstance
+      .get<TResponseUserData>(`${API_ENDPOINTS.USERS}/${userId}`)
+      .then((response) => response.data);
   },
   updateUser(userId: string | undefined, userUpdateData: IRegistrationData) {
     return axiosApiInstance

@@ -11,13 +11,14 @@ import { logout } from '../../redux/authorisation-slice';
 import s from './Header.module.scss';
 import saveLogin from '../../shared/login-save/login-save';
 import savePassword from '../../shared/password-save/password-save';
+import saveId from '../../shared/id-save/id-save';
 
 const Header: FC = () => {
   const [sticky, setSticky] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const currentUser = tokenActions.getUserToken() ? true : false;
+  const currentUser = !!tokenActions.getUserToken();
   const onClose = () => {
     setIsOpen(false);
   };
@@ -42,6 +43,7 @@ const Header: FC = () => {
     navigate(ROUTERS.LOGIN);
     saveLogin.removeUserLogin();
     savePassword.removeUserPassword();
+    saveId.removeUserId();
   };
 
   const createBoard = () => {

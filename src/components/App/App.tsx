@@ -14,15 +14,31 @@ import { ROUTERS } from '../../constants/constants';
 import './App.module.scss';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import { useAppDispatch } from '../../hooks/ReduxHooks';
-import { getUsers } from '../../redux/profile-slice';
+import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
+import { getUsers } from '../../redux/edit-profile-slice';
+import saveId from '../../shared/id-save/id-save';
+import saveLogin from '../../shared/login-save/login-save';
+import { TResponseUserData } from '../../interfaces/Interfaces';
 
 function App() {
   const dispatch = useAppDispatch();
+  const { users, getUsersStatus, reloadProfileStatus } = useAppSelector(
+    (state) => state.usersSlice
+  );
 
   useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
+    if (reloadProfileStatus) {
+      dispatch(getUsers());
+    }
+  }, [dispatch, reloadProfileStatus]);
+
+  useEffect(() => {
+    if (getUsersStatus === 'succeeded') {
+      saveId.setUserId(
+        (users?.find((user) => user.login === saveLogin.getUserLogin()) as TResponseUserData).id
+      );
+    }
+  }, [dispatch, getUsersStatus, users]);
 
   return (
     <div className="App">

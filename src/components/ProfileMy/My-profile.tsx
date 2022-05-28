@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import HeaderEnterApp from '../../shared/header-enter-app/header-enter-app';
 import style_form from '../../shared/show-password/show-password.module.scss';
 import savePassword from '../../shared/password-save/password-save';
-import { deleteUser } from '../../redux/edit-profile-slice';
+import { deleteUser, getUser } from '../../redux/edit-profile-slice';
 import { useNavigate } from 'react-router-dom';
 import { ROUTERS } from '../../constants/constants';
 import saveLogin from '../../shared/login-save/login-save';
@@ -13,14 +13,16 @@ import Modal from '../../components/Modal/Modal';
 import ConfirmationWindow from '../../components/ConfirmationWindow/ConfirmationWindow';
 
 import s from '../../pages/Registration/Registration.module.scss';
+import saveId from '../../shared/id-save/id-save';
+import { TResponseUserData } from '../../interfaces/Interfaces';
 
 type TMyProfile = {
   setEditMode: (editMode: boolean) => void;
+  user?: TResponseUserData;
 };
 
 const MyProfile = (props: TMyProfile) => {
-  const { setEditMode } = props;
-  const { user } = useAppSelector((state) => state.usersSlice);
+  const { setEditMode, user } = props;
   const [openWindow, setOpenWindow] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -30,6 +32,7 @@ const MyProfile = (props: TMyProfile) => {
       saveLogin.removeUserLogin();
       savePassword.removeUserPassword();
       tokenActions.removeUserToken();
+      saveId.removeUserId();
       setOpenWindow(false);
       navigate(`${ROUTERS.LOGIN}`);
     });

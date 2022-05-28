@@ -4,7 +4,7 @@ import tokenActions from '../../api/token-actions/token-actions';
 import { ROUTERS } from '../../constants/constants';
 
 const ProtectedRoute: FC<{ children?: JSX.Element }> = ({ children }) => {
-  const auth = tokenActions.getUserToken() ? true : false;
+  const auth = !!tokenActions.getUserToken();
 
   if (!auth) {
     return <Navigate to={ROUTERS.LOGIN} replace />;

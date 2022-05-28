@@ -1,25 +1,26 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
-import { cancel, updateUser } from '../../redux/edit-profile-slice';
+import { cancel, getUser, updateUser } from '../../redux/edit-profile-slice';
 import ShowPasswords from '../../shared/show-password/show-password';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import MainActionButton from '../../shared/main-action-button/main-action-button';
 import saveLogin from '../../shared/login-save/login-save';
 import savePassword from '../../shared/password-save/password-save';
 import HeaderEnterApp from '../../shared/header-enter-app/header-enter-app';
-import { TUpdateUser } from '../../interfaces/Interfaces';
+import { TResponseUserData, TUpdateUser } from '../../interfaces/Interfaces';
 
 import s from '../../pages/Registration/Registration.module.scss';
 import style_form from '../../shared/show-password/show-password.module.scss';
+import saveId from '../../shared/id-save/id-save';
 
 type TEditProfile = {
   setEditMode: (editMode: boolean) => void;
+  user?: TResponseUserData;
 };
 
 const EditProfile = (props: TEditProfile) => {
-  const { setEditMode } = props;
-  const { user } = useAppSelector((state) => state.usersSlice);
+  const { setEditMode, user } = props;
   const { error, registrationRequestStatus } = useAppSelector((state) => state.authorisationSlice);
   const dispatch = useAppDispatch();
 
@@ -38,11 +39,9 @@ const EditProfile = (props: TEditProfile) => {
         updateUser({
           userId: user?.id,
           user: {
-            name: data.user.name ? data.user.name : (user?.name as string),
-            login: data.user.login ? data.user.login : (user?.login as string),
-            password: data.user.password
-              ? data.user.password
-              : (savePassword.getUserPassword() as string),
+            name: data.user.name,
+            login: data.user.login,
+            password: data.user.password,
           },
         })
       );
