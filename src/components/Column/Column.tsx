@@ -93,7 +93,7 @@ const Column: FC<IColumnProps> = ({ column, index }: IColumnProps) => {
               {openTitle ? title : column.title}
             </p>
           )}
-          <Droppable droppableId={column.id} type="task" direction="vertical">
+          <Droppable droppableId={column.id} type="task">
             {(provided: DroppableProvided) => (
               <div className={s.taskWrapper} ref={provided.innerRef} {...provided.droppableProps}>
                 {column.tasks?.map((task) => (
