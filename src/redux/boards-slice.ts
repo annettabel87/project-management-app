@@ -133,6 +133,7 @@ export const boardsSlice = createSlice({
     builder.addCase(getBoardById.fulfilled, (state, action: PayloadAction<IFullBoardData>) => {
       state.requestStatus = 'succeeded';
       state.selectBoard = action.payload;
+      state.selectBoard.columns = state.selectBoard.columns.sort((a, b) => a.order - b.order);
       state.reloadStatus = false;
     });
     builder.addCase(getBoardById.rejected, (state) => {

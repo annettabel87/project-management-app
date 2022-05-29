@@ -10,7 +10,7 @@ const Board: FC = () => {
   const { selectBoard, reloadStatus } = useAppSelector((state) => state.boardsSlice);
 
   const { reloadColumnsStatus } = useAppSelector((state) => state.columnsSlice);
-  const { title, description, columns } = selectBoard;
+  const { id, title, description, columns } = selectBoard;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const toMain = () => {
@@ -30,7 +30,7 @@ const Board: FC = () => {
         <button className={s.homeBtn} onClick={toMain}></button>
         <p className={s.boardTitle}>{title}</p>
         <p className={s.text}>{description}</p>
-        {reloadStatus ? <div>Loading</div> : <ColumnsField columns={columns} />}
+        {reloadStatus ? <div>Loading</div> : <ColumnsField columns={columns} boardId={id} />}
       </div>
     </section>
   );
