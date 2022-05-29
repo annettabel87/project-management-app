@@ -1,14 +1,15 @@
 import React, { FC, useState } from 'react';
 import { useAppDispatch } from '../../hooks/ReduxHooks';
-import { IColumnData } from '../../interfaces/Interfaces';
+import { IColumnProps } from '../../interfaces/Interfaces';
 import { deleteColumn, updateColumn } from '../../redux/columns-slice';
+import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import ConfirmationWindow from '../ConfirmationWindow/ConfirmationWindow';
 import CreateTask from '../CreateTask/CreateTask';
 import Modal from '../Modal/Modal';
 import Task from '../Task/Task';
 import s from './Column.module.scss';
 
-const Column: FC<IColumnData> = (column: IColumnData) => {
+const Column: FC<IColumnProps> = ({ column, index }: IColumnProps) => {
   const dispatch = useAppDispatch();
 
   const [isOpenConfirm, setIsOpenConfirm] = useState<boolean>(false);
@@ -52,61 +53,70 @@ const Column: FC<IColumnData> = (column: IColumnData) => {
   };
 
   return (
-    <div className={s.column}>
-      <button
-        className={s.columnBtn}
-        onClick={(e) => {
-          e.stopPropagation();
-          setIsOpenConfirm(true);
-        }}
-      >
-        X
-      </button>
-      {openTitle ? (
-        <form onSubmit={onSubmit}>
-          <div className={s.btnWrapper}>
-            <button type="submit" className={s.formBtn}>
-              Submit
-            </button>
-            <button type="button" className={s.formBtn} onClick={cancelHandler}>
-              Cancel
-            </button>
+    <Draggable draggableId={column.id} index={index}>
+      {(provided: DraggableProvided) => (
+        <div
+          className={s.column}
+          ref={provided.innerRef}
+          {...provided.dragHandleProps}
+          {...provided.draggableProps}
+        >
+          <button
+            className={s.columnBtn}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpenConfirm(true);
+            }}
+          >
+            X
+          </button>
+          {openTitle ? (
+            <form onSubmit={onSubmit}>
+              <div className={s.btnWrapper}>
+                <button type="submit" className={s.formBtn}>
+                  Submit
+                </button>
+                <button type="button" className={s.formBtn} onClick={cancelHandler}>
+                  Cancel
+                </button>
+              </div>
+
+              <input
+                type="text"
+                className={s.formInput}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              ></input>
+            </form>
+          ) : (
+            <p className={s.title} onClick={() => setOpenTitle(true)}>
+              {openTitle ? title : column.title}
+            </p>
+          )}
+          <div className={s.taskWrapper}>
+            {column.tasks?.map((task) => (
+              <Task task={task} columnId={column.id} key={task.id} />
+            ))}
           </div>
 
-          <input
-            type="text"
-            className={s.formInput}
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          ></input>
-        </form>
-      ) : (
-        <p className={s.title} onClick={() => setOpenTitle(true)}>
-          {openTitle ? title : column.title}
-        </p>
+          <button
+            className={s.taskCreateBtn}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpenCreate(true);
+            }}
+          >
+            + Add another task
+          </button>
+          <Modal onClose={onClose} open={isOpenConfirm}>
+            <ConfirmationWindow onClose={onClose} handleOK={deleteHandler} />
+          </Modal>
+          <Modal onClose={onClose} open={isOpenCreate}>
+            <CreateTask onClose={onClose} columnId={column.id} />
+          </Modal>
+        </div>
       )}
-      <div className={s.taskWrapper}>
-        {column.tasks?.map((task) => (
-          <Task task={task} columnId={column.id} key={task.id} />
-        ))}
-      </div>
-
-      <button
-        className={s.taskCreateBtn}
-        onClick={(e) => {
-          e.stopPropagation();
-          setIsOpenCreate(true);
-        }}
-      >
-        + Add another task
-      </button>
-      <Modal onClose={onClose} open={isOpenConfirm}>
-        <ConfirmationWindow onClose={onClose} handleOK={deleteHandler} />
-      </Modal>
-      <Modal onClose={onClose} open={isOpenCreate}>
-        <CreateTask onClose={onClose} columnId={column.id} />
-      </Modal>
-    </div>
+    </Draggable>
   );
 };
 

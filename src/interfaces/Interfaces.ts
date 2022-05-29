@@ -225,3 +225,11 @@ export type TCurrentUser = {
   login: string;
   password?: string;
 };
+export interface IColumnProps {
+  column: IColumnData;
+  index: number;
+}
+export type ColumnFieldPropsType = {
+  columns: IColumnData[];
+  boardId: string;
+};
