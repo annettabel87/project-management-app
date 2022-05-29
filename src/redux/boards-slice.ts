@@ -134,6 +134,9 @@ export const boardsSlice = createSlice({
       state.requestStatus = 'succeeded';
       state.selectBoard = action.payload;
       state.selectBoard.columns = state.selectBoard.columns.sort((a, b) => a.order - b.order);
+      state.selectBoard.columns.forEach((item) => {
+        item.tasks.sort((a, b) => a.order - b.order);
+      });
       state.reloadStatus = false;
     });
     builder.addCase(getBoardById.rejected, (state) => {

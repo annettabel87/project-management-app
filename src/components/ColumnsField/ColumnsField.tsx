@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { DragDropContext, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd';
 import { useAppDispatch } from '../../hooks/ReduxHooks';
 import { ColumnFieldPropsType } from '../../interfaces/Interfaces';
-import { updateColumn } from '../../redux/columns-slice';
+import { updateColumn, updateTask } from '../../redux/columns-slice';
 import Column from '../Column/Column';
 import CreateColumn from '../CreateColumn/CreateColumn';
 import Modal from '../Modal/Modal';
@@ -34,6 +34,36 @@ const ColumnsField: FC<ColumnFieldPropsType> = ({ columns, boardId }: ColumnFiel
             columnId: draggableId,
           })
         );
+      }
+    }
+
+    if (type === 'task') {
+      const startColumn = columns.find((column) => column.id === source.droppableId);
+      const endColumn = columns.find((column) => column.id === destination.droppableId);
+      if (JSON.stringify(startColumn) === JSON.stringify(endColumn)) {
+        if (startColumn) {
+          const items = [...startColumn?.tasks];
+          const draggableItem = items.find((item) => item.id == draggableId);
+          const reorderedItem = items.splice(source.index, 1);
+          items.splice(destination.index, 0, ...reorderedItem);
+          if (draggableItem) {
+            dispatch(
+              updateTask({
+                taskData: {
+                  userId: draggableItem.userId,
+                  title: draggableItem.title,
+                  description: draggableItem.description,
+                  boardId: boardId,
+                  columnId: startColumn.id,
+                  order: destination.index,
+                },
+                boardId: boardId,
+                columnId: startColumn.id,
+                taskId: draggableItem.id,
+              })
+            );
+          }
+        }
       }
     }
   };

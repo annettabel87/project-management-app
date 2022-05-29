@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import { useAppDispatch } from '../../hooks/ReduxHooks';
 import { IColumnProps } from '../../interfaces/Interfaces';
 import { deleteColumn, updateColumn } from '../../redux/columns-slice';
-import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
+import { Draggable, DraggableProvided, Droppable, DroppableProvided } from 'react-beautiful-dnd';
 import ConfirmationWindow from '../ConfirmationWindow/ConfirmationWindow';
 import CreateTask from '../CreateTask/CreateTask';
 import Modal from '../Modal/Modal';
@@ -93,11 +93,16 @@ const Column: FC<IColumnProps> = ({ column, index }: IColumnProps) => {
               {openTitle ? title : column.title}
             </p>
           )}
-          <div className={s.taskWrapper}>
-            {column.tasks?.map((task) => (
-              <Task task={task} columnId={column.id} key={task.id} />
-            ))}
-          </div>
+          <Droppable droppableId={column.id} type="task" direction="vertical">
+            {(provided: DroppableProvided) => (
+              <div className={s.taskWrapper} ref={provided.innerRef} {...provided.droppableProps}>
+                {column.tasks?.map((task) => (
+                  <Task task={task} columnId={column.id} key={task.id} />
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
 
           <button
             className={s.taskCreateBtn}

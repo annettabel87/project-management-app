@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import { ITaskProps } from '../../interfaces/Interfaces';
 import { removeTask, updateTask } from '../../redux/columns-slice';
@@ -64,58 +65,72 @@ const Task: FC<ITaskProps> = ({ task, columnId }: ITaskProps) => {
   };
 
   return (
-    <div className={openTitle ? `${s.task} ${s.active}` : s.task}>
-      <button
-        className={s.taskBtn}
-        onClick={(e) => {
-          e.stopPropagation();
-          setIsOpen(true);
-        }}
-      >
-        X
-      </button>
-      <div className={s.titleWrapper}>
-        {openTitle ? (
-          <form onSubmit={onSubmit}>
-            <textarea
-              name="title"
-              className={s.formInput}
-              value={formData.title}
-              onChange={onChange}
-            ></textarea>
-            <textarea
-              name="description"
-              className={s.formInput}
-              value={formData.description}
-              onChange={onChange}
-            ></textarea>
+    <Draggable draggableId={task.id} index={task.order}>
+      {(provided: DraggableProvided) => (
+        <div
+          className={openTitle ? `${s.task} ${s.active}` : s.task}
+          {...provided.dragHandleProps}
+          {...provided.draggableProps}
+          ref={provided.innerRef}
+        >
+          <button
+            className={s.taskBtn}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpen(true);
+            }}
+          >
+            X
+          </button>
+          <div className={s.titleWrapper}>
+            {openTitle ? (
+              <form onSubmit={onSubmit}>
+                <textarea
+                  name="title"
+                  className={s.formInput}
+                  value={formData.title}
+                  onChange={onChange}
+                ></textarea>
+                <textarea
+                  name="description"
+                  className={s.formInput}
+                  value={formData.description}
+                  onChange={onChange}
+                ></textarea>
 
-            <select name="userId" className={s.select} value={formData.user} onChange={onChange}>
-              {users &&
-                users.map((user) => (
-                  <option key={user.id} value={user.id}>
-                    {user.name}
-                  </option>
-                ))}
-            </select>
+                <select
+                  name="userId"
+                  className={s.select}
+                  value={formData.user}
+                  onChange={onChange}
+                >
+                  {users &&
+                    users.map((user) => (
+                      <option key={user.id} value={user.id}>
+                        {user.name}
+                      </option>
+                    ))}
+                </select>
 
-            <button className={s.okBtn}>ok</button>
-          </form>
-        ) : (
-          <>
-            <p className={s.title}>{task.title}</p>
-            <p className={s.text}>{task.description}</p>
-            <p className={s.textUser}>{userName && userName.name}</p>
-            {!!task.files.length && <button>file</button>}
-            <button className={s.editBtn} onClickCapture={() => setOpenTitle(true)}></button>
-          </>
-        )}
-      </div>
+                <button className={s.okBtn}>ok</button>
+              </form>
+            ) : (
+              <>
+                <p className={s.title}>{task.title}</p>
+                <p className={s.text}>{task.description}</p>
+                <p className={s.textUser}>{userName && userName.name}</p>
+                {!!task.files.length && <button>file</button>}
+                <button className={s.editBtn} onClickCapture={() => setOpenTitle(true)}></button>
+              </>
+            )}
+          </div>
 
-      <Modal onClose={onClose} open={isOpen}>
-        <ConfirmationWindow onClose={onClose} handleOK={deleteHandler} />
-      </Modal>
-    </div>
+          <Modal onClose={onClose} open={isOpen}>
+            <ConfirmationWindow onClose={onClose} handleOK={deleteHandler} />
+          </Modal>
+        </div>
+      )}
+    </Draggable>
   );
 };
 
