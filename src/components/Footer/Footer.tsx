@@ -1,7 +1,10 @@
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import s from './Footer.module.scss';
 
 const Footer: FC = () => {
+  const { t } = useTranslation();
   return (
     <div className={s.footer}>
       <img
@@ -15,13 +18,13 @@ const Footer: FC = () => {
       <div>2022</div>
       <div className={s.github}>
         <a href="https://github.com/annettabel87" className={s.github__link}>
-          Anna Repeshko
+          {t('anna_repeshko')}
         </a>
         <a href="https://github.com/zhirkovpetr" className={s.github__link}>
-          Petr Zhirkov
+          {t('petr_zhirkov')}
         </a>
         <a href="https://github.com/Der200" className={s.github__link}>
-          Nikita Kandziuba
+          {t('nikita_kandziuba')}
         </a>
       </div>
     </div>

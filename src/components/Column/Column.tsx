@@ -1,16 +1,20 @@
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Draggable, DraggableProvided, Droppable, DroppableProvided } from 'react-beautiful-dnd';
+
 import { useAppDispatch } from '../../hooks/ReduxHooks';
 import { IColumnProps } from '../../interfaces/Interfaces';
 import { deleteColumn, updateColumn } from '../../redux/columns-slice';
-import { Draggable, DraggableProvided, Droppable, DroppableProvided } from 'react-beautiful-dnd';
 import ConfirmationWindow from '../ConfirmationWindow/ConfirmationWindow';
 import CreateTask from '../CreateTask/CreateTask';
 import Modal from '../Modal/Modal';
 import Task from '../Task/Task';
+
 import s from './Column.module.scss';
 
 const Column: FC<IColumnProps> = ({ column, index }: IColumnProps) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const [isOpenConfirm, setIsOpenConfirm] = useState<boolean>(false);
   const [isOpenCreate, setIsOpenCreate] = useState<boolean>(false);
@@ -74,10 +78,10 @@ const Column: FC<IColumnProps> = ({ column, index }: IColumnProps) => {
             <form onSubmit={onSubmit}>
               <div className={s.btnWrapper}>
                 <button type="submit" className={s.formBtn}>
-                  Submit
+                  {t('submit')}
                 </button>
                 <button type="button" className={s.formBtn} onClick={cancelHandler}>
-                  Cancel
+                  {t('cancel')}
                 </button>
               </div>
 
@@ -86,7 +90,7 @@ const Column: FC<IColumnProps> = ({ column, index }: IColumnProps) => {
                 className={s.formInput}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-              ></input>
+              />
             </form>
           ) : (
             <p className={s.title} onClick={() => setOpenTitle(true)}>
@@ -111,7 +115,7 @@ const Column: FC<IColumnProps> = ({ column, index }: IColumnProps) => {
               setIsOpenCreate(true);
             }}
           >
-            + Add another task
+            {t('add_another_task')}
           </button>
           <Modal onClose={onClose} open={isOpenConfirm}>
             <ConfirmationWindow onClose={onClose} handleOK={deleteHandler} />

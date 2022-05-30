@@ -1,16 +1,20 @@
 import { FC, useState } from 'react';
 import { DragDropContext, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd';
+import { useTranslation } from 'react-i18next';
+
 import { useAppDispatch } from '../../hooks/ReduxHooks';
 import { ColumnFieldPropsType } from '../../interfaces/Interfaces';
 import { addTask, removeTask, updateColumn, updateTask } from '../../redux/columns-slice';
 import Column from '../Column/Column';
 import CreateColumn from '../CreateColumn/CreateColumn';
 import Modal from '../Modal/Modal';
+
 import s from './ColumnsField.module.scss';
 
 const ColumnsField: FC<ColumnFieldPropsType> = ({ columns, boardId }: ColumnFieldPropsType) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   const onClose = () => {
     setIsOpen(false);
   };
@@ -109,7 +113,7 @@ const ColumnsField: FC<ColumnFieldPropsType> = ({ columns, boardId }: ColumnFiel
                   <Column key={column.id} column={column} index={column.order} />
                 ))}
               <button className={s.createBtn} onClick={() => setIsOpen(true)}>
-                + Create column
+                + {t('create_column')}
               </button>
               {provided.placeholder}
             </div>
