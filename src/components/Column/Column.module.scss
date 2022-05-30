@@ -1,103 +1,119 @@
 .column {
-    position: relative;
-    border: 1px solid black;
-    background-color: #eaeaea;
-    padding: 10px;
-    min-width: 300px;
-    max-height: 55vh;
-    border-radius: 5px;
-    text-align: center;
-    font-size: 36px;
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    box-shadow: 0 4px 18px 2px #575f61;
-    transition: all ease-in 0.3s;
-    overflow-y: scroll;
-    @media screen and (max-width: 716px) {
-        min-height: 200px;
-    }
-    &.isDragging {
-        background-color: cadetblue;
-    }    
+  position: relative;
+  border: 1px solid black;
+  background-color: #eaeaea;
+  padding: 10px;
+  width: 400px;
+  height: 100%;
+  min-height: 40vh;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 36px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  box-shadow: 2px 5px 10px 2px rgba(0, 0, 0, 0.47);;
+  transition: all ease-in 0.3s;
+  overflow-y: scroll;
+  @media screen and (max-width: 716px) {
+    min-height: 200px;
+  }
+
+  &.isDragging {
+    background-color: cadetblue;
+  }
+}
+
+.column:hover {
+  box-shadow: none;
 }
 
 .taskCreateBtn {
-    border: none;
-    color: #646464;
-    background-color: #eaeaea;
-    font-size: 21px;
-    cursor: pointer;
-    transition: all ease-in 0.5s;
+  border: none;
+  color: #646464;
+  background-color: #eaeaea;
+  font-size: 21px;
+  cursor: pointer;
+  transition: all ease-in 0.5s;
 }
+
 .taskCreateBtn:hover {
-    color: rgb(68, 124, 170);
-    font-weight: 500;
-    transform: scale(1.2);
+  color: rgb(68, 124, 170);
+  font-weight: 500;
+  transform: scale(1.2);
 }
+
 .title {
-    line-height: 0;
-    font-weight: 400;
+  line-height: 0;
+  font-weight: 400;
 }
+
 .columnBtn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    height: 30px;
-    width: 30px;
-    font-size: 21px;
-    transition: all ease-in 0.5s;
-    cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  transition: all ease-in 0.5s;
+  cursor: pointer;
 }
+
+.columnBtn:hover {
+  transform: scale(1.2);
+}
+
 .taskWrapper {
-    border-radius: 5px;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    min-height: 80%;
-    min-width: 95%;
-    &.draggingOver {
-        background-color: #575f61;
-    }
-}
-.formInput {
-    height: 30px;
-    width: 80%;
-    border-radius: 5px;
-    font-size: 30px;
-    &::placeholder {
-        font-size: 21px;
-    }
-}
-.formBtn{
-    font-size: 21px;
-    cursor: pointer;
-    transition: all ease-in 0.3s;
-}
-.btnWrapper {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 36px;
-}
-.column::-webkit-scrollbar {
-    width: 5px;
-    
-  }  
-  
-  .column::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    width: 10px;
+  border-radius: 5px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 80%;
+  min-width: 95%;
+
+  &.draggingOver {
+    background-color: #575f61;
   }
-  
- 
-  .column::-webkit-scrollbar-thumb {
-    background: cadetblue;  
-    border-radius: 10px;    
-  }  
- 
-  
+}
+
+.formInput {
+  height: 30px;
+  width: 80%;
+  border-radius: 5px;
+  font-size: 30px;
+
+  &::placeholder {
+    font-size: 21px;
+  }
+}
+
+.formBtn {
+  font-size: 21px;
+  cursor: pointer;
+  transition: all ease-in 0.3s;
+}
+
+.btnWrapper {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 36px;
+}
+
+.column::-webkit-scrollbar {
+  width: 5px;
+
+}
+
+.column::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  width: 10px;
+}
+
+
+.column::-webkit-scrollbar-thumb {
+  background: cadetblue;
+  border-radius: 10px;
+}
+

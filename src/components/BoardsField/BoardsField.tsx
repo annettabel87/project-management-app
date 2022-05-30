@@ -1,7 +1,6 @@
 import { FC } from 'react';
 
 import BoardPreview from '../BoardPreview/BoardPreview';
-
 import { IBoardData } from '../../interfaces/Interfaces';
 
 import s from './BoardsField.module.scss';

@@ -38,7 +38,7 @@ const BoardPreview: FC<IBoardData> = ({ id, title, description }: IBoardData) =>
         X
       </button>
       <div>
-        <p className={s.title}>{title}</p>
+        <p className={s.title}>{title.length < 20 ? title : `${title.substring(0, 17)}..`}</p>
         <p className={s.description}>{description}</p>
       </div>
 

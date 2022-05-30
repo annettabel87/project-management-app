@@ -7,9 +7,9 @@ import BoardsField from '../../components/BoardsField/BoardsField';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import { getBoards } from '../../redux/boards-slice';
 import imageAdd from '../../assets/image/svg/add.svg';
+import { Preloader } from '../../shared/preloader/preloader';
 
 import s from './Main.module.scss';
-import { Preloader } from '../../shared/preloader/preloader';
 
 const Main: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);

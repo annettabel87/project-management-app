@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import './NotFound.module.scss';
 import { useTranslation } from 'react-i18next';
+
+import './NotFound.module.scss';
 
 const NotFound: FC = () => {
   const { t } = useTranslation();

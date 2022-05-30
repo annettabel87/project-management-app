@@ -1,35 +1,39 @@
 .boardPage {
-    height: 74vh;
+  height: 74vh;
 }
+
 .container {
-    max-width: 90%;
-    margin: 0 auto;
-    padding: 15px;
-    overflow-x: auto;
-    @media screen and (max-width: 716px) {
-        text-align: center;
-    }
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 15px;
+  overflow-x: auto;
+  @media screen and (max-width: 716px) {
+    text-align: center;
+  }
 }
 
 .boardTitle {
-    text-align: center;
-    font-size: 36px;
-    line-height: 0;
-    font-weight: 600;
+  text-align: center;
+  font-size: 36px;
+  line-height: 0;
+  font-weight: 600;
 }
 
 .text {
-    font-size: 23px;
-    text-align: center;
+  font-size: 23px;
+  text-align: center;
 }
+
 .error {
-    color: red;
+  color: red;
 }
+
 .homeBtn {
-    background-image: url('../../../public/assets/Home.png');
-    width: 35px;
-    height: 35px;
-    background-size: contain;
-    border-radius: 5px;
-    position: absolute;
+  background-image: url('../../assets/image/svg/back.svg');
+  width: 35px;
+  height: 35px;
+  background-size: contain;
+  border-radius: 5px;
+  position: absolute;
+  cursor: pointer;
 }
