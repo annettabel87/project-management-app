@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
+import { Draggable, DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import { ITaskProps } from '../../interfaces/Interfaces';
 import { removeTask, updateTask } from '../../redux/columns-slice';
@@ -10,6 +10,7 @@ import s from './Task.module.scss';
 const Task: FC<ITaskProps> = ({ task, columnId }: ITaskProps) => {
   const dispatch = useAppDispatch();
   const { users } = useAppSelector((state) => state.profileSlice);
+  const { requestStatus } = useAppSelector((state) => state.boardsSlice);
 
   const userName = users?.filter((user) => {
     if (user.id === task.userId) {
@@ -66,9 +67,12 @@ const Task: FC<ITaskProps> = ({ task, columnId }: ITaskProps) => {
 
   return (
     <Draggable draggableId={task.id} index={task.order}>
-      {(provided: DraggableProvided) => (
+      {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
         <div
-          className={openTitle ? `${s.task} ${s.active}` : s.task}
+          className={`${openTitle ? `${s.task} ${s.active}` : s.task} ${
+            snapshot.isDragging ? s.isDragging : s.noDragging
+          }
+          `}
           {...provided.dragHandleProps}
           {...provided.draggableProps}
           ref={provided.innerRef}
@@ -84,7 +88,7 @@ const Task: FC<ITaskProps> = ({ task, columnId }: ITaskProps) => {
           </button>
           <div className={s.titleWrapper}>
             {openTitle ? (
-              <form onSubmit={onSubmit}>
+              <form onSubmit={onSubmit} className={s.taskUpdate}>
                 <textarea
                   name="title"
                   className={s.formInput}

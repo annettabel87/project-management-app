@@ -16,10 +16,13 @@
     box-sizing: border-box;
     box-shadow: 0 4px 18px 2px #575f61;
     transition: all ease-in 0.3s;
-    overflow-y: auto;
+    overflow-y: scroll;
     @media screen and (max-width: 716px) {
         min-height: 200px;
     }
+    &.isDragging {
+        background-color: cadetblue;
+    }    
 }
 
 .taskCreateBtn {
@@ -50,12 +53,16 @@
     cursor: pointer;
 }
 .taskWrapper {
+    border-radius: 5px;
     align-items: center;
     display: flex;
     flex-direction: column;
     gap: 10px;
     min-height: 80%;
-    min-width: 90%;
+    min-width: 95%;
+    &.draggingOver {
+        background-color: #575f61;
+    }
 }
 .formInput {
     height: 30px;
