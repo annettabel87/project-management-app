@@ -1,6 +1,13 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Draggable, DraggableProvided, Droppable, DroppableProvided } from 'react-beautiful-dnd';
+import {
+  Draggable,
+  DraggableProvided,
+  DraggableStateSnapshot,
+  Droppable,
+  DroppableProvided,
+  DroppableStateSnapshot,
+} from 'react-beautiful-dnd';
 
 import { useAppDispatch } from '../../hooks/ReduxHooks';
 import { IColumnProps } from '../../interfaces/Interfaces';
@@ -58,9 +65,9 @@ const Column: FC<IColumnProps> = ({ column, index }: IColumnProps) => {
 
   return (
     <Draggable draggableId={column.id} index={index}>
-      {(provided: DraggableProvided) => (
+      {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
         <div
-          className={s.column}
+          className={`${s.column} ${snapshot.isDragging ? s.isDragging : s.noDragging} `}
           ref={provided.innerRef}
           {...provided.dragHandleProps}
           {...provided.draggableProps}
@@ -98,8 +105,14 @@ const Column: FC<IColumnProps> = ({ column, index }: IColumnProps) => {
             </p>
           )}
           <Droppable droppableId={column.id} type="task">
-            {(provided: DroppableProvided) => (
-              <div className={s.taskWrapper} ref={provided.innerRef} {...provided.droppableProps}>
+            {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
+              <div
+                className={`${s.taskWrapper} ${
+                  snapshot.isDraggingOver ? s.draggingOver : s.noDraggingOver
+                }`}
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
                 {column.tasks?.map((task) => (
                   <Task task={task} columnId={column.id} key={task.id} />
                 ))}

@@ -70,6 +70,7 @@ const CreateTask: FC<ICreateTaskFormProps> = ({ onClose, columnId }: ICreateTask
           <label htmlFor="userId">
             <p className={s.formTitle}>{t('user')}</p>
             <select
+              className={s.select}
               {...register('userId', {
                 required: t('select_user'),
               })}

@@ -1,5 +1,11 @@
 import { FC, useState } from 'react';
-import { DragDropContext, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd';
+import {
+  DragDropContext,
+  Droppable,
+  DroppableProvided,
+  DroppableStateSnapshot,
+  DropResult,
+} from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch } from '../../hooks/ReduxHooks';
@@ -101,9 +107,11 @@ const ColumnsField: FC<ColumnFieldPropsType> = ({ columns, boardId }: ColumnFiel
     <DragDropContext onDragEnd={onDragEnd}>
       <section>
         <Droppable droppableId={boardId} type="column" direction="horizontal">
-          {(provided: DroppableProvided) => (
+          {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
             <div
-              className={s.columnsWrapper}
+              className={`${s.columnsWrapper} ${
+                snapshot.isDraggingOver ? s.draggingOver : s.noDraggingOver
+              }`}
               {...provided.droppableProps}
               id={boardId}
               ref={provided.innerRef}
