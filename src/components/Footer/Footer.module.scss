@@ -6,21 +6,41 @@
     justify-content: center;
     align-items: center;
     gap: 20px;
-    font-size: 20px;    
+    font-size: 20px;
     flex-wrap: wrap;
     padding: 10px;
 }
+
 .logo {
     width: 100px;
 }
+
 .rsschool, .github__link {
     text-decoration: none;
     color: #fff;
 }
+
+.rsschool:hover {
+    color: #5ee2f3;
+}
+
+.rsschool a:active {
+    color: #5ec6f3;
+}
+
 .github {
     display: flex;
     flex-direction: column;
 }
-.rsschool:hover, .github__link:hover  {
-   cursor: pointer;
+
+.github a:hover {
+    color: #5ee2f3;
+}
+
+.github a:active {
+    color: #5ec6f3;
+}
+
+.rsschool:hover, .github__link:hover {
+    cursor: pointer;
 }

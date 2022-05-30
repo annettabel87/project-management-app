@@ -1,18 +1,18 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
+import { useAppDispatch } from '../../hooks/ReduxHooks';
 import { ICreateBoardFormProps } from '../../interfaces/Interfaces';
 import { addBoard } from '../../redux/boards-slice';
 
 import s from './CreateBoardForm.module.scss';
+import style_form from '../../shared/show-password/show-password.module.scss';
 
 const CreateBoardForm: FC<ICreateBoardFormProps> = ({ onClose }: ICreateBoardFormProps) => {
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const { error } = useAppSelector((state) => state.boardsSlice);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,7 +34,7 @@ const CreateBoardForm: FC<ICreateBoardFormProps> = ({ onClose }: ICreateBoardFor
         </button>
         <form className={s.boardForm} onSubmit={(e) => onSubmit(e)}>
           <label htmlFor="title" className={s.formLabel}>
-            <p className={s.formTitle}>{t('title')}</p>
+            <span className={style_form.inputTitle}>{t('title')}</span>
             <input
               type="text"
               className={s.formInput}
@@ -43,7 +43,7 @@ const CreateBoardForm: FC<ICreateBoardFormProps> = ({ onClose }: ICreateBoardFor
             />
           </label>
           <label htmlFor="title" className={s.formLabel}>
-            <p className={s.formTitle}>{t('description')}</p>
+            <span className={style_form.inputTitle}>{t('description')}</span>
             <input
               type="text"
               className={s.formInput}
@@ -52,7 +52,6 @@ const CreateBoardForm: FC<ICreateBoardFormProps> = ({ onClose }: ICreateBoardFor
             />
           </label>
           <button className={s.formBtn}>{t('create')}</button>
-          {error && <p className={s.error}>{error}</p>}
         </form>
       </div>
     </div>
