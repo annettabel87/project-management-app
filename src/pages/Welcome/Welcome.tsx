@@ -29,6 +29,7 @@ const Welcome: FC = () => {
       </section>
       <section className={s.appDescription}>
         <div className={`${s.container} ${s.descriptionContainer}`}>
+          <div className={s.image} />
           <div>
             <p className={s.item}>
               This application was created on the react development course from The Rolling Scopes

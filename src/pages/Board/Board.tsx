@@ -35,7 +35,7 @@ const Board: FC = () => {
   return (
     <section className={s.boardPage}>
       <div className={s.container}>
-        <button className={s.homeBtn} onClick={toMain} />
+        <button className={s.homeBtn} style={{ maxWidth: '1128px' }} onClick={toMain} />
         <p className={s.boardTitle}>{title}</p>
         <p className={s.text}>{description}</p>
         {reloadStatus ? <Preloader /> : <ColumnsField columns={columns} boardId={id} />}
