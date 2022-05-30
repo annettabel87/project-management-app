@@ -66,7 +66,7 @@ const Header = () => {
 
   return (
     <header className={sticky ? `${s.header} ${s.sticky}` : s.header}>
-      <select onChange={onLanguageChange} value={isLanguage ? 'en' : 'ru'}>
+      <select onChange={onLanguageChange} value={isLanguage ? 'en' : 'ru'} className={s.select}>
         <option value="ru">Ru</option>
         <option value="en">En</option>
       </select>
