@@ -1,16 +1,21 @@
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Draggable, DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
+
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import { ITaskProps } from '../../interfaces/Interfaces';
 import { removeTask, updateTask } from '../../redux/columns-slice';
 import ConfirmationWindow from '../ConfirmationWindow/ConfirmationWindow';
 import Modal from '../Modal/Modal';
+
 import s from './Task.module.scss';
 
 const Task: FC<ITaskProps> = ({ task, columnId }: ITaskProps) => {
   const dispatch = useAppDispatch();
   const { users } = useAppSelector((state) => state.profileSlice);
   const { requestStatus } = useAppSelector((state) => state.boardsSlice);
+
+  const { t } = useTranslation();
 
   const userName = users?.filter((user) => {
     if (user.id === task.userId) {
@@ -94,13 +99,13 @@ const Task: FC<ITaskProps> = ({ task, columnId }: ITaskProps) => {
                   className={s.formInput}
                   value={formData.title}
                   onChange={onChange}
-                ></textarea>
+                />
                 <textarea
                   name="description"
                   className={s.formInput}
                   value={formData.description}
                   onChange={onChange}
-                ></textarea>
+                />
 
                 <select
                   name="userId"
@@ -116,15 +121,15 @@ const Task: FC<ITaskProps> = ({ task, columnId }: ITaskProps) => {
                     ))}
                 </select>
 
-                <button className={s.okBtn}>ok</button>
+                <button className={s.okBtn}>{t('ok')}</button>
               </form>
             ) : (
               <>
                 <p className={s.title}>{task.title}</p>
                 <p className={s.text}>{task.description}</p>
                 <p className={s.textUser}>{userName && userName.name}</p>
-                {!!task.files.length && <button>file</button>}
-                <button className={s.editBtn} onClickCapture={() => setOpenTitle(true)}></button>
+                {!!task.files.length && <button>{t('file')}</button>}
+                <button className={s.editBtn} onClickCapture={() => setOpenTitle(true)} />
               </>
             )}
           </div>

@@ -1,4 +1,6 @@
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import s from './ConfirmationWindow.module.scss';
 
 export interface ConfirmPropsType {
@@ -6,6 +8,7 @@ export interface ConfirmPropsType {
   handleOK: () => void;
 }
 const ConfirmationWindow: FC<ConfirmPropsType> = ({ onClose, handleOK }: ConfirmPropsType) => {
+  const { t } = useTranslation();
   return (
     <div className={s.overlay} onClick={onClose}>
       <div
@@ -17,13 +20,13 @@ const ConfirmationWindow: FC<ConfirmPropsType> = ({ onClose, handleOK }: Confirm
         <button className={s.close} onClick={onClose}>
           X
         </button>
-        <p>Are your sure?</p>
+        <p>{t('are_your_sure')}</p>
         <div className={s.buttonWrapper}>
           <button className={s.confirmBtn} onClick={handleOK}>
-            Ok
+            {t('ok')}
           </button>
           <button className={s.confirmBtn} onClick={onClose}>
-            Cancel
+            {t('cancel')}
           </button>
         </div>
       </div>

@@ -1,13 +1,17 @@
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import { ICreateBoardFormProps } from '../../interfaces/Interfaces';
 import { addBoard } from '../../redux/boards-slice';
+
 import s from './CreateBoardForm.module.scss';
 
 const CreateBoardForm: FC<ICreateBoardFormProps> = ({ onClose }: ICreateBoardFormProps) => {
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   const { error } = useAppSelector((state) => state.boardsSlice);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -30,7 +34,7 @@ const CreateBoardForm: FC<ICreateBoardFormProps> = ({ onClose }: ICreateBoardFor
         </button>
         <form className={s.boardForm} onSubmit={(e) => onSubmit(e)}>
           <label htmlFor="title" className={s.formLabel}>
-            <p className={s.formTitle}>Title</p>
+            <p className={s.formTitle}>{t('title')}</p>
             <input
               type="text"
               className={s.formInput}
@@ -39,7 +43,7 @@ const CreateBoardForm: FC<ICreateBoardFormProps> = ({ onClose }: ICreateBoardFor
             />
           </label>
           <label htmlFor="title" className={s.formLabel}>
-            <p className={s.formTitle}>Description</p>
+            <p className={s.formTitle}>{t('description')}</p>
             <input
               type="text"
               className={s.formInput}
@@ -47,7 +51,7 @@ const CreateBoardForm: FC<ICreateBoardFormProps> = ({ onClose }: ICreateBoardFor
               onChange={(e) => setDescription(e.target.value)}
             />
           </label>
-          <button className={s.formBtn}>create</button>
+          <button className={s.formBtn}>{t('create')}</button>
           {error && <p className={s.error}>{error}</p>}
         </form>
       </div>

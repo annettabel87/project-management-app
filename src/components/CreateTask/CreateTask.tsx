@@ -1,14 +1,17 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
+import { useTranslation } from 'react-i18next';
 
+import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import { ICreateTaskFormProps, TTaskData } from '../../interfaces/Interfaces';
 import { addTask } from '../../redux/columns-slice';
+
 import s from './CreateTask.module.scss';
 
 const CreateTask: FC<ICreateTaskFormProps> = ({ onClose, columnId }: ICreateTaskFormProps) => {
   const dispatch = useAppDispatch();
   const { users } = useAppSelector((state) => state.profileSlice);
+  const { t } = useTranslation();
 
   const {
     register,
@@ -39,37 +42,37 @@ const CreateTask: FC<ICreateTaskFormProps> = ({ onClose, columnId }: ICreateTask
         </button>
         <form className={s.taskForm} onSubmit={onSubmit}>
           <label htmlFor="title" className={s.formLabel}>
-            <p className={s.formTitle}>Title</p>
+            <p className={s.formTitle}>{t('title')}</p>
             <input
               type="text"
-              placeholder="Enter your title"
+              placeholder={t('enter_your_title')}
               className={s.formInput}
               {...register('title', {
-                required: 'Enter your title',
+                required: t('enter_your_title'),
               })}
-              title="title"
+              title={t('title')}
             />
             {errors.title && <span className={s.error}>{errors.title.message}</span>}
           </label>
           <label htmlFor="description" className={s.formLabel}>
-            <p className={s.formTitle}>Description</p>
+            <p className={s.formTitle}>{t('description')}</p>
             <input
               type="text"
-              placeholder="Enter your description"
+              placeholder={t('enter_your_description')}
               className={s.formInput}
               {...register('description', {
-                required: 'Enter your description',
+                required: t('enter_your_description'),
               })}
-              title="description"
+              title={t('description')}
             />
             {errors.description && <span className={s.error}>{errors.description.message}</span>}
           </label>
           <label htmlFor="userId">
-            <p className={s.formTitle}>User:</p>
+            <p className={s.formTitle}>{t('user')}</p>
             <select
               className={s.select}
               {...register('userId', {
-                required: 'select user',
+                required: t('select_user'),
               })}
             >
               {users &&
@@ -82,7 +85,7 @@ const CreateTask: FC<ICreateTaskFormProps> = ({ onClose, columnId }: ICreateTask
             {errors.userId && <span className={s.error}>{errors.userId.message}</span>}
           </label>
           <button type="submit" className={s.formBtn}>
-            create
+            {t('create')}
           </button>
         </form>
       </div>

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { rootReducer, setupStore } from '../redux/store';
 
 export interface IModalProps {
@@ -117,14 +119,6 @@ export type TProfileSliceState = {
   getUsersStatus: 'idle' | 'pending' | 'succeeded' | 'failed';
 };
 
-export type TLoginState = {
-  login: string;
-  password: string;
-  token: string;
-  isLoading: boolean;
-  error: string;
-  requestStatus: string;
-};
 export interface ILoginData {
   login: string;
   password: string;
@@ -160,8 +154,10 @@ export type TAuthorisationSliceState = {
   user?: {
     [key: string]: string;
   };
-  error?: string;
+  errorLogin?: string;
+  errorRegistration?: string;
   token?: string;
+  isLanguage: boolean;
 };
 
 export interface IFullBoardData {
@@ -200,12 +196,6 @@ export interface ITaskData {
 export interface ITaskProps {
   task: ITaskData;
   columnId: string;
-}
-export interface ICreateTaskData {
-  title: string;
-  description: string;
-  file: FileList;
-  userId: string;
 }
 
 export interface IFileData {

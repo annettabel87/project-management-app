@@ -43,6 +43,7 @@ export const loginUser = createAsyncThunk<IResponseLoginData, ILoginData>(
 export const initialState: TAuthorisationSliceState = {
   loginRequestStatus: 'idle',
   registrationRequestStatus: 'idle',
+  isLanguage: true,
 };
 
 export const authorisationSlice = createSlice({
@@ -52,6 +53,9 @@ export const authorisationSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
     },
+    updateLanguage: (state, action) => {
+      state.isLanguage = action.payload;
+    },
     logout: (state) => {
       state.loginRequestStatus = 'idle';
       state.registrationRequestStatus = 'idle';
@@ -59,7 +63,8 @@ export const authorisationSlice = createSlice({
       state.token = undefined;
     },
     cancel: (state) => {
-      state.error = '';
+      state.errorLogin = '';
+      state.errorRegistration = '';
       state.user = undefined;
     },
   },
@@ -70,11 +75,13 @@ export const authorisationSlice = createSlice({
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.loginRequestStatus = 'succeeded';
       state.token = action.payload.token;
-      state.error = undefined;
+      state.errorLogin = undefined;
+      state.errorRegistration = undefined;
     });
     builder.addCase(loginUser.rejected, (state) => {
       state.loginRequestStatus = 'failed';
-      state.error = 'Error! Failed to login! Try again!';
+      state.errorLogin = 'Error! Failed to login! Try again!';
+      state.errorRegistration = undefined;
     });
     builder.addCase(registrationUser.pending, (state) => {
       state.registrationRequestStatus = 'pending';
@@ -82,14 +89,16 @@ export const authorisationSlice = createSlice({
     builder.addCase(registrationUser.fulfilled, (state, action) => {
       state.registrationRequestStatus = 'succeeded';
       state.user = action.payload;
-      state.error = undefined;
+      state.errorLogin = undefined;
+      state.errorRegistration = undefined;
     });
     builder.addCase(registrationUser.rejected, (state) => {
       state.registrationRequestStatus = 'failed';
-      state.error = 'Error! User not registration! Try again!';
+      state.errorLogin = undefined;
+      state.errorRegistration = 'Error! User not registration! Try again!';
     });
   },
 });
 
-export const { logout, cancel, setToken } = authorisationSlice.actions;
+export const { logout, cancel, setToken, updateLanguage } = authorisationSlice.actions;
 export default authorisationSlice.reducer;

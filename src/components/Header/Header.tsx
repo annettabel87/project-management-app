@@ -1,25 +1,41 @@
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Modal from '../Modal/Modal';
 import CreateBoardForm from '../CreateBoardForm/CreateBoardForm';
-
 import { ROUTERS } from '../../constants/constants';
-import { useAppDispatch } from '../../hooks/ReduxHooks';
-import { logout } from '../../redux/authorisation-slice';
-
+import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
+import { logout, updateLanguage } from '../../redux/authorisation-slice';
 import { localStorageActions } from '../../utils/localStorageActions';
+
 import s from './Header.module.scss';
 
-const Header: FC = () => {
+const Header = () => {
   const [sticky, setSticky] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { isLanguage } = useAppSelector((state) => state.authorisationSlice);
   const currentUser = !!localStorageActions.getToken();
+  const { t } = useTranslation();
+
+  const { i18n } = useTranslation();
+
+  const onLanguageChange = () => {
+    if (isLanguage) {
+      dispatch(updateLanguage(false));
+      i18n.changeLanguage('ru').then(() => console.log('язык изменен на русский'));
+    } else {
+      dispatch(updateLanguage(true));
+      i18n.changeLanguage('en').then(() => console.log('language changed to English'));
+    }
+  };
+
   const onClose = () => {
     setIsOpen(false);
   };
+
   const setSticked = () => {
     if (window.scrollY >= 100) {
       setSticky(true);
@@ -27,6 +43,7 @@ const Header: FC = () => {
       setSticky(false);
     }
   };
+
   useEffect(() => {
     document.addEventListener('scroll', setSticked);
 
@@ -46,37 +63,36 @@ const Header: FC = () => {
   const createBoard = () => {
     setIsOpen(true);
   };
-  const changeLanguage = () => {};
 
   return (
     <header className={sticky ? `${s.header} ${s.sticky}` : s.header}>
       <NavLink className={s.header__item} to={ROUTERS.WELCOME}>
-        Welcome
+        {t('welcome')}
       </NavLink>
       {currentUser && (
         <>
           <NavLink className={s.header__item} to={ROUTERS.MAIN}>
-            Main
+            {t('main')}
           </NavLink>
           <NavLink className={s.header__item} to={ROUTERS.BOARD}>
-            Board
+            {t('board')}
           </NavLink>
           <NavLink className={s.header__item} to={ROUTERS.PROFILE}>
-            Edit profile
+            {t('edit_profile')}
           </NavLink>
-          <button onClick={createBoard}>New board</button>
-          <button onClick={logOut}>Logout</button>
+          <button onClick={createBoard}>{t('new_board')}</button>
+          <button onClick={logOut}>{t('logout')}</button>
         </>
       )}
       {!currentUser && (
         <NavLink className={s.header__item} to={ROUTERS.LOGIN}>
-          Login
+          {t('login')}
         </NavLink>
       )}
 
-      <select onSelect={changeLanguage}>
-        <option value="Ru">Ru</option>
-        <option value="En">En</option>
+      <select onChange={onLanguageChange} value={isLanguage ? 'en' : 'ru'}>
+        <option value="ru">Ru</option>
+        <option value="en">En</option>
       </select>
       <Modal onClose={onClose} open={isOpen}>
         <CreateBoardForm onClose={onClose} />

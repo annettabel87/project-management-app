@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import { cancel, updateUser } from '../../redux/profile-slice';
@@ -18,7 +19,9 @@ type TEditProfile = {
 
 const EditProfile = (props: TEditProfile) => {
   const { setEditMode, user } = props;
-  const { error, registrationRequestStatus } = useAppSelector((state) => state.authorisationSlice);
+  const { errorRegistration, registrationRequestStatus } = useAppSelector(
+    (state) => state.authorisationSlice
+  );
   const dispatch = useAppDispatch();
 
   const [errorPasswords, setErrorPasswords] = useState<string>('');
@@ -27,10 +30,11 @@ const EditProfile = (props: TEditProfile) => {
   const [name, setName] = useState<string | undefined>(user?.name);
   const [login, setLogin] = useState<string | undefined>(user?.login);
   const [password, setPassword] = useState<string | undefined>(user?.password);
+  const { t } = useTranslation();
 
   const onSubmit: SubmitHandler<TUpdateUser & { passwordConfirm: string }> = (data) => {
     if (data.user.password !== data.passwordConfirm) {
-      setErrorPasswords(`Sorry, but the passwords don't match.`);
+      setErrorPasswords(t('sorry_but_the_passwords_dont_match'));
     } else if (data && data.user.password === data.passwordConfirm) {
       dispatch(
         updateUser({
@@ -45,7 +49,7 @@ const EditProfile = (props: TEditProfile) => {
 
       setEditMode(false);
     }
-    error === undefined &&
+    errorRegistration === undefined &&
       reset({
         user: {
           name: '',
@@ -92,21 +96,21 @@ const EditProfile = (props: TEditProfile) => {
   return (
     <div className={s.container}>
       <form className={s.wrapper} onSubmit={handleSubmit(onSubmit)} style={{ height: '420px' }}>
-        <HeaderEnterApp title={'Edit profile'} />
+        <HeaderEnterApp title={t('edit_profile')} />
         <div className={s.main}>
           <label className={style_form.emailPasswordContainer}>
-            <span className={style_form.inputTitle}>name</span>
+            <span className={style_form.inputTitle}>{t('name')}</span>
             <input
               {...register('user.name', {
-                required: 'Please, enter your new name',
+                required: t('please_enter_your_name'),
                 pattern: {
                   value: /^[a-zA-Z ]{2,30}$/,
-                  message: 'Please, enter your name correctly',
+                  message: t('please_enter_your_name_correctly'),
                 },
               })}
               value={name}
-              placeholder={'change your name...'}
-              title={'name'}
+              placeholder={t('enter_your_name')}
+              title={t('name')}
               type={'name'}
               onChange={changeName}
             />
@@ -115,19 +119,19 @@ const EditProfile = (props: TEditProfile) => {
             </span>
           </label>
           <label className={style_form.emailPasswordContainer}>
-            <span className={style_form.inputTitle}>login</span>
+            <span className={style_form.inputTitle}>{t('login')}</span>
             <input
               {...register('user.login', {
-                required: 'Please, enter your new login',
+                required: t('please_enter_your_login'),
                 pattern: {
                   value: /^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$/i,
-                  message: 'Please, enter your login correctly',
+                  message: t('please_enter_your_login_correctly'),
                 },
               })}
               value={login}
               onChange={changeLogin}
-              placeholder={'change your login...'}
-              title={'login'}
+              placeholder={t('enter_your_login')}
+              title={t('login')}
               type={'login'}
             />
             <span className={style_form.errorEmailPasswordMessage}>
@@ -135,19 +139,19 @@ const EditProfile = (props: TEditProfile) => {
             </span>
           </label>
           <label className={style_form.emailPasswordContainer}>
-            <span className={style_form.inputTitle}>password</span>
+            <span className={style_form.inputTitle}>{t('password')}</span>
             <input
               {...register('user.password', {
-                required: 'Please, enter your new password',
+                required: t('please_enter_your_password'),
                 pattern: {
                   value: /[0-9a-zA-Z!@#$%^&*]{8,}/,
-                  message: 'Please, enter your password correctly',
+                  message: t('please_enter_your_password_correctly'),
                 },
               })}
               value={password}
               onChange={changePassword}
-              placeholder={'change your password...'}
-              title={'password'}
+              placeholder={t('enter_your_password')}
+              title={t('password')}
               type={typeShowInput('password', showPassword)}
             />
             <ShowPasswords showPassword={showPassword} setShowPassword={setShowPassword} />
@@ -156,17 +160,17 @@ const EditProfile = (props: TEditProfile) => {
             </span>
           </label>
           <label className={style_form.emailPasswordContainer}>
-            <span className={style_form.inputTitle}>Confirm password</span>
+            <span className={style_form.inputTitle}>{t('confirm_password')}</span>
             <input
               {...register('passwordConfirm', {
-                required: 'Please, enter change your confirm new password',
+                required: t('please_enter_your_confirm_password'),
                 pattern: {
                   value: /[0-9a-zA-Z!@#$%^&*]{8,}/,
-                  message: 'Please, enter your password confirm correctly',
+                  message: t('please_enter_your_confirm_password_correctly'),
                 },
               })}
-              placeholder={'enter your confirm password...'}
-              title={'confirm'}
+              placeholder={t('enter_your_confirm_password')}
+              title={t('confirm_password')}
               type={typeShowInput('password', showConfirmPassword)}
             />
             <ShowPasswords
@@ -180,18 +184,18 @@ const EditProfile = (props: TEditProfile) => {
           <div className={s.footer}>
             <div className={s.footerBtns}>
               <span className={s.btnCancel} onClick={goBack}>
-                Cancel
+                {t('cancel')}
               </span>
               <div className={s.blueBtnContainer}>
                 <MainActionButton
                   type={'submit'}
                   disabledBtnSubmit={!isDirty || !isValid || !!errorPasswords}
-                  title={'Save'}
+                  title={t('save')}
                   loadingStatus={registrationRequestStatus}
                 />
               </div>
             </div>
-            <span className={s.errorMessageContainer}>{errorPasswords || error}</span>
+            <span className={s.errorMessageContainer}>{errorPasswords || errorRegistration}</span>
           </div>
         </div>
       </form>

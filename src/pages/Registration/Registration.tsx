@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import HeaderEnterApp from '../../shared/header-enter-app/header-enter-app';
 import MainActionButton from '../../shared/main-action-button/main-action-button';
@@ -14,12 +15,15 @@ import s from './Registration.module.scss';
 import style_form from '../../shared/show-password/show-password.module.scss';
 
 const Registration = () => {
-  const { error, registrationRequestStatus } = useAppSelector((state) => state.authorisationSlice);
+  const { errorRegistration, registrationRequestStatus } = useAppSelector(
+    (state) => state.authorisationSlice
+  );
   const [errorPasswords, setErrorPasswords] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const {
     register,
@@ -47,7 +51,7 @@ const Registration = () => {
         navigate(`${ROUTERS.LOGIN}`);
       });
     }
-    error === undefined &&
+    errorRegistration === undefined &&
       reset({
         name: '',
         login: '',
@@ -64,68 +68,68 @@ const Registration = () => {
   return (
     <div className={s.container}>
       <form className={s.wrapper} onSubmit={handleSubmit(onSubmit)}>
-        <HeaderEnterApp title={'Sign Up'} />
+        <HeaderEnterApp title={t('sign_up')} />
         <div className={s.main}>
           <label className={style_form.emailPasswordContainer}>
-            <span className={style_form.inputTitle}>name</span>
+            <span className={style_form.inputTitle}>{t('name')}</span>
             <input
               {...register('name', {
-                required: 'Please, enter your name',
+                required: t('please_enter_your_name'),
                 pattern: {
                   value: /^[a-zA-Z ]{2,30}$/,
-                  message: 'Please, enter your name correctly',
+                  message: t('please_enter_your_name_correctly'),
                 },
               })}
-              placeholder={'enter your name...'}
-              title={'name'}
+              placeholder={t('enter_your_name')}
+              title={t('name')}
               type={'name'}
             />
             <span className={style_form.errorEmailPasswordMessage}>{errors.name?.message}</span>
           </label>
           <label className={style_form.emailPasswordContainer}>
-            <span className={style_form.inputTitle}>login</span>
+            <span className={style_form.inputTitle}>{t('login')}</span>
             <input
               {...register('login', {
-                required: 'Please, enter your login',
+                required: t('please_enter_your_login'),
                 pattern: {
                   value: /^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$/i,
-                  message: 'Please, enter your login correctly',
+                  message: t('please_enter_your_login_correctly'),
                 },
               })}
-              placeholder={'enter your login...'}
-              title={'login'}
+              placeholder={t('enter_your_login')}
+              title={t('login')}
               type={'login'}
             />
             <span className={style_form.errorEmailPasswordMessage}>{errors.login?.message}</span>
           </label>
           <label className={style_form.emailPasswordContainer}>
-            <span className={style_form.inputTitle}>password</span>
+            <span className={style_form.inputTitle}>{t('password')}</span>
             <input
               {...register('password', {
-                required: 'Please, enter your password',
+                required: t('please_enter_your_password'),
                 pattern: {
                   value: /[0-9a-zA-Z!@#$%^&*]{8,}/,
-                  message: 'Please, enter your password correctly',
+                  message: t('please_enter_your_password_correctly'),
                 },
               })}
-              placeholder={'enter your password...'}
-              title={'password'}
+              placeholder={t('enter_your_password')}
+              title={t('password')}
               type={typeShowInput('password', showPassword)}
             />
             <ShowPasswords showPassword={showPassword} setShowPassword={setShowPassword} />
             <span className={style_form.errorEmailPasswordMessage}>{errors.password?.message}</span>
           </label>
           <label className={style_form.emailPasswordContainer}>
-            <span className={style_form.inputTitle}>Confirm password</span>
+            <span className={style_form.inputTitle}>{t('confirm_password')}</span>
             <input
               {...register('passwordConfirm', {
                 required: 'Please, enter your confirm password',
                 pattern: {
                   value: /[0-9a-zA-Z!@#$%^&*]{8,}/,
-                  message: 'Please, enter your password confirm correctly',
+                  message: t('please_enter_your_confirm_password_correctly'),
                 },
               })}
-              placeholder={'enter your confirm password...'}
+              placeholder={t('enter_your_confirm_password')}
               title={'confirm'}
               type={typeShowInput('password', showConfirmPassword)}
             />
@@ -139,18 +143,18 @@ const Registration = () => {
         <div className={s.footer}>
           <div className={s.footerBtns}>
             <span className={s.btnCancel} onClick={goBack}>
-              Cancel
+              {t('cancel')}
             </span>
             <div className={s.blueBtnContainer}>
               <MainActionButton
                 type={'submit'}
                 disabledBtnSubmit={!isDirty || !isValid || !!errorPasswords}
-                title={'Register'}
+                title={t('register')}
                 loadingStatus={registrationRequestStatus}
               />
             </div>
           </div>
-          <span className={s.errorMessageContainer}>{errorPasswords || error}</span>
+          <span className={s.errorMessageContainer}>{errorPasswords || errorRegistration}</span>
         </div>
       </form>
     </div>

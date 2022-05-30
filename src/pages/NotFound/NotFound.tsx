@@ -1,11 +1,13 @@
 import { FC } from 'react';
 import './NotFound.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const NotFound: FC = () => {
+  const { t } = useTranslation();
   return (
     <div>
       <h2>404</h2>
-      <div>page not found</div>
+      <div>{t('page_not_found')}</div>
     </div>
   );
 };

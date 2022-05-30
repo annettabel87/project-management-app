@@ -8,6 +8,7 @@ import { ROUTERS } from '../../constants/constants';
 import { useAppDispatch } from '../../hooks/ReduxHooks';
 import { IBoardData } from '../../interfaces/Interfaces';
 import { deleteBoardById } from '../../redux/boards-slice';
+
 import s from './BoardPreview.module.scss';
 
 const BoardPreview: FC<IBoardData> = ({ id, title, description }: IBoardData) => {

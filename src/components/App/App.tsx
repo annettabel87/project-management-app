@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import { getUsers, setUser } from '../../redux/profile-slice';
 import { setToken } from '../../redux/authorisation-slice';
 import { localStorageActions } from '../../utils/localStorageActions';
+import '../../shared/i18n/i18n';
 
 import './App.module.scss';
 

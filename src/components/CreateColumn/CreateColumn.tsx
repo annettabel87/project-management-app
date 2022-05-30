@@ -1,14 +1,16 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../hooks/ReduxHooks';
+import { useTranslation } from 'react-i18next';
 
+import { useAppDispatch } from '../../hooks/ReduxHooks';
 import { ICreateBoardFormProps, TColumnData } from '../../interfaces/Interfaces';
 import { createColumn } from '../../redux/columns-slice';
+
 import s from './CreateColumn.module.scss';
 
 const CreateColumn: FC<ICreateBoardFormProps> = ({ onClose }: ICreateBoardFormProps) => {
   const dispatch = useAppDispatch();
-
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -38,20 +40,20 @@ const CreateColumn: FC<ICreateBoardFormProps> = ({ onClose }: ICreateBoardFormPr
 
         <form className={s.columnForm} onSubmit={onSubmit}>
           <label htmlFor="title" className={s.formLabel}>
-            <p className={s.formTitle}>Title</p>
+            <p className={s.formTitle}>{t('title')}</p>
             <input
               type="text"
-              placeholder="Enter your title"
+              placeholder={t('enter_your_title')}
               className={s.formInput}
               {...register('title', {
-                required: 'Enter your title',
+                required: t('enter_your_title'),
               })}
-              title="title"
+              title={t('title')}
             />
             {errors.title && <span className={s.error}>{errors.title.message}</span>}
           </label>
           <button className={s.formBtn} onSubmit={(e) => onSubmit(e)}>
-            create
+            {t('create')}
           </button>
         </form>
       </div>
