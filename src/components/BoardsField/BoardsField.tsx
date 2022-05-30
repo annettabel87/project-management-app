@@ -12,7 +12,7 @@ export type BoardsFieldPropsType = {
 const BoardsField: FC<BoardsFieldPropsType> = ({ boards }: BoardsFieldPropsType) => {
   const boardsCard = boards.map((board) => <BoardPreview key={board.id} {...board} />);
   return (
-    <section>
+    <section style={{ marginTop: '65px' }}>
       <div className={s.cardsWrapper}>{boardsCard}</div>
     </section>
   );

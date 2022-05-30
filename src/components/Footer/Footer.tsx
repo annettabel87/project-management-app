@@ -7,11 +7,13 @@ const Footer: FC = () => {
   const { t } = useTranslation();
   return (
     <div className={s.footer}>
-      <img
-        className={s.logo}
-        src="https://rs.school/images/rs_school_js.svg"
-        alt="logo of RS School"
-      />
+      <a href="https://rs.school/react/" className={s.rsschool}>
+        <img
+          className={s.logo}
+          src="https://rs.school/images/rs_school_js.svg"
+          alt="logo of RS School"
+        />
+      </a>
       <a href="https://rs.school/react/" className={s.rsschool}>
         The Rolling Scopes School
       </a>

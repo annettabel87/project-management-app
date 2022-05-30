@@ -1,5 +1,5 @@
-import Preloader from '../preloader/preloader';
 import s from './main-action-button.module.scss';
+import { Preloader } from '../preloader/preloader';
 
 type MainActionButton = {
   type?: 'button' | 'submit' | 'reset' | undefined;
