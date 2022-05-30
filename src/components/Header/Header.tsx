@@ -55,7 +55,7 @@ const Header = () => {
   const logOut = () => {
     localStorageActions.removeToken();
     dispatch(logout());
-    navigate(ROUTERS.LOGIN);
+    navigate(ROUTERS.WELCOME);
 
     localStorageActions.removeCurrentUser();
   };

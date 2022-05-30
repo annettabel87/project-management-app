@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -15,7 +15,7 @@ import s from './Registration.module.scss';
 import style_form from '../../shared/show-password/show-password.module.scss';
 
 const Registration = () => {
-  const { errorRegistration, registrationRequestStatus } = useAppSelector(
+  const { errorRegistration, registrationRequestStatus, token } = useAppSelector(
     (state) => state.authorisationSlice
   );
   const [errorPasswords, setErrorPasswords] = useState<string>('');
@@ -64,6 +64,10 @@ const Registration = () => {
     window.history.go(-1);
     dispatch(cancel());
   };
+
+  if (token) {
+    return <Navigate to={ROUTERS.MAIN} />;
+  }
 
   return (
     <div className={s.container}>
