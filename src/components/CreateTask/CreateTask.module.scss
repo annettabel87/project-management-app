@@ -77,6 +77,12 @@
     cursor: pointer;
     transition: all ease-in 0.3s;
 }
+.select {
+    padding: 5px;
+    font-size: 21px;
+    border-radius: 5px;
+    height: 45px;
+}
 
 .error {
     color: red;

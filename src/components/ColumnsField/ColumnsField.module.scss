@@ -1,12 +1,17 @@
 .columnsWrapper {
     display: flex;
     justify-content: center;
+    padding: 10px;
     gap: 15px;
     overflow-x: auto;
+    border-radius: 10px;
+    &.draggingOver {
+        background-color: #575f61;
+    }
 }
 .createBtn {
     border: none;
-    background-color: #eaeaea70;;
+    background-color: #eaeaea70;
     padding: 10px;
     min-width: 235px;
     height: 100px;
@@ -17,4 +22,7 @@
     box-sizing: border-box;
     transition: all ease-in 0.3s;
     cursor: pointer;   
+    &:hover {
+        background-color: cadetblue;
+    }
 }
