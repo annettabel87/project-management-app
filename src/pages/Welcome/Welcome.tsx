@@ -17,7 +17,12 @@ const Welcome: FC = () => {
           </div>
           <div className={s.teamSection}>
             <div className={s.card}>
-              <p>About command</p>
+              <p>TEAM</p>
+              <ul>
+                <li>Anna Repeshko</li>
+                <li>Petr Zhirkov</li>
+                <li>Nikita Kandziuba</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -26,6 +31,10 @@ const Welcome: FC = () => {
         <div className={`${s.container} ${s.descriptionContainer}`}>
           <div className={s.image} />
           <div>
+            <p className={s.item}>
+              This application was created on the react development course from The Rolling Scopes
+              School. Try it:
+            </p>
             <ul>
               <li className={s.item}>Add boards, columns and tasks</li>
               <li className={s.item}>Manage your projects</li>
