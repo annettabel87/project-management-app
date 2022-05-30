@@ -36,6 +36,9 @@
   font-size: 21px;
   cursor: pointer;
   transition: all ease-in 0.5s;
+  /*position: absolute;
+  bottom: 0;
+  left: 0;*/
 }
 
 .taskCreateBtn:hover {
@@ -68,6 +71,7 @@
   flex-direction: column;
   gap: 10px;
   min-width: 95%;
+  min-height: 80vh;
 
   &.draggingOver {
     background-color: #575f61;
