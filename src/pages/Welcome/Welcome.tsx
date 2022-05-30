@@ -1,32 +1,11 @@
 import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ROUTERS } from '../../constants/constants';
-import { useAppSelector } from '../../hooks/ReduxHooks';
 import s from './Welcome.module.scss';
 
 const Welcome: FC = () => {
-  const { token } = useAppSelector((state) => state.authorisationSlice);
-  const navigate = useNavigate();
   return (
     <div className={s.welcomePage}>
       <section className={s.appInfo}>
         <div className={s.container}>
-          <div className={s.welcomeHeader}>
-            {token ? (
-              <button className={s.welcomeBtn} onClick={() => navigate(ROUTERS.MAIN)}>
-                Go to Main Page
-              </button>
-            ) : (
-              <div className={s.btnWrapper}>
-                <button className={s.welcomeBtn} onClick={() => navigate(ROUTERS.LOGIN)}>
-                  Sign In
-                </button>
-                <button className={s.welcomeBtn} onClick={() => navigate(ROUTERS.REGISTRATION)}>
-                  Sign Up
-                </button>
-              </div>
-            )}
-          </div>
           <div className={s.textWrapper}>
             <h1 className={s.title}>Trello clone</h1>
             <p className={s.description}>
