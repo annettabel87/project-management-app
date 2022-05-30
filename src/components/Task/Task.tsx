@@ -9,11 +9,11 @@ import ConfirmationWindow from '../ConfirmationWindow/ConfirmationWindow';
 import Modal from '../Modal/Modal';
 
 import s from './Task.module.scss';
+import style_form from '../../shared/show-password/show-password.module.scss';
 
 const Task: FC<ITaskProps> = ({ task, columnId }: ITaskProps) => {
   const dispatch = useAppDispatch();
   const { users } = useAppSelector((state) => state.profileSlice);
-  const { requestStatus } = useAppSelector((state) => state.boardsSlice);
 
   const { t } = useTranslation();
 
@@ -94,43 +94,51 @@ const Task: FC<ITaskProps> = ({ task, columnId }: ITaskProps) => {
           <div className={s.titleWrapper}>
             {openTitle ? (
               <form onSubmit={onSubmit} className={s.taskUpdate}>
-                <textarea
-                  name="title"
-                  className={s.formInput}
-                  value={formData.title}
-                  onChange={onChange}
-                />
-                <textarea
-                  name="description"
-                  className={s.formInput}
-                  value={formData.description}
-                  onChange={onChange}
-                />
-
-                <select
-                  name="userId"
-                  className={s.select}
-                  value={formData.user}
-                  onChange={onChange}
-                >
-                  {users &&
-                    users.map((user) => (
-                      <option key={user.id} value={user.id}>
-                        {user.name}
-                      </option>
-                    ))}
-                </select>
+                <label htmlFor="userId" className={s.formLabel}>
+                  <span className={style_form.inputTitle}>{t('title')}</span>
+                  <textarea
+                    name="title"
+                    className={s.formInput}
+                    value={formData.title}
+                    onChange={onChange}
+                  />
+                </label>
+                <label htmlFor="userId" className={s.formLabel}>
+                  <span className={style_form.inputTitle}>{t('description')}</span>
+                  <textarea
+                    name="description"
+                    className={s.formInput}
+                    value={formData.description}
+                    onChange={onChange}
+                  />
+                </label>
+                <label htmlFor="userId" className={s.formLabel}>
+                  <span className={style_form.inputTitle}>{t('user')}</span>
+                  <select
+                    name="userId"
+                    className={s.select}
+                    value={formData.user}
+                    onChange={onChange}
+                  >
+                    {users &&
+                      users.map((user) => (
+                        <option key={user.id} value={user.id}>
+                          {user.name}
+                        </option>
+                      ))}
+                  </select>
+                </label>
 
                 <button className={s.okBtn}>{t('ok')}</button>
               </form>
             ) : (
-              <>
+              <div className={s.formLabel}>
                 <p className={s.title}>{task.title}</p>
                 <p className={s.text}>{task.description}</p>
                 <p className={s.textUser}>{userName && userName.name}</p>
                 {!!task.files.length && <button>{t('file')}</button>}
                 <button className={s.editBtn} onClickCapture={() => setOpenTitle(true)} />
-              </>
+              </div>
             )}
           </div>
 

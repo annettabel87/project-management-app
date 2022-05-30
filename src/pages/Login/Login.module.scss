@@ -5,6 +5,7 @@
   width: 100vw;
   height: 100vh;
   @include flexCenter();
+
   .wrapper {
     @include authWrapper(413px, 600px);
     display: flex;
@@ -16,6 +17,7 @@
         display: flex;
         flex-direction: column;
         margin-bottom: 60px;
+
         .forgotPasswordBtn {
           margin-top: 45px;
           display: flex;
@@ -31,11 +33,13 @@
             }
           }
         }
+
         .authBtn {
           @include authBtn();
         }
       }
     }
+
     @include footer;
   }
 }

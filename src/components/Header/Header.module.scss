@@ -1,30 +1,55 @@
 .header {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    height: 60px;
-    background: #575f61;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    font-size: 20px;
-    z-index: 1000;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  background: #575f61;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-size: 20px;
+  z-index: 1000;
 }
+
 .header.sticky {
-    background: #252829;
-    height: 8vh;
-    transition: .3s ease-in-out;
+  background: #252829;
+  height: 8vh;
+  transition: .3s ease-in-out;
 }
+
 .header__item {
-    text-decoration: none;
-    color: #fff;
+  text-decoration: none;
+  color: #fff;
 }
+
 .header__item:hover {
-    transition: all 1s;
-    color: #5ee2f3;
+  transition: all 1s;
+  color: #5ee2f3;
 }
+
 .active {
-    color: rgb(117, 117, 231);
+  color: rgb(117, 117, 231);
+}
+
+header button {
+  display: inline-block;
+  color: rgba(0, 0, 0, 0.45);
+  font-weight: 700;
+  text-decoration: none;
+  user-select: none;
+  padding: 0.5em 2em;
+  outline: none;
+  border: 2px solid;
+  border-radius: 1px;
+  transition: 0.2s;
+  cursor: pointer;
+  margin: 0;
+  background-color: white;
+}
+
+header button:hover {
+  color: rgb(0, 0, 0);
+  background-color: #cccccc;
 }

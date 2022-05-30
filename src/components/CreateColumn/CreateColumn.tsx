@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -7,6 +7,7 @@ import { ICreateBoardFormProps, TColumnData } from '../../interfaces/Interfaces'
 import { createColumn } from '../../redux/columns-slice';
 
 import s from './CreateColumn.module.scss';
+import style_form from '../../shared/show-password/show-password.module.scss';
 
 const CreateColumn: FC<ICreateBoardFormProps> = ({ onClose }: ICreateBoardFormProps) => {
   const dispatch = useAppDispatch();
@@ -40,7 +41,7 @@ const CreateColumn: FC<ICreateBoardFormProps> = ({ onClose }: ICreateBoardFormPr
 
         <form className={s.columnForm} onSubmit={onSubmit}>
           <label htmlFor="title" className={s.formLabel}>
-            <p className={s.formTitle}>{t('title')}</p>
+            <span className={style_form.inputTitle}>{t('title')}</span>
             <input
               type="text"
               placeholder={t('enter_your_title')}

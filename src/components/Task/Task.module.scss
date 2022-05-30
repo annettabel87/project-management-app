@@ -1,81 +1,129 @@
 .task {
-    border: 1px solid black;
-    background-color: #fbf8f8;
-    padding: 25px 10px;
-    width: 90%;
-    line-height: 1;    
-    border-radius: 5px;
-    text-align: left;
-    font-size: 21px;
-    position: relative;
-    box-sizing: border-box;
-    transition: all ease-in 0.3s;
-    cursor: pointer;
-    @media screen and (max-width: 716px) {
-        min-height: 200px;
-    }    
-    &.isDragging {
-        background-color: cadetblue;
-    }  
+  border: 1px solid black;
+  background-color: #fbf8f8;
+  padding: 25px 10px;
+  width: 90%;
+  line-height: 1;
+  border-radius: 5px;
+  text-align: left;
+  font-size: 21px;
+  position: relative;
+  box-sizing: border-box;
+  transition: all ease-in 0.3s;
+  cursor: pointer;
+  @media screen and (max-width: 716px) {
+    min-height: 200px;
+  }
+
+  &.isDragging {
+    background-color: cadetblue;
+  }
 }
-.active {    
-    transform: scale(1.1);
-    z-index: 99;
-    padding-top: 45px;
+
+.active {
+  transform: scale(1.1);
+  z-index: 99;
+  padding-top: 45px;
 }
+
 .title {
-    font-weight: 500;
-    line-height: 1;
+  font-weight: 500;
+  line-height: 1;
 }
 
 .taskBtn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    height: 30px;
-    width: 30px;
-    font-size: 21px;
-    transition: all ease-in 0.5s;
-    cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  transition: all ease-in 0.5s;
+  cursor: pointer;
 }
+
 .taskBtn:hover {
-    transform: scale(1.2);
+  transform: scale(1.2);
 }
+
 .description {
-    font-size: 21px;
+  font-size: 21px;
 }
+
 .textUser {
-    text-align: right;
-    color: cadetblue;
+  text-align: right;
+  color: cadetblue;
 }
-.editBtn {    
-    height: 25px;
-    width: 25px;
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    background-image: url('../../../public/assets/edit.svg');
-    background-size: cover;
-    border: none;
-    cursor: pointer;
+
+.editBtn {
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background-image: url('../../../public/assets/edit.svg');
+  background-size: cover;
+  border: none;
+  cursor: pointer;
 }
+
 .formInput {
-    width: 85%;
-    font-size: 21px;
-    border-radius: 5px;
+  width: 85%;
+  font-size: 21px;
+  border-radius: 5px;
 }
+
 .select {
-    width: 86%;
-    font-size: 21px;
-    border-radius: 5px;
+  width: 86%;
+  font-size: 21px;
+  border-radius: 5px;
 }
+
 .taskUpdate {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 15px;
+  width: 90%;
+  margin: 0 auto;
 }
+
+.formLabel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.formLabel textarea {
+  padding: 3px;
+  margin-bottom: 3px;
+  box-sizing: border-box;
+  font-family: SF UI Display, sans-serif;
+  color: #2d2e46;
+  border-bottom: 1.3px rgba(36, 37, 74, 0.5) solid;
+  border-right: none;
+  border-left: none;
+  border-top: none;
+  background-color: #f9f9fe;
+  outline: none;
+}
+
+
+.text {
+  overflow-wrap: inherit;
+}
+
 .okBtn {
-    font-size: 21px;
-    padding: 5px 15px;
+  font-size: 16px;
+  display: inline-block;
+  color: rgba(0, 0, 0, 0.45);
+  font-weight: 700;
+  text-decoration: none;
+  user-select: none;
+  padding: 0.5em 2em;
+  outline: none;
+  border: 2px solid;
+  border-radius: 1px;
+  transition: 0.2s;
+  cursor: pointer;
+  margin: 0;
+  background-color: white;
 }

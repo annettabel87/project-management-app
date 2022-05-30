@@ -1,4 +1,5 @@
 import { FC } from 'react';
+
 import s from './Welcome.module.scss';
 
 const Welcome: FC = () => {
@@ -23,7 +24,7 @@ const Welcome: FC = () => {
       </section>
       <section className={s.appDescription}>
         <div className={`${s.container} ${s.descriptionContainer}`}>
-          <div className={s.image}></div>
+          <div className={s.image}/>
           <div>
             <ul>
               <li className={s.item}>Add boards, columns and tasks</li>

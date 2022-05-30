@@ -14,6 +14,7 @@ import { addTask, removeTask, updateColumn, updateTask } from '../../redux/colum
 import Column from '../Column/Column';
 import CreateColumn from '../CreateColumn/CreateColumn';
 import Modal from '../Modal/Modal';
+import imageAdd from '../../assets/image/svg/add.svg';
 
 import s from './ColumnsField.module.scss';
 
@@ -108,23 +109,27 @@ const ColumnsField: FC<ColumnFieldPropsType> = ({ columns, boardId }: ColumnFiel
       <section>
         <Droppable droppableId={boardId} type="column" direction="horizontal">
           {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
-            <div
-              className={`${s.columnsWrapper} ${
-                snapshot.isDraggingOver ? s.draggingOver : s.noDraggingOver
-              }`}
-              {...provided.droppableProps}
-              id={boardId}
-              ref={provided.innerRef}
-            >
-              {columns &&
-                columns.map((column) => (
-                  <Column key={column.id} column={column} index={column.order} />
-                ))}
-              <button className={s.createBtn} onClick={() => setIsOpen(true)}>
-                + {t('create_column')}
+            <>
+              <button className={s.mainBtn} onClick={() => setIsOpen(true)}>
+                <img src={imageAdd} alt={'add board'} className={s.iconAdd} />
+                {t('create_column')}
               </button>
-              {provided.placeholder}
-            </div>
+              <div
+                className={`${s.columnsWrapper} ${
+                  snapshot.isDraggingOver ? s.draggingOver : s.noDraggingOver
+                }`}
+                {...provided.droppableProps}
+                id={boardId}
+                ref={provided.innerRef}
+              >
+                {columns &&
+                  columns.map((column) => (
+                    <Column key={column.id} column={column} index={column.order} />
+                  ))}
+
+                {provided.placeholder}
+              </div>
+            </>
           )}
         </Droppable>
 

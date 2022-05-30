@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -7,6 +7,7 @@ import { ICreateTaskFormProps, TTaskData } from '../../interfaces/Interfaces';
 import { addTask } from '../../redux/columns-slice';
 
 import s from './CreateTask.module.scss';
+import style_form from '../../shared/show-password/show-password.module.scss';
 
 const CreateTask: FC<ICreateTaskFormProps> = ({ onClose, columnId }: ICreateTaskFormProps) => {
   const dispatch = useAppDispatch();
@@ -42,7 +43,7 @@ const CreateTask: FC<ICreateTaskFormProps> = ({ onClose, columnId }: ICreateTask
         </button>
         <form className={s.taskForm} onSubmit={onSubmit}>
           <label htmlFor="title" className={s.formLabel}>
-            <p className={s.formTitle}>{t('title')}</p>
+            <span className={style_form.inputTitle}>{t('title')}</span>
             <input
               type="text"
               placeholder={t('enter_your_title')}
@@ -55,7 +56,7 @@ const CreateTask: FC<ICreateTaskFormProps> = ({ onClose, columnId }: ICreateTask
             {errors.title && <span className={s.error}>{errors.title.message}</span>}
           </label>
           <label htmlFor="description" className={s.formLabel}>
-            <p className={s.formTitle}>{t('description')}</p>
+            <span className={style_form.inputTitle}>{t('description')}</span>
             <input
               type="text"
               placeholder={t('enter_your_description')}
@@ -67,8 +68,8 @@ const CreateTask: FC<ICreateTaskFormProps> = ({ onClose, columnId }: ICreateTask
             />
             {errors.description && <span className={s.error}>{errors.description.message}</span>}
           </label>
-          <label htmlFor="userId">
-            <p className={s.formTitle}>{t('user')}</p>
+          <label htmlFor="userId" className={s.formLabel}>
+            <span className={style_form.inputTitle}>{t('user')}</span>
             <select
               className={s.select}
               {...register('userId', {
