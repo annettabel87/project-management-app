@@ -66,34 +66,36 @@ const Header = () => {
 
   return (
     <header className={sticky ? `${s.header} ${s.sticky}` : s.header}>
+      <select onChange={onLanguageChange} value={isLanguage ? 'en' : 'ru'}>
+        <option value="ru">Ru</option>
+        <option value="en">En</option>
+      </select>
       <NavLink className={s.header__item} to={ROUTERS.WELCOME}>
         {t('welcome')}
       </NavLink>
       {currentUser && (
         <>
-          <NavLink className={s.header__item} to={ROUTERS.MAIN}>
-            {t('main')}
-          </NavLink>
-          <NavLink className={s.header__item} to={ROUTERS.BOARD}>
-            {t('board')}
-          </NavLink>
           <NavLink className={s.header__item} to={ROUTERS.PROFILE}>
             {t('edit_profile')}
+          </NavLink>
+          <NavLink className={s.header__item} to={ROUTERS.MAIN}>
+            {t('main')}
           </NavLink>
           <button onClick={createBoard}>{t('new_board')}</button>
           <button onClick={logOut}>{t('logout')}</button>
         </>
       )}
       {!currentUser && (
-        <NavLink className={s.header__item} to={ROUTERS.LOGIN}>
-          {t('login')}
-        </NavLink>
+        <>
+          <NavLink className={s.header__item} to={ROUTERS.LOGIN}>
+            {t('sign_in')}
+          </NavLink>
+          <NavLink className={s.header__item} to={ROUTERS.REGISTRATION}>
+            {t('sign_up')}
+          </NavLink>
+        </>
       )}
 
-      <select onChange={onLanguageChange} value={isLanguage ? 'en' : 'ru'}>
-        <option value="ru">Ru</option>
-        <option value="en">En</option>
-      </select>
       <Modal onClose={onClose} open={isOpen}>
         <CreateBoardForm onClose={onClose} />
       </Modal>
