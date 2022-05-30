@@ -110,7 +110,11 @@ const ColumnsField: FC<ColumnFieldPropsType> = ({ columns, boardId }: ColumnFiel
         <Droppable droppableId={boardId} type="column" direction="horizontal">
           {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
             <>
-              <button className={s.mainBtn} onClick={() => setIsOpen(true)}>
+              <button
+                style={{ marginLeft: '15px' }}
+                className={s.mainBtn}
+                onClick={() => setIsOpen(true)}
+              >
                 <img src={imageAdd} alt={'add board'} className={s.iconAdd} />
                 {t('create_column')}
               </button>

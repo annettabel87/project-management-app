@@ -24,7 +24,7 @@ const Welcome: FC = () => {
       </section>
       <section className={s.appDescription}>
         <div className={`${s.container} ${s.descriptionContainer}`}>
-          <div className={s.image}/>
+          <div className={s.image} />
           <div>
             <ul>
               <li className={s.item}>Add boards, columns and tasks</li>
