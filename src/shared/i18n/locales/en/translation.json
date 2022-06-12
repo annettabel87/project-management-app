@@ -49,5 +49,12 @@
   "user": "User:",
   "select_user": "select user",
   "page_not_found": "page not found",
-  "file": "file"
+  "file": "file",
+  "welcome_description": "Trello clone will help you organize your team's work. The user can set tasks, complete tasks, view tasks, delete own tasks, be responsible for other people's tasks",
+  "team": "Team",
+  "about_app": "This application was created on the react development course from The Rolling Scopes School. Try it:", 
+  "functional_1": "Add boards, columns and tasks",
+  "functional_2": "Manage your projects",
+  "functional_3": "Planning to work on a project",
+  "functional_4": "Develop team spirit"
 }

@@ -129,7 +129,9 @@ const Task: FC<ITaskProps> = ({ task, columnId }: ITaskProps) => {
                   </select>
                 </label>
 
-                <button className={s.okBtn}>{t('ok')}</button>
+                <button type="submit" className={s.okBtn}>
+                  {t('ok')}
+                </button>
               </form>
             ) : (
               <div className={s.formLabel}>
