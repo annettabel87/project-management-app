@@ -63,6 +63,9 @@
     width: 100%;
     border-radius: 5px;
     font-size: 30px;
+    &::placeholder {
+        font-size: 21px;
+    }
 }
 .formLabel {
     width: 100%;

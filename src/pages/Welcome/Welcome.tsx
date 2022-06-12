@@ -1,27 +1,25 @@
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import s from './Welcome.module.scss';
 
 const Welcome: FC = () => {
+  const { t } = useTranslation();
   return (
     <div className={s.welcomePage}>
       <section className={s.appInfo}>
         <div className={s.container}>
           <div className={s.textWrapper}>
             <h1 className={s.title}>Trello clone</h1>
-            <p className={s.description}>
-              Trello clone will help you organize your team&apos;s work. The user can set tasks,
-              complete tasks, view tasks, delete own tasks, be responsible for other people&apos;s
-              tasks
-            </p>
+            <p className={s.description}>{t('welcome_description')}</p>
           </div>
           <div className={s.teamSection}>
             <div className={s.card}>
-              <p>TEAM</p>
+              <p>{t('team')}</p>
               <ul>
-                <li>Anna Repeshko</li>
-                <li>Petr Zhirkov</li>
-                <li>Nikita Kandziuba</li>
+                <li>{t('anna_repeshko')}</li>
+                <li> {t('petr_zhirkov')}</li>
+                <li>{t('nikita_kandziuba')}</li>
               </ul>
             </div>
           </div>
@@ -31,15 +29,12 @@ const Welcome: FC = () => {
         <div className={`${s.container} ${s.descriptionContainer}`}>
           <div className={s.image} />
           <div>
-            <p className={s.item}>
-              This application was created on the react development course from The Rolling Scopes
-              School. Try it:
-            </p>
+            <p className={s.item}>{t('about_app')}</p>
             <ul>
-              <li className={s.item}>Add boards, columns and tasks</li>
-              <li className={s.item}>Manage your projects</li>
-              <li className={s.item}>Planning to work on a project</li>
-              <li className={s.item}>Develop team spirit</li>
+              <li className={s.item}>{t('functional_1')}</li>
+              <li className={s.item}>{t('functional_2')}</li>
+              <li className={s.item}>{t('functional_3')}</li>
+              <li className={s.item}>{t('functional_4')}</li>
             </ul>
           </div>
         </div>
