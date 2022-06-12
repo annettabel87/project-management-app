@@ -1,0 +1,130 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 500;
+  background-color: rgba(0, 0, 0, .7);
+}
+
+.taskFormWrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
+  background-color: #eaeaea;
+  padding: 10px;
+  max-width: 600px;
+  min-height: 250px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 36px;
+  box-sizing: border-box;
+  transition: all ease-in 0.3s;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.taskForm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 15px;
+  width: 80%;
+
+  &::placeholder {
+    font-size: 18px;
+  }
+}
+
+.close {
+  position: absolute;
+  color: black;
+  top: 10px;
+  right: 10px;
+  transition: all ease-in 0.5s;
+  cursor: pointer;
+}
+
+.close:hover {
+  transform: scale(1.2);
+}
+
+.close:hover {
+  transform: scale(1.2);
+}
+
+.formTitle {
+  width: 100%;
+  font-size: 32px;
+  line-height: 0;
+}
+
+.formInput {
+  height: 45px;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 30px;
+
+  &::placeholder {
+    font-size: 21px;
+  }
+}
+
+.formLabel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.formLabel input {
+  padding: 3px;
+  margin-bottom: 3px;
+  box-sizing: border-box;
+  font-family: SF UI Display, sans-serif;
+  color: #2d2e46;
+  border-bottom: 1.3px rgba(36, 37, 74, 0.5) solid;
+  border-right: none;
+  border-left: none;
+  border-top: none;
+  background-color: #f9f9fe;
+  outline: none;
+}
+
+.formBtn {
+  display: inline-block;
+  color: rgba(0, 0, 0, 0.45);
+  font-weight: 700;
+  text-decoration: none;
+  user-select: none;
+  padding: .5em 2em;
+  outline: none;
+  border: 2px solid;
+  border-radius: 1px;
+  transition: 0.2s;
+  cursor: pointer;
+  font-size: initial;
+  margin: 0;
+}
+
+.formBtn:hover {
+  background: rgba(255, 255, 255, 0);
+}
+
+.select {
+  padding: 5px;
+  font-size: 21px;
+  border-radius: 5px;
+  height: 45px;
+}
+
+.error {
+  color: red;
+  font-size: 21px;
+}
+

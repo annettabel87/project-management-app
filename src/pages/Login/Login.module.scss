@@ -1,0 +1,45 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  @include flexCenter();
+
+  .wrapper {
+    @include authWrapper(413px, 600px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    .main {
+      .emailPasswordLoginContainer {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 60px;
+
+        .forgotPasswordBtn {
+          margin-top: 45px;
+          display: flex;
+          justify-content: flex-end;
+          font-size: 14px;
+          line-height: 17px;
+          font-family: SF, UI Display, sans-serif;
+          transition: 0.2s;
+
+          a {
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+
+        .authBtn {
+          @include authBtn();
+        }
+      }
+    }
+
+    @include footer;
+  }
+}

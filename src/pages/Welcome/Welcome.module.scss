@@ -1,0 +1,128 @@
+.welcomePage {
+  background: #fff;
+  padding: 0 0 10px;
+}
+
+.appInfo {
+  background-image: url('../../../public/assets/background.png');
+  width: 100%;
+  height: 702px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 15px 0;
+}
+
+.container {
+  max-width: 1440px;
+  margin: auto;
+}
+
+.welcomeBtn {
+  padding: 8px 12px;
+  width: 140px;
+  height: 36px;
+  color: #FFFFFF;
+  background: #248466;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.welcomeHeader {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btnWrapper {
+  display: flex;
+  gap: 15px;
+}
+
+.textWrapper {
+  max-width: 889px;
+  margin: auto;
+}
+
+.title {
+  font-weight: 800;
+  font-size: 60px;
+  line-height: 60px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.description {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+  text-align: center;
+  color: #D1D5DB;
+}
+
+.teamSection {
+  position: relative;
+  bottom: -300px;
+}
+
+.appDescription {
+  padding-top: 250px;
+}
+
+.descriptionContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.image {
+  background-image: url('../../../public/assets/screen.png');
+  width: 868px;
+  height: 484px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: 0 2px 12px 6px rgba(0, 0, 0, 0.16);
+  border-radius: 8px;
+}
+
+.item {
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 36px;
+  color: #6B7280;
+  list-style: square;
+}
+
+.card {
+  width: 100%;
+  height: 306px;
+  color: #fff;
+  font-weight: 600;
+  padding: 10px;
+  line-height: 28px;
+  box-shadow: 0 4px 10px 1px rgba(0, 0, 0, 0.08);
+  background: rgba(31, 42, 55, 0.9);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 36px;
+  box-sizing: border-box;
+  transition: all ease-in 0.3s;
+  cursor: pointer;
+  @media screen and (max-width: 716px) {
+    min-height: 200px;
+  }
+}
+
+.card li {
+  list-style: none;
+  margin-bottom: 15px;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}

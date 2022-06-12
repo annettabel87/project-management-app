@@ -1,0 +1,12 @@
+.cardsWrapper {
+    display: flex;
+    justify-content: stretch;
+    gap: 20px;
+    flex-wrap: wrap;
+    @media screen and (max-width: 716px) {
+        justify-content: center;
+    }
+    @media screen and (max-width: 385px) {
+        justify-content: stretch;
+    }
+}
